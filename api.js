@@ -1,10 +1,11 @@
 var express = require('express');
 var pg = require('pg');
 var queue = require('queue-async');
-var pgURL = require('./lib/config')().PostgresURL;
-var server = module.exports = express();
 var notesQuery = require('./query/notes');
 var Note = require('./lib/Note');
+var pgURL = require('./lib/config')().PostgresURL;
+
+var server = module.exports = express();
 
 server.get('/api/v1/notes', function(req, res) {
     var notesQ = notesQuery(req.query);
@@ -32,5 +33,4 @@ server.get('/api/v1/notes', function(req, res) {
             res.json(featureCollection);
         });
     });
-
 });
