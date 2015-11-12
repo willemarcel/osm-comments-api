@@ -1,0 +1,31 @@
+{
+  "name": "osm-comments-api",
+  "version": "1.0.0",
+  "description": "API Server for OSM Comments and Notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mapbox/osm-comments-api.git"
+  },
+  "author": "sanjay@mapbox.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mapbox/osm-comments-api/issues"
+  },
+  "homepage": "https://github.com/mapbox/osm-comments-api",
+  "dependencies": {
+    "express": "^4.13.3",
+    "fastlog": "^1.1.0",
+    "minimist": "^1.2.0",
+    "pg": "^4.4.3",
+    "queue-async": "^1.0.7",
+    "squel": "^4.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^1.9.0",
+    "eslint-config-mourner": "^1.0.1"
+  }
+}
