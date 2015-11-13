@@ -8,13 +8,10 @@ module.exports.getCountQuery = getCountQuery;
 
 function getSearchQuery(params) {
     var sql = squel.select()
-        .from('notes')
-        .field('notes.id', 'note_id')
-        .field('notes.created_at', 'created_at')
-        .field('notes.closed_at', 'closed_at')
-        .field('ST_AsGeoJSON(notes.point)', 'point');
- 
+        .from('notes');
+    sql = addFields(sql);
     sql = addWhereClauses(sql, params);
+    sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
     return sql.toParam();
 }
@@ -25,6 +22,14 @@ function getCountQuery(params) {
         .field('count(notes.id)');
     sql = addWhereClauses(sql, params);
     return sql.toParam();
+}
+
+function addFields(sql) {
+    sql.field('notes.id', 'note_id')
+        .field('notes.created_at', 'created_at')
+        .field('notes.closed_at', 'closed_at')
+        .field('ST_AsGeoJSON(notes.point)', 'point');
+    return sql;
 }
 
 function addWhereClauses(sql, params) {
@@ -47,6 +52,23 @@ function addWhereClauses(sql, params) {
         sql.where('users.name in ?', usersArray);
     }
     sql.distinct();
+    return sql;
+}
+
+function addOrderBy(sql, params) {
+    var sort = params.sort;
+    var operator = sort.substring(0, 1);
+    var field = sort.substring(1);
+    if (['+', '-'].indexOf(operator) === -1) {
+        // TODO: throw ERROR
+        return sql;
+    }
+    if (['created_at', 'closed_at'].indexOf(field) === -1) {
+        // TODO: throw ERROR
+        return sql;
+    }
+    var isAscending = operator === '+';
+    sql.order(field, isAscending);
     return sql;
 }
 
