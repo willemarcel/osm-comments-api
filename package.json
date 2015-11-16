@@ -22,7 +22,8 @@
     "minimist": "^1.2.0",
     "pg": "^4.4.3",
     "queue-async": "^1.0.7",
-    "squel": "^4.2.0"
+    "squel": "^4.2.0",
+    "turf-bbox-polygon": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^1.9.0",

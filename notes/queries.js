@@ -1,5 +1,6 @@
 var squel = require('squel').useFlavour('postgres');
 var moment = require('moment');
+var helpers = require('../helpers');
 
 module.exports = {};
 
@@ -37,6 +38,10 @@ function addWhereClauses(sql, params) {
     var to = params.to || null;
     var users = params.users || null;
     var bbox = params.bbox || null;
+    if (bbox) {
+        var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
+        sql.where('ST_Within(notes.point, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
+    }
     if (from) {
         sql.where('created_at > ?', from);
     }
