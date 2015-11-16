@@ -56,7 +56,7 @@ function addWhereClauses(sql, params) {
 }
 
 function addOrderBy(sql, params) {
-    var sort = params.sort;
+    var sort = params.sort || '-created_at';
     var operator = sort.substring(0, 1);
     var field = sort.substring(1);
     if (['+', '-'].indexOf(operator) === -1) {
