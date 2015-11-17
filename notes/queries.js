@@ -5,6 +5,8 @@ module.exports = {};
 
 module.exports.getSearchQuery = getSearchQuery;
 module.exports.getCountQuery = getCountQuery;
+module.exports.getNoteQuery = getNoteQuery;
+module.exports.getNoteCommentsQuery = getNoteCommentsQuery;
 
 function getSearchQuery(params) {
     var sql = squel.select()
@@ -21,6 +23,28 @@ function getCountQuery(params) {
         .from('notes')
         .field('count(notes.id)');
     sql = addWhereClauses(sql, params);
+    return sql.toParam();
+}
+
+function getNoteQuery(id) {
+    var sql = squel.select()
+        .from('notes')
+        .where('id = ?', id);
+    sql = addFields(sql);
+    return sql.toParam();
+}
+
+function getNoteCommentsQuery(id) {
+    var sql = squel.select()
+        .from('note_comments')
+        .join('users', null, 'note_comments.user_id = users.id')
+        .where('note_id = ?', id)
+        .field('note_comments.id', 'comment_id')
+        .field('users.id', 'user_id')
+        .field('users.name', 'user_name')
+        .field('note_comments.action', 'comment_action')
+        .field('note_comments.timestamp', 'comment_timestamp')
+        .field('note_comments.comment', 'comment');
     return sql.toParam();
 }
 
