@@ -24,6 +24,7 @@ function getCountQuery(params) {
     var sql = squel.select()
         .from('changesets')
         .join('users', null, 'changesets.user_id = users.id')
+        .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
         .field('COUNT(changesets.id)', 'count');
     sql = addWhereClauses(sql, params);
     return sql.toParam();
@@ -53,6 +54,7 @@ function addWhereClauses(sql, params) {
     var from = params.from || null;
     var to = params.to || null;
     var bbox = params.bbox || null;
+    var hasDiscussion = params.has_discussion || null;
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -68,6 +70,9 @@ function addWhereClauses(sql, params) {
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
         sql.where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
+    }
+    if (hasDiscussion) {
+        sql.having('COUNT(changeset_comments.id) > 0');
     }
     return sql;
 }

@@ -34,7 +34,12 @@ changesets.search = function(params, callback) {
                 var changeset = new Changeset(row);
                 return changeset.getGeoJSON();
             });
-            var count = countResult.rows[0].count;
+            var count;
+            if (countResult.rows.length > 0) {
+                count = countResult.rows[0].count;
+            } else {
+                count = 0;
+            }
             var featureCollection = {
                 'type': 'FeatureCollection',
                 'features': changesetsArray,
