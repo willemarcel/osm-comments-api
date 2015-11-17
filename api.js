@@ -24,3 +24,10 @@ server.get('/api/v1/notes/:id', function(req, res, next) {
         next();
     });
 });
+
+server.get('/api/v1/changesets/:id', function(req, res, next) {
+    changesets.get(req.params.id, function(err, geojson) {
+        res.json(geojson);
+        next();
+    });
+});

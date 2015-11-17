@@ -50,3 +50,33 @@ changesets.search = function(params, callback) {
         });
     });
 };
+
+changesets.get = function(id, callback) {
+    var changesetQuery = queries.getChangesetQuery(id);
+    var changesetCommentsQuery = queries.getChangesetCommentsQuery(id);
+    var q = queue(2);
+    console.log('queries', changesetQuery, changesetCommentsQuery);
+    pg.connect(pgURL, function(err, client, done) {
+        if (err) {
+            callback(err, null);
+            return;
+        }
+        q.defer(client.query.bind(client), changesetQuery.text, changesetQuery.values);
+        q.defer(client.query.bind(client), changesetCommentsQuery.text, changesetCommentsQuery.values);
+        q.awaitAll(function(err, results) {
+            done();
+            if (err) {
+                console.log('query error', err);
+                callback(err, null);
+                return;
+            }
+            var changesetResult = results[0];
+            if (changesetResult.rows.length === 0) {
+                throw Error('Changeset not found');
+            }
+            console.log('results', results);
+            var changeset = new Changeset(results[0].rows[0], results[1].rows);
+            callback(null, changeset.getGeoJSON());
+        });
+    });
+};

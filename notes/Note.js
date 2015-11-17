@@ -13,6 +13,7 @@ var Note = function(data, comments) {
     } else {
         this.comments = null;
     }
+    return this;
 };
 
 Note.prototype.getGeoJSON = function() {

@@ -1,17 +1,20 @@
 var squel = require('squel').useFlavour('postgres');
-var moment = require('moment');
 var helpers = require('../helpers');
 
 module.exports = {};
 
 module.exports.getSearchQuery = getSearchQuery;
 module.exports.getCountQuery = getCountQuery;
+module.exports.getChangesetQuery = getChangesetQuery;
+module.exports.getChangesetCommentsQuery = getChangesetCommentsQuery;
+
 
 function getSearchQuery(params) {
     var sql = squel.select()
         .from('changesets')
         .join('users', null, 'changesets.user_id = users.id')
-        .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id');
+        .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
+        .field('COUNT(changeset_comments.id)', 'discussion_count');
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addGroupBy(sql);
@@ -30,6 +33,28 @@ function getCountQuery(params) {
     return sql.toParam();
 }
 
+function getChangesetQuery(id) {
+    var sql = squel.select()
+        .from('changesets')
+        .join('users', null, 'changesets.user_id = users.id')
+        .where('changesets.id = ?', id);
+    sql = addFields(sql);
+    return sql.toParam();
+}
+
+function getChangesetCommentsQuery(id) {
+    var sql = squel.select()
+        .from('changeset_comments')
+        .join('users', null, 'changeset_comments.user_id = users.id')
+        .where('changeset_id = ?', id)
+        .field('changeset_comments.id', 'comment_id')
+        .field('changeset_comments.timestamp', 'comment_timestamp')
+        .field('changeset_comments.comment', 'comment')
+        .field('changeset_comments.user_id', 'user_id')
+        .field('users.name', 'user_name');
+    return sql.toParam();
+}
+
 function addGroupBy(sql) {
     sql.group('changesets.id')
         .group('users.name');
@@ -38,7 +63,6 @@ function addGroupBy(sql) {
 
 function addFields(sql) {
     sql.field('changesets.id', 'id')
-        .field('COUNT(changeset_comments.id)', 'discussion_count')
         .field('changesets.created_at', 'created_at')
         .field('changesets.closed_at', 'closed_at')
         .field('changesets.is_open', 'is_open')

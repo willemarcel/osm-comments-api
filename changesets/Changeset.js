@@ -1,4 +1,6 @@
-var Changeset = function(data) {
+var ChangesetComment = require('./ChangesetComment');
+
+var Changeset = function(data, comments) {
     this.id = data.id;
     this.createdAt = data.created_at;
     this.closedAt = data.closed_at || null;
@@ -8,6 +10,14 @@ var Changeset = function(data) {
     this.userName = data.user_name;
     this.numChanges = data.num_changes;
     this.bbox = JSON.parse(data.bbox);
+    if (comments) {
+        this.comments = comments.map(function(comment) {
+            return new ChangesetComment(comment);
+        });
+    } else {
+        this.comments = null;
+    }
+    return this;
 };
 
 Changeset.prototype.getGeoJSON = function() {
@@ -19,7 +29,7 @@ Changeset.prototype.getGeoJSON = function() {
 };
 
 Changeset.prototype.getProperties = function() {
-    return {
+    var props =  {
         'id': this.id,
         'createdAt': this.createdAt,
         'closedAt': this.closedAt,
@@ -29,6 +39,12 @@ Changeset.prototype.getProperties = function() {
         'userName': this.userName,
         'numChanges': this.numChanges
     };
+    if (this.comments) {
+        props.comments = this.comments.map(function(comment) {
+            return comment.getJSON();
+        });
+    }
+    return props;
 };
 
 module.exports = Changeset;
