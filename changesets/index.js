@@ -23,6 +23,7 @@ changesets.search = function(params, callback) {
         q.defer(client.query.bind(client), searchQuery.text, searchQuery.values);
         q.defer(client.query.bind(client), countQuery.text, countQuery.values);
         q.awaitAll(function(err, results) {
+            done();
             if (err) {
                 console.log('query error', err);
                 callback(err, null);
