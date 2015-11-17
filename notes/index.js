@@ -45,3 +45,30 @@ notes.search = function(params, callback) {
     });
 };
 
+notes.get = function(id, callback) {
+    var noteQuery = queries.getNoteQuery(id);
+    var noteCommentsQuery = queries.getNoteCommentsQuery(id);
+    var q = queue(2);
+    console.log('queries', noteQuery, noteCommentsQuery);
+    pg.connect(pgURL, function(err, client, done) {
+        if (err) {
+            callback(err, null);
+            return;
+        }
+        q.defer(client.query.bind(client), noteQuery.text, noteQuery.values);
+        q.defer(client.query.bind(client), noteCommentsQuery.text, noteCommentsQuery.values);
+        q.awaitAll(function(err, results) {
+            if (err) {
+                console.log('query error', err);
+                callback(err, null);
+                return;
+            }
+            var noteResult = results[0];
+            if (noteResult.rows.length === 0) {
+                throw Error('Note not found');
+            }
+            var note = new Note(results[0].rows[0], results[1].rows);
+            callback(null, note.getGeoJSON());
+        });
+    });
+};

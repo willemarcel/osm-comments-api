@@ -17,3 +17,10 @@ server.get('/api/v1/changesets', function(req, res, next) {
         next();
     });
 });
+
+server.get('/api/v1/notes/:id', function(req, res, next) {
+    notes.get(req.params.id, function(err, geojson) {
+        res.json(geojson);
+        next();
+    });
+});
