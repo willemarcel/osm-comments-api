@@ -15,6 +15,7 @@ function getSearchQuery(params) {
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addGroupBy(sql);
+    sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
     return sql.toParam();
 }
@@ -51,6 +52,7 @@ function addWhereClauses(sql, params) {
     var users = params.users || null;
     var from = params.from || null;
     var to = params.to || null;
+    var bbox = params.bbox || null;
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -63,6 +65,27 @@ function addWhereClauses(sql, params) {
     if (to) {
         sql.where('changesets.created_at < ?', to);
     }
+    if (bbox) {
+        var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
+        sql.where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
+    }
+    return sql;
+}
+
+function addOrderBy(sql, params) {
+    var sort = params.sort || '-created_at';
+    var operator = sort.substring(0, 1);
+    var field = sort.substring(1);
+    if (['+', '-'].indexOf(operator) === -1) {
+        // TODO: throw ERROR
+        return sql;
+    }
+    if (['created_at', 'closed_at', 'discussion_count', 'num_changes'].indexOf(field) === -1) {
+        // TODO: throw ERROR
+        return sql;
+    }
+    var isAscending = operator === '+';
+    sql.order(field, isAscending);
     return sql;
 }
 
