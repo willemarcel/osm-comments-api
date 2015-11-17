@@ -1,5 +1,4 @@
 var squel = require('squel').useFlavour('postgres');
-var moment = require('moment');
 var helpers = require('../helpers');
 
 module.exports = {};
