@@ -59,6 +59,9 @@ changesets.search = function(params, callback) {
 };
 
 changesets.get = function(id, callback) {
+    if (!validate.isNumber(parseInt(id, 10))) {
+        return callback(new errors.ParseError('Changeset id must be a number'));
+    }
     var changesetQuery = queries.getChangesetQuery(id);
     var changesetCommentsQuery = queries.getChangesetCommentsQuery(id);
     var q = queue(2);
@@ -79,7 +82,7 @@ changesets.get = function(id, callback) {
             }
             var changesetResult = results[0];
             if (changesetResult.rows.length === 0) {
-                throw Error('Changeset not found');
+                return callback(new errors.NotFoundError('Changeset not found'));
             }
             console.log('results', results);
             var changeset = new Changeset(results[0].rows[0], results[1].rows);

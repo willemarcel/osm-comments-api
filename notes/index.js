@@ -51,6 +51,9 @@ notes.search = function(params, callback) {
 };
 
 notes.get = function(id, callback) {
+    if (!validate.isNumber(parseInt(id, 10))) {
+        return callback(new errors.ParseError('Note id must be a number'));
+    }
     var noteQuery = queries.getNoteQuery(id);
     var noteCommentsQuery = queries.getNoteCommentsQuery(id);
     var q = queue(2);
@@ -69,7 +72,7 @@ notes.get = function(id, callback) {
             }
             var noteResult = results[0];
             if (noteResult.rows.length === 0) {
-                return callback(new Error('Note not found'));
+                return callback(new errors.NotFoundError('Note not found'));
             }
             var note = new Note(results[0].rows[0], results[1].rows);
             callback(null, note.getGeoJSON());

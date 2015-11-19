@@ -53,6 +53,8 @@ server.use(function(err, req, res, next) {
     if (err instanceof customErrors.ParseError) {
         console.log(err);
         res.status(400).send({'message': err.message});
+    } else if (err instanceof customErrors.NotFoundError) {
+        res.status(404).send({'message': err.message});
     } else {
         next(err);
     }
