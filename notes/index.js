@@ -19,7 +19,6 @@ notes.search = function(params, callback) {
     }
     var searchQuery = queries.getSearchQuery(params);
     var countQuery = queries.getCountQuery(params);
-    console.log('queries', searchQuery, countQuery);
     var q = queue(5);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
@@ -30,7 +29,6 @@ notes.search = function(params, callback) {
         q.awaitAll(function(err, results) {
             done();
             if (err) {
-                console.log('query error', err);
                 return callback(err, null);
             }
             var searchResult = results[0];
@@ -67,7 +65,6 @@ notes.get = function(id, callback) {
         q.awaitAll(function(err, results) {
             done();
             if (err) {
-                console.log('query error', err);
                 return callback(err, null);
             }
             var noteResult = results[0];
@@ -97,7 +94,6 @@ function validateParams(params) {
     };
     var errs = validate(params, constraints);
     if (errs) {
-        console.log('errs', errs);
         var errMsg = Object.keys(errs).map(function(key) {
             return errs[key][0];
         }).join(', ');

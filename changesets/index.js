@@ -20,7 +20,6 @@ changesets.search = function(params, callback) {
     }
     var searchQuery = queries.getSearchQuery(params);
     var countQuery = queries.getCountQuery(params);
-    console.log('queries', searchQuery, countQuery);
     var q = queue(2);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
@@ -32,7 +31,6 @@ changesets.search = function(params, callback) {
         q.awaitAll(function(err, results) {
             done();
             if (err) {
-                console.log('query error', err);
                 callback(err, null);
                 return;
             }
@@ -65,7 +63,6 @@ changesets.get = function(id, callback) {
     var changesetQuery = queries.getChangesetQuery(id);
     var changesetCommentsQuery = queries.getChangesetCommentsQuery(id);
     var q = queue(2);
-    console.log('queries', changesetQuery, changesetCommentsQuery);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
             callback(err, null);
@@ -76,7 +73,6 @@ changesets.get = function(id, callback) {
         q.awaitAll(function(err, results) {
             done();
             if (err) {
-                console.log('query error', err);
                 callback(err, null);
                 return;
             }
@@ -84,7 +80,6 @@ changesets.get = function(id, callback) {
             if (changesetResult.rows.length === 0) {
                 return callback(new errors.NotFoundError('Changeset not found'));
             }
-            console.log('results', results);
             var changeset = new Changeset(results[0].rows[0], results[1].rows);
             callback(null, changeset.getGeoJSON());
         });
