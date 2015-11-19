@@ -3,6 +3,9 @@ var Changeset = require('./Changeset');
 var queries = require('./queries');
 var queue = require('queue-async');
 var pg = require('pg');
+require('../validators');
+var validate = require('validate.js');
+var errors = require('../errors');
 
 var changesets = {};
 
@@ -11,6 +14,10 @@ module.exports = changesets;
 var pgURL = config.PostgresURL;
 
 changesets.search = function(params, callback) {
+    var parseError = validateParams(params);
+    if (parseError) {
+        return callback(new errors.ParseError(parseError));
+    }
     var searchQuery = queries.getSearchQuery(params);
     var countQuery = queries.getCountQuery(params);
     console.log('queries', searchQuery, countQuery);
@@ -80,3 +87,29 @@ changesets.get = function(id, callback) {
         });
     });
 };
+
+function validateParams(params) {
+    var constraints = {
+        'from': {
+            'presence': false,
+            'datetime': true
+        },
+        'to': {
+            'presence': false,
+            'datetime': true
+        },
+        'bbox': {
+            'presence': false,
+            'bbox': true
+        }
+    };
+    var errs = validate(params, constraints);
+    if (errs) {
+        console.log('errs', errs);
+        var errMsg = Object.keys(errs).map(function(key) {
+            return errs[key][0];
+        }).join(', ');
+        return errMsg;
+    }
+    return null;
+}
