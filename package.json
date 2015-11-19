@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mapbox/osm-comments-api",
   "dependencies": {
+    "cors": "^2.7.1",
     "express": "^4.13.3",
     "fastlog": "^1.1.0",
     "minimist": "^1.2.0",

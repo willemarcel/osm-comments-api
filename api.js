@@ -1,8 +1,11 @@
 var express = require('express');
 var notes = require('./notes/index');
 var changesets = require('./changesets/index');
+var cors = require('cors');
 
 var server = module.exports = express();
+
+server.use(cors());
 
 server.get('/api/v1/notes', function(req, res, next) {
     notes.search(req.query, function(err, geojson) {
