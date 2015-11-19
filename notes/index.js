@@ -3,7 +3,9 @@ var Note = require('./Note');
 var queries = require('./queries');
 var queue = require('queue-async');
 var pg = require('pg');
-
+require('../validators');
+var validate = require('validate.js');
+var errors = require('../errors');
 var notes = {};
 
 module.exports = notes;
@@ -11,14 +13,17 @@ module.exports = notes;
 var pgURL = config.PostgresURL;
 
 notes.search = function(params, callback) {
+    var parseError = validateParams(params);
+    if (parseError) {
+        return callback(new errors.ParseError(parseError));
+    }
     var searchQuery = queries.getSearchQuery(params);
     var countQuery = queries.getCountQuery(params);
     console.log('queries', searchQuery, countQuery);
     var q = queue(5);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
-            callback(err, null);
-            return;
+            return callback(err, null);
         }
         q.defer(client.query.bind(client), searchQuery.text, searchQuery.values);
         q.defer(client.query.bind(client), countQuery.text, countQuery.values);
@@ -26,8 +31,7 @@ notes.search = function(params, callback) {
             done();
             if (err) {
                 console.log('query error', err);
-                callback(err, null);
-                return;
+                return callback(err, null);
             }
             var searchResult = results[0];
             var countResult = results[1];
@@ -53,8 +57,7 @@ notes.get = function(id, callback) {
     console.log('queries', noteQuery, noteCommentsQuery);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
-            callback(err, null);
-            return;
+            return callback(err, null);
         }
         q.defer(client.query.bind(client), noteQuery.text, noteQuery.values);
         q.defer(client.query.bind(client), noteCommentsQuery.text, noteCommentsQuery.values);
@@ -62,15 +65,40 @@ notes.get = function(id, callback) {
             done();
             if (err) {
                 console.log('query error', err);
-                callback(err, null);
-                return;
+                return callback(err, null);
             }
             var noteResult = results[0];
             if (noteResult.rows.length === 0) {
-                throw Error('Note not found');
+                return callback(new Error('Note not found'));
             }
             var note = new Note(results[0].rows[0], results[1].rows);
             callback(null, note.getGeoJSON());
         });
     });
 };
+
+function validateParams(params) {
+    var constraints = {
+        'from': {
+            'presence': false,
+            'datetime': true
+        },
+        'to': {
+            'presence': false,
+            'datetime': true
+        },
+        'bbox': {
+            'presence': false,
+            'bbox': true
+        }
+    };
+    var errs = validate(params, constraints);
+    if (errs) {
+        console.log('errs', errs);
+        var errMsg = Object.keys(errs).map(function(key) {
+            return errs[key][0];
+        }).join(', ');
+        return errMsg;
+    }
+    return null;
+}
