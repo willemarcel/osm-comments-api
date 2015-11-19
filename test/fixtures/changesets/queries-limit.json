@@ -1,0 +1,132 @@
+{
+    "description": "test with limit=3 returns expected results",
+    "params": {
+        "limit": "3"
+    },
+    "geojson": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                -0.3186246,
+                                42.6291332
+                            ],
+                            [
+                                -0.3186246,
+                                42.6292013
+                            ],
+                            [
+                                -0.3185371,
+                                42.6292013
+                            ],
+                            [
+                                -0.3185371,
+                                42.6291332
+                            ],
+                            [
+                                -0.3186246,
+                                42.6291332
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "id": 35721794,
+                    "createdAt": "2015-07-13T23:23:19.000Z",
+                    "closedAt": "2015-08-15T23:23:20.000Z",
+                    "discussionCount": "0",
+                    "isOpen": false,
+                    "userID": 3188422,
+                    "userName": "ansuta",
+                    "numChanges": 6
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                44.2095235,
+                                13.2572198
+                            ],
+                            [
+                                44.2095235,
+                                13.2572198
+                            ],
+                            [
+                                44.2095235,
+                                13.2572198
+                            ],
+                            [
+                                44.2095235,
+                                13.2572198
+                            ],
+                            [
+                                44.2095235,
+                                13.2572198
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "id": 34721799,
+                    "createdAt": "2015-05-16T22:23:41.000Z",
+                    "closedAt": "2015-07-16T22:23:42.000Z",
+                    "discussionCount": "0",
+                    "isOpen": false,
+                    "userID": 3318999,
+                    "userName": "wanda987",
+                    "numChanges": 1
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                -46.9123787,
+                                -23.1260827
+                            ],
+                            [
+                                -46.9123787,
+                                -23.1135019
+                            ],
+                            [
+                                -46.9072305,
+                                -23.1135019
+                            ],
+                            [
+                                -46.9072305,
+                                -23.1260827
+                            ],
+                            [
+                                -46.9123787,
+                                -23.1260827
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "id": 34721797,
+                    "createdAt": "2014-04-28T22:23:33.000Z",
+                    "closedAt": "2014-10-08T22:23:34.000Z",
+                    "discussionCount": "0",
+                    "isOpen": false,
+                    "userID": 1799626,
+                    "userName": "AjBelnuovo",
+                    "numChanges": 6
+                }
+            }
+        ],
+        "total": "10"
+    }
+}
