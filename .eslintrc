@@ -1,7 +1,19 @@
 {
-  "extends": "mourner",
+  "extends": "eslint:recommended",
   "rules": {
     "space-before-function-paren": 0,
-    "no-process-exit": 0
+    "no-process-exit": 0,
+    "indent": [2, 4],
+    "quotes": [2, "single"],
+    "no-console": [0],
+    "semi": [2, "always"]
+  },
+  "env": {
+    "node": true
+  },
+  "globals": {
+      "process": true,
+      "module": true,
+      "require": true
   }
 }
