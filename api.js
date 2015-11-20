@@ -3,6 +3,7 @@ var notes = require('./notes/index');
 var changesets = require('./changesets/index');
 var cors = require('cors');
 var errors = require('mapbox-error');
+var ErrorHTTP = require('mapbox-error').ErrorHTTP;
 var customErrors = require('./errors');
 
 var server = module.exports = express();
@@ -15,7 +16,6 @@ server.get('/api/v1/notes', function(req, res, next) {
             return next(err);
         }
         res.json(geojson);
-        next();
     });
 });
 
@@ -25,7 +25,6 @@ server.get('/api/v1/changesets', function(req, res, next) {
             return next(err);
         }
         res.json(geojson);
-        next();
     });
 });
 
@@ -35,7 +34,6 @@ server.get('/api/v1/notes/:id', function(req, res, next) {
             return next(err);
         }
         res.json(geojson);
-        next();
     });
 });
 
@@ -45,16 +43,14 @@ server.get('/api/v1/changesets/:id', function(req, res, next) {
             return next(err);
         }
         res.json(geojson);
-        next();
     });
 });
 
 server.use(function(err, req, res, next) {
     if (err instanceof customErrors.ParseError) {
-        console.log(err);
-        res.status(400).send({'message': err.message});
+        next(new ErrorHTTP('Invalid request: ' + err.message, 422));
     } else if (err instanceof customErrors.NotFoundError) {
-        res.status(404).send({'message': err.message});
+        next(new ErrorHTTP('Not found: ' + err.message, 404));
     } else {
         next(err);
     }
