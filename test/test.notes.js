@@ -6,14 +6,14 @@ require('../lib/config')(testConfig);
 
 var tape = require('tape');
 var notesQueries = [
-        require('./fixtures/notes/queries-no-params.json'),
-        require('./fixtures/notes/queries-bbox.json'),
-        require('./fixtures/notes/queries-from-to.json'),
-        require('./fixtures/notes/queries-sort.json'),
-        require('./fixtures/notes/queries-limit.json'),
-        require('./fixtures/notes/queries-users.json')
-        ];
-var noteQueryDetailed = require('./fixtures/notes/queries-detailed.json')
+    require('./fixtures/notes/queries-no-params.json'),
+    require('./fixtures/notes/queries-bbox.json'),
+    require('./fixtures/notes/queries-from-to.json'),
+    require('./fixtures/notes/queries-sort.json'),
+    require('./fixtures/notes/queries-limit.json'),
+    require('./fixtures/notes/queries-users.json')
+];
+var noteQueryDetailed = require('./fixtures/notes/queries-detailed.json');
 var queue = require('queue-async');
 var notes = require('../notes/index');
 
