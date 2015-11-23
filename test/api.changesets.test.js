@@ -141,6 +141,7 @@ test('get changesets related to users ansuta Armire bjoern_m Cyclizine and wanda
     });
 });
 
+//Tests for invalid queries
 test('get changeset that does not exist', function(assert) {
     get('/api/v1/changesets/123456789', function(err, body, res) {
         assert.ifError(err, 'success');
@@ -154,6 +155,33 @@ test('get invalid changeset id', function(assert) {
     get('/api/v1/changesets/ventriloquism', function(err, body, res) {
         assert.ifError(err, 'success');
         assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Changeset id must be a number' }, 'expected error message');
+        assert.equal(res.statusCode, 422, 'expected status');
+        assert.end();
+    });
+});
+
+test('get results for invalid from date', function(assert) {
+    get('/api/v1/changesets?from=strings&to=2015-09-08', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: From must be a valid date' }, 'expected error message');
+        assert.equal(res.statusCode, 422, 'expected status');
+        assert.end();
+    });
+});
+
+test('get results for invalid to date', function(assert) {
+    get('/api/v1/changesets?from=2015-09-08&to=strings', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: To must be a valid date' }, 'expected error message');
+        assert.equal(res.statusCode, 422, 'expected status');
+        assert.end();
+    });
+});
+
+test('get results for invalid bounding box', function(assert) {
+    get('/api/v1/changesets?bbox=a,1,2,3', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Bbox not a valid bbox string' }, 'expected error message');
         assert.equal(res.statusCode, 422, 'expected status');
         assert.end();
     });
