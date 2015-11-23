@@ -141,6 +141,7 @@ test('get notes related to users kuede, FredB, nyampire andTomH', function(asser
     });
 });
 
+//Tests for invalid queries
 test('get note that does not exist', function(assert) {
     get('/api/v1/notes/123456789', function(err, body, res) {
         assert.ifError(err, 'success');
@@ -154,6 +155,33 @@ test('get invalid note id', function(assert) {
     get('/api/v1/notes/bananas', function(err, body, res) {
         assert.ifError(err, 'success');
         assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Note id must be a number' }, 'expected error message');
+        assert.equal(res.statusCode, 422, 'expected status');
+        assert.end();
+    });
+});
+
+test('get results for invalid from date', function(assert) {
+    get('/api/v1/notes?from=strings&to=2015-09-08', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: From must be a valid date' }, 'expected error message');
+        assert.equal(res.statusCode, 422, 'expected status');
+        assert.end();
+    });
+});
+
+test('get results for invalid to date', function(assert) {
+    get('/api/v1/notes?from=2015-09-08&to=strings', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: To must be a valid date' }, 'expected error message');
+        assert.equal(res.statusCode, 422, 'expected status');
+        assert.end();
+    });
+});
+
+test('get results for invalid bounding box', function(assert) {
+    get('/api/v1/notes?bbox=a,1,2,3', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Bbox not a valid bbox string' }, 'expected error message');
         assert.equal(res.statusCode, 422, 'expected status');
         assert.end();
     });
