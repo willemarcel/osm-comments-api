@@ -13,6 +13,7 @@ var notesQueries = [
         require('./fixtures/notes/queries-limit.json'),
         require('./fixtures/notes/queries-users.json')
         ];
+var noteQueryDetailed = require('./fixtures/notes/queries-detailed.json')
 var queue = require('queue-async');
 var notes = require('../notes/index');
 
@@ -25,6 +26,8 @@ tape('test notes module', function(assert) {
             process.exit(0);
         });
     });
+
+    getnotes(assert,noteQueryDetailed);
 });
 
 function searchNotes(assert, query, callback) {
@@ -33,5 +36,13 @@ function searchNotes(assert, query, callback) {
         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
         callback();
+    });
+}
+
+function getnotes(assert, query) {
+    notes.get(query.id, function(err, result) {
+
+        //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
+        assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
     });
 }
