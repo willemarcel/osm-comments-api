@@ -13,4 +13,4 @@ var api = require('./api');
 
 api.listen(port);
 
-logger.info("Started api at localhost:%s", port);
+logger.info('Started api at localhost: %s', port);
