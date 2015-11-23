@@ -13,6 +13,9 @@ var changesetsQueries = [
     require('./fixtures/changesets/queries-limit.json'),
     require('./fixtures/changesets/queries-users.json')
 ];
+
+var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
+
 var queue = require('queue-async');
 var changesets = require('../changesets/index');
 
@@ -25,6 +28,9 @@ tape('test changesets module', function(assert) {
             process.exit(0);
         });
     });
+
+    getchangesets(assert,changesetQueryDetailed);
+
 });
 
 function searchchangesets(assert, query, callback) {
@@ -33,5 +39,13 @@ function searchchangesets(assert, query, callback) {
         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
         callback();
+    });
+}
+
+function getchangesets(assert, query) {
+    changesets.get(query.id, function(err, result) {
+
+        //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
+        assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
     });
 }
