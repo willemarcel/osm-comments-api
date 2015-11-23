@@ -1,0 +1,44 @@
+{
+    "description": "test that changeset=35721794 returns expected results",
+    "id": "34721797",
+    "geojson": {
+        "type": "Feature",
+        "geometry": {
+            "type": "Polygon",
+            "coordinates": [
+                [
+                    [
+                        -46.9123787,
+                        -23.1260827
+                    ],
+                    [
+                        -46.9123787,
+                        -23.1135019
+                    ],
+                    [
+                        -46.9072305,
+                        -23.1135019
+                    ],
+                    [
+                        -46.9072305,
+                        -23.1260827
+                    ],
+                    [
+                        -46.9123787,
+                        -23.1260827
+                    ]
+                ]
+            ]
+        },
+        "properties": {
+            "id": 34721797,
+            "createdAt": "2014-04-28T22:23:33.000Z",
+            "closedAt": "2014-10-08T22:23:34.000Z",
+            "isOpen": false,
+            "userID": 1799626,
+            "userName": "AjBelnuovo",
+            "numChanges": 6,
+            "comments": []
+        }
+    }
+}
