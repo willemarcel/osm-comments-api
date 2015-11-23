@@ -1,5 +1,5 @@
 {
-    "description": "test with from=2013-04-01 and to=2014-04-01 returns expected results",
+    "description": "test with limit=2 returns expected results",
     "params": {
         "limit": "2"
     },
