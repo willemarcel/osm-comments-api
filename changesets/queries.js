@@ -28,7 +28,7 @@ function getCountQuery(params) {
         .from('changesets')
         .join('users', null, 'changesets.user_id = users.id')
         .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
-        .field('COUNT(changesets.id)', 'count');
+        .field('COUNT(DISTINCT(changesets.id))', 'count');
     sql = addWhereClauses(sql, params);
     return sql.toParam();
 }
