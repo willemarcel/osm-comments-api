@@ -15,14 +15,16 @@ function getSearchQuery(params) {
     sql = addWhereClauses(sql, params);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
+    sql = sql.distinct('notes.id');
     return sql.toParam();
 }
 
 function getCountQuery(params) {
     var sql = squel.select()
         .from('notes')
-        .field('count(notes.id)');
+        .field('count(distinct(notes.id))');
     sql = addWhereClauses(sql, params);
+    console.log('count sql', sql.toParam());
     return sql.toParam();
 }
 
@@ -85,7 +87,6 @@ function addWhereClauses(sql, params) {
     if (comment) {
         sql.where('to_tsvector(\'english\', note_comments.comment) @@ plainto_tsquery(?)', comment);
     }
-    sql.distinct();
     return sql;
 }
 
