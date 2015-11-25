@@ -103,7 +103,6 @@ function validateParams(params) {
     };
     var errs = validate(params, constraints);
     if (errs) {
-        console.log('errs', errs);
         var errMsg = Object.keys(errs).map(function(key) {
             return errs[key][0];
         }).join(', ');

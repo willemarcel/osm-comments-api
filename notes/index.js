@@ -55,7 +55,6 @@ notes.get = function(id, callback) {
     var noteQuery = queries.getNoteQuery(id);
     var noteCommentsQuery = queries.getNoteCommentsQuery(id);
     var q = queue(2);
-    console.log('queries', noteQuery, noteCommentsQuery);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
             return callback(err, null);

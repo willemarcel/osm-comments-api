@@ -21,7 +21,6 @@ function getSearchQuery(params) {
     sql = addGroupBy(sql);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
-    console.log(sql.toParam().text);
     return sql.toParam();
 }
 
@@ -99,7 +98,6 @@ function addWhereClauses(sql, params) {
     if (comment) {
         sql.where('changeset_tags.key = \'comment\'')
             .where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', comment);
-        // console.log(sql.toParam());
     }
     if (discussion) {
         sql.join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
