@@ -141,6 +141,16 @@ test('get changesets related to users ansuta Armire bjoern_m Cyclizine and wanda
     });
 });
 
+test('get changesets with comment containing the word Hamburg', function(assert) {
+    var expectedchangesets = require('./fixtures/changesets/queries-comment.json').geojson;
+    get('/api/v1/changesets?comment=Hamburg', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.equal(res.statusCode, 200, 'expected HTTP status');
+        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
+        assert.end();
+    });
+});
+
 //Tests for invalid queries
 test('get changeset that does not exist', function(assert) {
     get('/api/v1/changesets/123456789', function(err, body, res) {
@@ -192,5 +202,6 @@ tape('close server', function(assert) {
         if (err) throw err;
         assert.pass('server closed');
         assert.end();
+        process.exit(0);
     });
 });

@@ -24,7 +24,6 @@ function getCountQuery(params) {
         .from('notes')
         .field('count(distinct(notes.id))');
     sql = addWhereClauses(sql, params);
-    console.log('count sql', sql.toParam());
     return sql.toParam();
 }
 

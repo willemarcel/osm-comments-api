@@ -202,5 +202,6 @@ tape('close server', function(assert) {
         if (err) throw err;
         assert.pass('server closed');
         assert.end();
+        process.exit(0);
     });
 });

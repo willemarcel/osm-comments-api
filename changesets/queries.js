@@ -12,22 +12,25 @@ module.exports.getChangesetCommentsQuery = getChangesetCommentsQuery;
 function getSearchQuery(params) {
     var sql = squel.select()
         .from('changesets')
-        .join('users', null, 'changesets.user_id = users.id')
+        .join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id')
         .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
-        .field('COUNT(changeset_comments.id)', 'discussion_count');
+        .join('users', null, 'changesets.user_id = users.id')
+        .field('COUNT(DISTINCT(changeset_comments.id))', 'discussion_count');
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addGroupBy(sql);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
+    console.log(sql.toParam().text);
     return sql.toParam();
 }
 
 function getCountQuery(params) {
     var sql = squel.select()
         .from('changesets')
-        .join('users', null, 'changesets.user_id = users.id')
+        .join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id')
         .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
+        .join('users', null, 'changesets.user_id = users.id')
         .field('COUNT(DISTINCT(changesets.id))', 'count');
     sql = addWhereClauses(sql, params);
     return sql.toParam();
@@ -79,6 +82,7 @@ function addWhereClauses(sql, params) {
     var to = params.to || null;
     var bbox = params.bbox || null;
     var hasDiscussion = params.has_discussion || null;
+    var comment = params.comment || null;
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -90,6 +94,11 @@ function addWhereClauses(sql, params) {
     }
     if (to) {
         sql.where('changesets.created_at < ?', to);
+    }
+    if (comment) {
+        sql.where('changeset_tags.key = \'comment\'')
+            .where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', comment);
+        // console.log(sql.toParam());
     }
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
