@@ -11,7 +11,8 @@ var notesQueries = [
     require('./fixtures/notes/queries-from-to.json'),
     require('./fixtures/notes/queries-sort.json'),
     require('./fixtures/notes/queries-limit.json'),
-    require('./fixtures/notes/queries-users.json')
+    require('./fixtures/notes/queries-users.json'),
+    require('./fixtures/notes/queries-comment.json')
 ];
 var noteQueryDetailed = require('./fixtures/notes/queries-detailed.json');
 var queue = require('queue-async');

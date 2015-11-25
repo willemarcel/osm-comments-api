@@ -15,13 +15,14 @@ function getSearchQuery(params) {
     sql = addWhereClauses(sql, params);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
+    sql = sql.distinct('notes.id');
     return sql.toParam();
 }
 
 function getCountQuery(params) {
     var sql = squel.select()
         .from('notes')
-        .field('count(notes.id)');
+        .field('count(distinct(notes.id))');
     sql = addWhereClauses(sql, params);
     return sql.toParam();
 }
@@ -61,6 +62,7 @@ function addWhereClauses(sql, params) {
     var to = params.to || null;
     var users = params.users || null;
     var bbox = params.bbox || null;
+    var comment = params.comment || null;
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
         sql.where('ST_Within(notes.point, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
@@ -71,15 +73,19 @@ function addWhereClauses(sql, params) {
     if (to) {
         sql.where('created_at < ?', to);
     }
+    if (users || comment) {
+        sql.join('note_comments', null, 'notes.id = note_comments.note_id');
+    }
     if (users) {
-        sql.join('note_comments', null, 'notes.id = note_comments.note_id')
-            .join('users', null, 'note_comments.user_id = users.id');
+        sql.join('users', null, 'note_comments.user_id = users.id');
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
         });
         sql.where('users.name in ?', usersArray);
     }
-    sql.distinct();
+    if (comment) {
+        sql.where('to_tsvector(\'english\', note_comments.comment) @@ plainto_tsquery(?)', comment);
+    }
     return sql;
 }
 

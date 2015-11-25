@@ -1,0 +1,52 @@
+{
+    "description": "test that comment query returns expected results",
+    "params": {
+        "comment": "Hamburg"
+    },
+    "geojson": {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [
+                                10.1863837,
+                                53.4870471
+                            ],
+                            [
+                                10.1863837,
+                                53.5342565
+                            ],
+                            [
+                                10.3292951,
+                                53.5342565
+                            ],
+                            [
+                                10.3292951,
+                                53.4870471
+                            ],
+                            [
+                                10.1863837,
+                                53.4870471
+                            ]
+                        ]
+                    ]
+                },
+                "properties": {
+                    "id": 34721796,
+                    "createdAt": "2013-10-07T22:23:22.000Z",
+                    "closedAt": "2013-10-10T22:23:53.000Z",
+                    "discussionCount": "0",
+                    "isOpen": false,
+                    "userID": 44660,
+                    "userName": "bjoern_m",
+                    "numChanges": 5
+                }
+            }
+        ],
+        "total": "1"
+    }
+}
