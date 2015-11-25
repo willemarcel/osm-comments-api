@@ -83,6 +83,7 @@ function addWhereClauses(sql, params) {
     var bbox = params.bbox || null;
     var hasDiscussion = params.has_discussion || null;
     var comment = params.comment || null;
+    var discussion = params.discussion || null;
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -99,6 +100,10 @@ function addWhereClauses(sql, params) {
         sql.where('changeset_tags.key = \'comment\'')
             .where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', comment);
         // console.log(sql.toParam());
+    }
+    if (discussion) {
+        sql.join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
+        sql.where('to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', discussion);
     }
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);

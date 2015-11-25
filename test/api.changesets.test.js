@@ -151,6 +151,16 @@ test('get changesets with comment containing the word Hamburg', function(assert)
     });
 });
 
+test('get changesets with discussion containing the word test', function(assert) {
+    var expectedchangesets = require('./fixtures/changesets/queries-discussion.json').geojson;
+    get('/api/v1/changesets?discussion=test', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.equal(res.statusCode, 200, 'expected HTTP status');
+        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
+        assert.end();
+    });
+});
+
 //Tests for invalid queries
 test('get changeset that does not exist', function(assert) {
     get('/api/v1/changesets/123456789', function(err, body, res) {
