@@ -7,6 +7,7 @@ module.exports.getSearchQuery = getSearchQuery;
 module.exports.getCountQuery = getCountQuery;
 module.exports.getChangesetQuery = getChangesetQuery;
 module.exports.getChangesetCommentsQuery = getChangesetCommentsQuery;
+module.exports.getChangesetTagsQuery = getChangesetTagsQuery;
 
 
 function getSearchQuery(params) {
@@ -54,6 +55,15 @@ function getChangesetCommentsQuery(id) {
         .field('changeset_comments.comment', 'comment')
         .field('changeset_comments.user_id', 'user_id')
         .field('users.name', 'user_name');
+    return sql.toParam();
+}
+
+function getChangesetTagsQuery(id) {
+    var sql = squel.select()
+        .from('changeset_tags')
+        .where('changeset_id = ?', id)
+        .field('changeset_tags.key', 'key')
+        .field('changeset_tags.value', 'value');
     return sql.toParam();
 }
 

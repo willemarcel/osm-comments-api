@@ -38,7 +38,13 @@
             "userID": 1799626,
             "userName": "AjBelnuovo",
             "numChanges": 6,
-            "comments": []
+            "comments": [],
+            "tags": [ 
+                { "key": "host", "value": "https://www.openstreetmap.org/id" },
+                { "key": "locale", "value": "pt-BR" },
+                { "key": "created_by", "value": "iD 1.7.4" },
+                { "key": "imagery_used", "value": "Bing" }
+            ]
         }
     }
 }
