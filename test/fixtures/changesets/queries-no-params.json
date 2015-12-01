@@ -41,7 +41,8 @@
                     "isOpen": false,
                     "userID": 3188422,
                     "userName": "ansuta",
-                    "numChanges": 6
+                    "numChanges": 6,
+                    "changesetComment": "Biescas"
                 }
             },
             {
@@ -81,7 +82,8 @@
                     "isOpen": false,
                     "userID": 3318999,
                     "userName": "wanda987",
-                    "numChanges": 1
+                    "numChanges": 1,
+                    "changesetComment": ""
                 }
             },
             {
@@ -121,7 +123,8 @@
                     "isOpen": false,
                     "userID": 1799626,
                     "userName": "AjBelnuovo",
-                    "numChanges": 6
+                    "numChanges": 6,
+                    "changesetComment": ""
                 }
             },
             {
@@ -161,7 +164,8 @@
                     "isOpen": false,
                     "userID": 651782,
                     "userName": "Cyclizine",
-                    "numChanges": 16
+                    "numChanges": 16,
+                    "changesetComment": ""
                 }
             },
             {
@@ -201,7 +205,8 @@
                     "isOpen": false,
                     "userID": 44660,
                     "userName": "bjoern_m",
-                    "numChanges": 5
+                    "numChanges": 5,
+                    "changesetComment": "Eisenbahn Hamburg"
                 }
             },
             {
@@ -241,7 +246,8 @@
                     "isOpen": false,
                     "userID": 3099780,
                     "userName": "Armire",
-                    "numChanges": 47
+                    "numChanges": 47,
+                    "changesetComment": ""
                 }
             },
             {
@@ -281,7 +287,8 @@
                     "isOpen": false,
                     "userID": 3188422,
                     "userName": "ansuta",
-                    "numChanges": 5
+                    "numChanges": 5,
+                    "changesetComment": "Biescas"
                 }
             },
             {
@@ -321,7 +328,8 @@
                     "isOpen": false,
                     "userID": 344561,
                     "userName": "FahRadler",
-                    "numChanges": 37
+                    "numChanges": 37,
+                    "changesetComment": "Fernwärme ergänzt"
                 }
             }
         ],

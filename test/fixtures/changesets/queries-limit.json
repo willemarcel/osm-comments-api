@@ -43,7 +43,8 @@
                     "isOpen": false,
                     "userID": 3188422,
                     "userName": "ansuta",
-                    "numChanges": 6
+                    "numChanges": 6,
+                    "changesetComment": "Biescas"
                 }
             },
             {
@@ -83,7 +84,8 @@
                     "isOpen": false,
                     "userID": 3318999,
                     "userName": "wanda987",
-                    "numChanges": 1
+                    "numChanges": 1,
+                    "changesetComment": ""
                 }
             },
             {
@@ -123,7 +125,8 @@
                     "isOpen": false,
                     "userID": 1799626,
                     "userName": "AjBelnuovo",
-                    "numChanges": 6
+                    "numChanges": 6,
+                    "changesetComment": ""
                 }
             }
         ],

@@ -13,7 +13,7 @@ module.exports.getChangesetTagsQuery = getChangesetTagsQuery;
 function getSearchQuery(params) {
     var sql = squel.select()
         .from('changesets')
-        .join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id')
+        .left_outer_join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id AND changeset_tags.key=\'comment\'')
         .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
         .join('users', null, 'changesets.user_id = users.id')
         .field('COUNT(DISTINCT(changeset_comments.id))', 'discussion_count');
@@ -40,6 +40,7 @@ function getChangesetQuery(id) {
     var sql = squel.select()
         .from('changesets')
         .join('users', null, 'changesets.user_id = users.id')
+        .left_outer_join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id AND changeset_tags.key=\'comment\'')
         .where('changesets.id = ?', id);
     sql = addFields(sql);
     return sql.toParam();
@@ -69,7 +70,8 @@ function getChangesetTagsQuery(id) {
 
 function addGroupBy(sql) {
     sql.group('changesets.id')
-        .group('users.name');
+        .group('users.name')
+        .group('changeset_tags.value');
     return sql;
 }
 
@@ -79,6 +81,7 @@ function addFields(sql) {
         .field('changesets.closed_at', 'closed_at')
         .field('changesets.is_open', 'is_open')
         .field('changesets.user_id', 'user_id')
+        .field('changeset_tags.value', 'changeset_comment')
         .field('users.name', 'user_name')
         .field('changesets.num_changes', 'num_changes')
         .field('ST_AsGeoJSON(changesets.bbox)', 'bbox');
@@ -93,6 +96,7 @@ function addWhereClauses(sql, params) {
     var hasDiscussion = params.has_discussion || null;
     var comment = params.comment || null;
     var discussion = params.discussion || null;
+    // sql.where('changeset_tags.key = \'comment\'');
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -106,8 +110,7 @@ function addWhereClauses(sql, params) {
         sql.where('changesets.created_at < ?', to);
     }
     if (comment) {
-        sql.where('changeset_tags.key = \'comment\'')
-            .where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', comment);
+        sql.where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', comment);
     }
     if (discussion) {
         sql.join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
