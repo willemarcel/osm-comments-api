@@ -2,27 +2,24 @@
     "description": "test that note=9 returns expected results",
     "id": "9",
     "geojson": {
-        "type": "Feature",
         "geometry": {
-            "type": "Point",
-            "coordinates": [
-                8.3768338,
-                47.395811
-            ]
+            "coordinates": [8.3768338, 47.395811],
+            "type": "Point"
         },
         "properties": {
-            "id": 9,
-            "createdAt": "2013-04-24T08:17:47.000Z",
             "closedAt": "2013-07-03T21:20:32.000Z",
-            "comments": [
-                {
-                    "id": "ec4cd7b6-f481-b689-e0f1-502fe59b8712",
-                    "userID": 8296,
-                    "action": "closed",
-                    "timestamp": "2013-07-03T21:20:32.000Z",
-                    "comment": "Hat schon jemand eingetragen..."
-                }
-            ]
-        }
+            "comments": [{
+                "action": "closed",
+                "comment": "Hat schon jemand eingetragen...",
+                "id": "ec4cd7b6-f481-b689-e0f1-502fe59b8712",
+                "timestamp": "2013-07-03T21:20:32.000Z",
+                "userID": 8296
+            }],
+            "createdAt": "2013-04-24T08:17:47.000Z",
+            "id": 9,
+            "note": "Building is currently demolished",
+            "userName": null
+        },
+        "type": "Feature"
     }
 }

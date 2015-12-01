@@ -10,12 +10,15 @@ module.exports.getNoteCommentsQuery = getNoteCommentsQuery;
 
 function getSearchQuery(params) {
     var sql = squel.select()
-        .from('notes');
+        .from('notes')
+        .join('note_comments', 'opening_comment', 'opening_comment.note_id = notes.id AND opening_comment.action=\'opened\'')
+        .left_outer_join('users', 'opening_user', 'opening_user.id = opening_comment.user_id');
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
     sql = sql.distinct('notes.id');
+    // console.log(sql.toParam());
     return sql.toParam();
 }
 
@@ -30,7 +33,9 @@ function getCountQuery(params) {
 function getNoteQuery(id) {
     var sql = squel.select()
         .from('notes')
-        .where('id = ?', id);
+        .join('note_comments', 'opening_comment', 'opening_comment.note_id = notes.id AND opening_comment.action=\'opened\'')
+        .left_outer_join('users', 'opening_user', 'opening_user.id = opening_comment.user_id')
+        .where('notes.id = ?', id);
     sql = addFields(sql);
     return sql.toParam();
 }
@@ -53,6 +58,8 @@ function addFields(sql) {
     sql.field('notes.id', 'note_id')
         .field('notes.created_at', 'created_at')
         .field('notes.closed_at', 'closed_at')
+        .field('opening_comment.comment', 'note')
+        .field('opening_user.name', 'user_name')
         .field('ST_AsGeoJSON(notes.point)', 'point');
     return sql;
 }

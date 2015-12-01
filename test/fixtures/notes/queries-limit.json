@@ -4,39 +4,34 @@
         "limit": "2"
     },
     "geojson": {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        7.3768338,
-                        48.395811
-                    ]
-                },
-                "properties": {
-                    "id": 10,
-                    "createdAt": "2013-05-24T08:17:47.000Z",
-                    "closedAt": "2013-07-03T21:20:32.000Z"
-                }
+        "features": [{
+            "geometry": {
+                "coordinates": [7.3768338, 48.395811],
+                "type": "Point"
             },
-            {
-                "type": "Feature",
-                "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                        8.3768338,
-                        47.395811
-                    ]
-                },
-                "properties": {
-                    "id": 9,
-                    "createdAt": "2013-04-24T08:17:47.000Z",
-                    "closedAt": "2013-07-03T21:20:32.000Z"
-                }
-            }
-        ],
-        "total": "7"
+            "properties": {
+                "closedAt": "2013-07-03T21:20:32.000Z",
+                "createdAt": "2013-05-24T08:17:47.000Z",
+                "id": 10,
+                "note": "Building is currently demolished",
+                "userName": null
+            },
+            "type": "Feature"
+        }, {
+            "geometry": {
+                "coordinates": [8.3768338, 47.395811],
+                "type": "Point"
+            },
+            "properties": {
+                "closedAt": "2013-07-03T21:20:32.000Z",
+                "createdAt": "2013-04-24T08:17:47.000Z",
+                "id": 9,
+                "note": "Building is currently demolished",
+                "userName": null
+            },
+            "type": "Feature"
+        }],
+        "total": "7",
+        "type": "FeatureCollection"
     }
 }
