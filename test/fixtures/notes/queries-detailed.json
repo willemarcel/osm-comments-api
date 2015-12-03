@@ -13,7 +13,15 @@
                 "comment": "Hat schon jemand eingetragen...",
                 "id": "ec4cd7b6-f481-b689-e0f1-502fe59b8712",
                 "timestamp": "2013-07-03T21:20:32.000Z",
-                "userID": 8296
+                "userID": 8296,
+                "userName": "kuede"
+            }, {
+                "action": "opened",
+                "comment": "Building is currently demolished",
+                "id": "1c1d3126-df8f-7551-cdf3-6645652eba8d",
+                "timestamp": "2013-04-24T08:17:47.000Z",
+                "userID": null,
+                "userName": null
             }],
             "createdAt": "2013-04-24T08:17:47.000Z",
             "id": 9,

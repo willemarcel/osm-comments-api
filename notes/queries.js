@@ -43,7 +43,7 @@ function getNoteQuery(id) {
 function getNoteCommentsQuery(id) {
     var sql = squel.select()
         .from('note_comments')
-        .join('users', null, 'note_comments.user_id = users.id')
+        .left_outer_join('users', null, 'note_comments.user_id = users.id')
         .where('note_id = ?', id)
         .field('note_comments.id', 'comment_id')
         .field('users.id', 'user_id')
