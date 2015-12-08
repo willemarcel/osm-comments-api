@@ -151,6 +151,26 @@ test('get notes for full text search for the word test', function(assert) {
     });
 });
 
+test('get open notes', function(assert) {
+    var expectedNotes = require('./fixtures/notes/queries-is-open-true.json').geojson;
+    get('/api/v1/notes?isOpen=true', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.equal(res.statusCode, 200, 'expected HTTP status');
+        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
+        assert.end();
+    });
+});
+
+test('get closed notes', function(assert) {
+    var expectedNotes = require('./fixtures/notes/queries-is-open-false.json').geojson;
+    get('/api/v1/notes?isOpen=false', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.equal(res.statusCode, 200, 'expected HTTP status');
+        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
+        assert.end();
+    });
+});
+
 //Tests for invalid queries
 test('get note that does not exist', function(assert) {
     get('/api/v1/notes/123456789', function(err, body, res) {

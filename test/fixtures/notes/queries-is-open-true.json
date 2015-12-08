@@ -1,0 +1,24 @@
+{
+    "description": "test that isOpen=true returns expected results",
+    "params": {
+        "isOpen": "true"
+    },
+    "geojson": {
+        "features": [{
+            "geometry": {
+                "coordinates": [6.1373234, 50.7550836],
+                "type": "Point"
+            },
+            "properties": {
+                "closedAt": null,
+                "createdAt": "2013-04-24T08:15:06.000Z",
+                "id": 8,
+                "note": "test",
+                "userName": "Oli-Wan"
+            },
+            "type": "Feature"
+        }],
+        "total": "1",
+        "type": "FeatureCollection"
+    }
+}

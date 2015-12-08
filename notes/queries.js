@@ -50,7 +50,8 @@ function getNoteCommentsQuery(id) {
         .field('users.name', 'user_name')
         .field('note_comments.action', 'comment_action')
         .field('note_comments.timestamp', 'comment_timestamp')
-        .field('note_comments.comment', 'comment');
+        .field('note_comments.comment', 'comment')
+        .order('note_comments.timestamp', true);
     return sql.toParam();
 }
 
@@ -70,6 +71,7 @@ function addWhereClauses(sql, params) {
     var users = params.users || null;
     var bbox = params.bbox || null;
     var comment = params.comment || null;
+    var isOpen = params.isOpen || null;
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
         sql.where('ST_Within(notes.point, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
@@ -82,6 +84,11 @@ function addWhereClauses(sql, params) {
     }
     if (users || comment) {
         sql.join('note_comments', null, 'notes.id = note_comments.note_id');
+    }
+    if (isOpen === 'true') {
+        sql.where('closed_at IS NULL');
+    } else if (isOpen === 'false') {
+        sql.where('closed_at IS NOT NULL');
     }
     if (users) {
         sql.join('users', null, 'note_comments.user_id = users.id');

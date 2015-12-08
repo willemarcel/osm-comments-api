@@ -12,7 +12,9 @@ var notesQueries = [
     require('./fixtures/notes/queries-sort.json'),
     require('./fixtures/notes/queries-limit.json'),
     require('./fixtures/notes/queries-users.json'),
-    require('./fixtures/notes/queries-comment.json')
+    require('./fixtures/notes/queries-comment.json'),
+    require('./fixtures/notes/queries-is-open-true.json'),
+    require('./fixtures/notes/queries-is-open-false.json')
 ];
 var noteQueryDetailed = require('./fixtures/notes/queries-detailed.json');
 var queue = require('queue-async');
