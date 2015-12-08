@@ -94,6 +94,7 @@ function addWhereClauses(sql, params) {
     var to = params.to || null;
     var bbox = params.bbox || null;
     var hasDiscussion = params.has_discussion || null;
+    var discussedAtSort = params.sort && params.sort.indexOf('discussed_at') !== -1;
     var comment = params.comment || null;
     var discussion = params.discussion || null;
     // sql.where('changeset_tags.key = \'comment\'');
@@ -120,8 +121,9 @@ function addWhereClauses(sql, params) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
         sql.where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
     }
-    if (hasDiscussion) {
-        sql.having('COUNT(changeset_comments.id) > 0');
+    if (hasDiscussion || discussedAtSort) {
+        sql.having('COUNT(changeset_comments.id) > 0')
+            .group('changesets.id');
     }
     return sql;
 }
@@ -134,9 +136,13 @@ function addOrderBy(sql, params) {
         // TODO: throw ERROR
         return sql;
     }
-    if (['created_at', 'closed_at', 'discussion_count', 'num_changes'].indexOf(field) === -1) {
+    if (['created_at', 'closed_at', 'discussion_count', 'num_changes', 'discussed_at'].indexOf(field) === -1) {
         // TODO: throw ERROR
         return sql;
+    }
+    if (field === 'discussed_at') {
+        sql.field('MAX(changeset_comments.timestamp)', 'last_comment');
+        field = 'last_comment';
     }
     var isAscending = operator === '+';
     sql.order(field, isAscending);

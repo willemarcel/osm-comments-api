@@ -13,7 +13,8 @@ var changesetsQueries = [
     require('./fixtures/changesets/queries-limit.json'),
     require('./fixtures/changesets/queries-users.json'),
     require('./fixtures/changesets/queries-comment.json'),
-    require('./fixtures/changesets/queries-discussion.json')
+    require('./fixtures/changesets/queries-discussion.json'),
+    require('./fixtures/changesets/queries-sort-discussed-at.json')
 ];
 
 var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
