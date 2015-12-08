@@ -11,20 +11,22 @@ module.exports.getNoteCommentsQuery = getNoteCommentsQuery;
 function getSearchQuery(params) {
     var sql = squel.select()
         .from('notes')
+        .join('note_comments', null, 'notes.id = note_comments.note_id')
         .join('note_comments', 'opening_comment', 'opening_comment.note_id = notes.id AND opening_comment.action=\'opened\'')
         .left_outer_join('users', 'opening_user', 'opening_user.id = opening_comment.user_id');
+       
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
     sql = sql.distinct('notes.id');
-    // console.log(sql.toParam());
     return sql.toParam();
 }
 
 function getCountQuery(params) {
     var sql = squel.select()
         .from('notes')
+        .join('note_comments', null, 'notes.id = note_comments.note_id')
         .field('count(distinct(notes.id))');
     sql = addWhereClauses(sql, params);
     return sql.toParam();
@@ -82,13 +84,13 @@ function addWhereClauses(sql, params) {
     if (to) {
         sql.where('created_at < ?', to);
     }
-    if (users || comment) {
-        sql.join('note_comments', null, 'notes.id = note_comments.note_id');
-    }
     if (isOpen === 'true') {
         sql.where('closed_at IS NULL');
     } else if (isOpen === 'false') {
         sql.where('closed_at IS NOT NULL');
+    }
+    if (users || comment) {
+        
     }
     if (users) {
         sql.join('users', null, 'note_comments.user_id = users.id');
@@ -111,9 +113,25 @@ function addOrderBy(sql, params) {
         // TODO: throw ERROR
         return sql;
     }
-    if (['created_at', 'closed_at'].indexOf(field) === -1) {
+    if (['created_at', 'closed_at', 'commented_at'].indexOf(field) === -1) {
         // TODO: throw ERROR
         return sql;
+    }
+    if (field === 'commented_at') {
+        sql.field('MAX(note_comments.timestamp)', 'last_timestamp')
+            .group('notes.id')
+            .group('opening_comment.comment')
+            .group('opening_user.name');
+        field = 'last_timestamp';
+        // sql.from(
+        //     squel.select()
+        //         .field('note_comments.timestamp', 'last_timestamp')
+        //         .from('note_comments')
+        //         .where('note_comments.note_id = note_id')
+        //         .order('note_comments.timestamp', false),
+        //     't'
+        // );
+        // field = 't.last_timestamp';
     }
     var isAscending = operator === '+';
     sql.order(field, isAscending);

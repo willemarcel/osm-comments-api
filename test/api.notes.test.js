@@ -171,6 +171,16 @@ test('get closed notes', function(assert) {
     });
 });
 
+test('sorting reverse by last commented at', function(assert) {
+    var expectedNotes = require('./fixtures/notes/queries-sort-commented-at.json').geojson;
+    get('/api/v1/notes?sort=-commented_at', function(err, body, res) {
+        assert.ifError(err, 'success');
+        assert.equal(res.statusCode, 200, 'expected HTTP status');
+        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
+        assert.end();
+    });
+});
+
 //Tests for invalid queries
 test('get note that does not exist', function(assert) {
     get('/api/v1/notes/123456789', function(err, body, res) {
