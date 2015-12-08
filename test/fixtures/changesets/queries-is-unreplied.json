@@ -1,0 +1,36 @@
+{
+    "description": "test that isUnreplied=true returns expected results",
+    "params": {
+        "isUnreplied": "true"
+    },
+    "geojson": {
+        "features": [{
+            "geometry": {
+                "coordinates": [
+                    [
+                        [10.2474101, 57.1613],
+                        [10.2474101, 57.1668117],
+                        [10.2570929, 57.1668117],
+                        [10.2570929, 57.1613],
+                        [10.2474101, 57.1613]
+                    ]
+                ],
+                "type": "Polygon"
+            },
+            "properties": {
+                "changesetComment": "Fernwärme ergänzt",
+                "closedAt": "2013-07-05T22:23:16.000Z",
+                "createdAt": "2013-04-01T22:23:15.000Z",
+                "discussionCount": "3",
+                "id": 34721793,
+                "isOpen": false,
+                "numChanges": 37,
+                "userID": 344561,
+                "userName": "FahRadler"
+            },
+            "type": "Feature"
+        }],
+        "total": "1",
+        "type": "FeatureCollection"
+    }
+}

@@ -97,6 +97,7 @@ function addWhereClauses(sql, params) {
     var discussedAtSort = params.sort && params.sort.indexOf('discussed_at') !== -1;
     var comment = params.comment || null;
     var discussion = params.discussion || null;
+    var isUnreplied = params.isUnreplied || null;
     // sql.where('changeset_tags.key = \'comment\'');
     if (users) {
         var usersArray = users.split(',').map(function(user) {
@@ -121,9 +122,12 @@ function addWhereClauses(sql, params) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
         sql.where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
     }
-    if (hasDiscussion || discussedAtSort) {
+    if (hasDiscussion || discussedAtSort || isUnreplied === 'true') {
         sql.having('COUNT(changeset_comments.id) > 0')
             .group('changesets.id');
+    }
+    if (isUnreplied && isUnreplied === 'true') {
+        sql.where('changesets.user_id != changeset_comments.user_id');
     }
     return sql;
 }
