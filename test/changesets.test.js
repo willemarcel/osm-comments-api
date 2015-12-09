@@ -15,7 +15,8 @@ var changesetsQueries = [
     require('./fixtures/changesets/queries-comment.json'),
     require('./fixtures/changesets/queries-discussion.json'),
     require('./fixtures/changesets/queries-sort-discussed-at.json'),
-    require('./fixtures/changesets/queries-is-unreplied.json')
+    require('./fixtures/changesets/queries-is-unreplied.json'),
+    require('./fixtures/changesets/queries-text.json')
 ];
 
 var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
