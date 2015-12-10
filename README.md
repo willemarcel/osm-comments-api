@@ -12,3 +12,9 @@ Expose a RESTful API for OSM Notes and Changeset Comments. _Work in progress_.
  - Run server with `node index.js`
 
  - Visit for eg. `http://localhost:8888/api/v1/notes` in your browser to see some JSON
+
+
+ ### Test
+
+ - Set an environment variabled called `TEST_PG_USER` with your postgres username
+ - Run `npm test`

@@ -97,6 +97,7 @@ function addWhereClauses(sql, params) {
     var discussedAtSort = params.sort && params.sort.indexOf('discussed_at') !== -1;
     var comment = params.comment || null;
     var discussion = params.discussion || null;
+    var text = params.text || null;
     var isUnreplied = params.isUnreplied || null;
     // sql.where('changeset_tags.key = \'comment\'');
     if (users) {
@@ -117,6 +118,16 @@ function addWhereClauses(sql, params) {
     if (discussion) {
         sql.join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
         sql.where('to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', discussion);
+    }
+    if (text) {
+        sql.left_outer_join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
+        sql.where(
+            squel.expr().or_begin()
+                .or('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', text)
+                .or('to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', text)
+                .end()
+        );
+        // sql.where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?) OR to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', text, text);
     }
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
