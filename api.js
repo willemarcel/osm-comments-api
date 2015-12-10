@@ -1,3 +1,8 @@
+var config = {
+    'PostgresURL': process.env.OSM_COMMENTS_POSTGRES_URL || 'postgres://postgres@localhost/osm-comments'
+};
+require('./lib/config')(config);
+
 var express = require('express');
 var notes = require('./notes/index');
 var changesets = require('./changesets/index');
