@@ -1,6 +1,4 @@
-require('../lib/config')({
-    PostgresURL: 'postgres://' + process.env.TEST_PG_USER + '@localhost/osm-comments-api-test'
-});
+process.env.OSM_COMMENTS_POSTGRES_URL = 'postgres://' + process.env.TEST_PG_USER + '@localhost/osm-comments-api-test';
 
 var api = require('../api');
 var tape = require('tape');
