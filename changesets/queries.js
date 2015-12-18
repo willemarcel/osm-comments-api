@@ -89,7 +89,6 @@ function addFields(sql) {
 }
 
 function addWhereClauses(sql, params) {
-    console.log('params', params);
     var users = params.users || null;
     var from = params.from || null;
     var to = params.to || null;
