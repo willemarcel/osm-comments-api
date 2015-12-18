@@ -89,6 +89,7 @@ function addFields(sql) {
 }
 
 function addWhereClauses(sql, params) {
+    console.log('params', params);
     var users = params.users || null;
     var from = params.from || null;
     var to = params.to || null;
@@ -98,7 +99,7 @@ function addWhereClauses(sql, params) {
     var comment = params.comment || null;
     var discussion = params.discussion || null;
     var text = params.text || null;
-    var isUnreplied = params.isUnreplied || null;
+    var isUnreplied = params.unReplied || null;
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -130,7 +131,7 @@ function addWhereClauses(sql, params) {
         sql.where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
     }
     if (isUnreplied && isUnreplied === 'true') {
-        sql.where('changesets.user_id != changeset_comments.user_id');
+        sql.where('changesets.user_id NOT IN (SELECT user_id FROM changeset_comments c WHERE c.changeset_id = changesets.id)');
     }
     return sql;
 }
