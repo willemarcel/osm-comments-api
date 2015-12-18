@@ -14,9 +14,8 @@ function getSearchQuery(params) {
     var sql = squel.select()
         .from('changesets')
         .left_outer_join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id AND changeset_tags.key=\'comment\'')
-        .left_outer_join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
-        .join('users', null, 'changesets.user_id = users.id')
-        .field('COUNT(DISTINCT(changeset_comments.id))', 'discussion_count');
+        .join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
+        .join('users', null, 'changesets.user_id = users.id');
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addGroupBy(sql);
@@ -70,8 +69,8 @@ function getChangesetTagsQuery(id) {
 
 function addGroupBy(sql) {
     sql.group('changesets.id')
-        .group('users.name')
-        .group('changeset_tags.value');
+         .group('users.name')
+         .group('changeset_tags.value');
     return sql;
 }
 
@@ -84,6 +83,7 @@ function addFields(sql) {
         .field('changeset_tags.value', 'changeset_comment')
         .field('users.name', 'user_name')
         .field('changesets.num_changes', 'num_changes')
+        .field('changesets.discussion_count', 'discussion_count')
         .field('ST_AsGeoJSON(changesets.bbox)', 'bbox');
     return sql;
 }
@@ -99,7 +99,6 @@ function addWhereClauses(sql, params) {
     var discussion = params.discussion || null;
     var text = params.text || null;
     var isUnreplied = params.isUnreplied || null;
-    // sql.where('changeset_tags.key = \'comment\'');
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user.trim();
@@ -116,26 +115,19 @@ function addWhereClauses(sql, params) {
         sql.where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', comment);
     }
     if (discussion) {
-        sql.join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
-        sql.where('to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', discussion);
+        sql.where('to_tsvector(\'english\', changeset_comments.comment) @@ plainto_tsquery(?)', discussion);
     }
     if (text) {
-        sql.left_outer_join('changeset_comments', 'c', 'changesets.id = changeset_comments.changeset_id');
         sql.where(
             squel.expr().or_begin()
                 .or('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?)', text)
-                .or('to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', text)
+                .or('to_tsvector(\'english\', changeset_comments.comment) @@ plainto_tsquery(?)', text)
                 .end()
         );
-        // sql.where('to_tsvector(\'english\', changeset_tags.value) @@ plainto_tsquery(?) OR to_tsvector(\'english\', c.comment) @@ plainto_tsquery(?)', text, text);
     }
     if (bbox) {
         var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
         sql.where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
-    }
-    if (hasDiscussion || discussedAtSort || isUnreplied === 'true') {
-        sql.having('COUNT(changeset_comments.id) > 0')
-            .group('changesets.id');
     }
     if (isUnreplied && isUnreplied === 'true') {
         sql.where('changesets.user_id != changeset_comments.user_id');
