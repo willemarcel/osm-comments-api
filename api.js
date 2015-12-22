@@ -15,6 +15,10 @@ var server = module.exports = express();
 
 server.use(cors());
 
+server.get('/', function(req, res, next) {
+    res.json({'status': 'ok'});
+});
+
 server.get('/api/v1/notes', function(req, res, next) {
     notes.search(req.query, function(err, geojson) {
         if (err) {
