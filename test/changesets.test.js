@@ -24,10 +24,13 @@ var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.jso
 var queue = require('queue-async');
 var changesets = require('../changesets/index');
 
+
 tape('test changesets module', function(assert) {
     var q = queue(10);
     changesetsQueries.forEach(function(query) {
+
         q.defer(searchchangesets, assert, query);
+
         q.awaitAll(function() {
             assert.end();
             process.exit(0);
@@ -37,6 +40,7 @@ tape('test changesets module', function(assert) {
     getchangesets(assert,changesetQueryDetailed);
 
 });
+
 
 function searchchangesets(assert, query, callback) {
     changesets.search(query.params, function(err, result) {

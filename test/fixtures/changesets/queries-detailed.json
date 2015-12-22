@@ -1,51 +1,72 @@
 {
-    "description": "test that changeset=35721794 returns expected results",
-    "id": "34721797",
-    "geojson": {
-        "type": "Feature",
-        "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-                [
-                    [
-                        -46.9123787,
-                        -23.1260827
-                    ],
-                    [
-                        -46.9123787,
-                        -23.1135019
-                    ],
-                    [
-                        -46.9072305,
-                        -23.1135019
-                    ],
-                    [
-                        -46.9072305,
-                        -23.1260827
-                    ],
-                    [
-                        -46.9123787,
-                        -23.1260827
-                    ]
-                ]
-            ]
-        },
-        "properties": {
-            "id": 34721797,
-            "createdAt": "2014-04-28T22:23:33.000Z",
-            "closedAt": "2014-10-08T22:23:34.000Z",
-            "isOpen": false,
-            "userID": 1799626,
-            "userName": "AjBelnuovo",
-            "numChanges": 6,
-            "changesetComment": "",
-            "comments": [],
-            "tags": [ 
-                { "key": "host", "value": "https://www.openstreetmap.org/id" },
-                { "key": "locale", "value": "pt-BR" },
-                { "key": "created_by", "value": "iD 1.7.4" },
-                { "key": "imagery_used", "value": "Bing" }
-            ]
+  "description": "test that changeset=35721794 returns expected results",
+  "id": "34721797",
+  "geojson": {
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            -46.9123787,
+            -23.1260827
+          ],
+          [
+            -46.9123787,
+            -23.1135019
+          ],
+          [
+            -46.9072305,
+            -23.1135019
+          ],
+          [
+            -46.9072305,
+            -23.1260827
+          ],
+          [
+            -46.9123787,
+            -23.1260827
+          ]
+        ]
+      ]
+    },
+    "properties": {
+      "id": 34721797,
+      "createdAt": "2015-10-18T22:23:33.000Z",
+      "closedAt": "2015-10-18T22:23:34.000Z",
+      "discussionCount": 1,
+      "isOpen": false,
+      "userID": 1799626,
+      "userName": "AjBelnuovo",
+      "numChanges": 6,
+      "changesetComment": "",
+      "comments": [
+        {
+          "id": "920e00bb-5cd6-f262-e31b-3692b5619d01",
+          "timestamp": "2015-11-18T22:49:10.000Z",
+          "comment": "Test discussion item.",
+          "userID": 44660,
+          "userName": "bjoern_m"
         }
+      ],
+      "tags": [
+        {
+          "key": "host",
+          "value": "https://www.openstreetmap.org/id"
+        },
+        {
+          "key": "locale",
+          "value": "pt-BR"
+        },
+        {
+          "key": "created_by",
+          "value": "iD 1.7.4"
+        },
+        {
+          "key": "imagery_used",
+          "value": "Bing"
+        }
+      ]
     }
+  }
 }
