@@ -1,0 +1,62 @@
+[
+    {
+        "description": "get changesets within the bounding box [-80,-80,60,60]",
+        "url": "/api/v1/changesets?bbox=-80,-80,60,60",
+        "fixture": "queries-bbox.json"
+    },
+    {
+        "description": "get a detailed reponse for the changeset with ID 34721797",
+        "url": "/api/v1/changesets/34721797",
+        "fixture": "queries-detailed.json"
+    },
+    {
+        "description": "get changesets from 2013-04-01 to 2014-12-01",
+        "url": "/api/v1/changesets?from=2013-04-01&to=2014-12-01",
+        "fixture": "queries-from-to.json"
+    },
+    {
+        "description": "get all changesets from server, but show only the first two, by setting limit=3",
+        "url": "/api/v1/changesets?limit=3",
+        "fixture": "queries-limit.json"
+    },
+    {
+        "description": "list changesets",
+        "url": "/api/v1/changesets",
+        "fixture": "queries-no-params.json"
+    },
+    {
+        "description": "sort queries in the ascending order",
+        "url": "/api/v1/changesets?sort=%2Bcreated_at",
+        "fixture": "queries-sort.json"
+    },
+    {
+        "description": "get changesets related to users ansuta Armire bjoern_m Cyclizine and wanda987",
+        "url": "/api/v1/changesets?users=ansuta,Armire,bjoern_m,Cyclizine,wanda987",
+        "fixture": "queries-users.json"
+    },
+    {
+        "description": "get changesets with comment containing the word Hamburg",
+        "url": "/api/v1/changesets?comment=Hamburg",
+        "fixture": "queries-comment.json"
+    },
+    {
+        "description": "get changesets with discussion containing the word test",
+        "url": "/api/v1/changesets?discussion=test",
+        "fixture": "queries-discussion.json"
+    },
+    {
+        "description": "get changesets sorted by -discussed_at",
+        "url": "/api/v1/changesets?sort=-discussed_at",
+        "fixture": "queries-sort-discussed-at.json"
+    },
+    {
+        "description": "get changesets filtered by unReplied=true",
+        "url": "/api/v1/changesets?isUnreplied=true",
+        "fixture": "queries-is-unreplied.json"
+    },
+    {
+        "description": "test that text=test returns expected results",
+        "url": "/api/v1/changesets?text=test",
+        "fixture": "queries-text.json"
+    }
+]

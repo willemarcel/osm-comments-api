@@ -7,6 +7,7 @@ var queue = require('queue-async');
 var path = require('path');
 var http = require('http');
 var db = path.resolve(__dirname, 'db.sh');
+var testsList = require('./fixtures/test_list.json');
 var server;
 
 // Simple GET function
@@ -67,117 +68,27 @@ tape('start server', function(assert) {
     });
 });
 
-test('get changesets within the bounding box [-80,-80,60,60]', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-bbox.json').geojson;
-    get('/api/v1/changesets?bbox=-80,-80,60,60', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
+test('run API tests for changesets', function(assert) {
+    var q = queue(5);
+    testsList.forEach(function(t) {
+        q.defer(runAPITest, assert, t);    
+    });
+    q.awaitAll(function() {
         assert.end();
     });
 });
 
-test('get a detailed reponse for the changeset with ID 34721797', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-detailed.json').geojson;
-    get('/api/v1/changesets/34721797', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
+function runAPITest(assert, testObj, callback) {
+    var basePath = './fixtures/changesets/';
+    var expected = require(basePath + testObj.fixture);
+    get(testObj.url, function(err, body, res) {
+        assert.ifError(err, testObj.description + ': success');
+        assert.equal(res.statusCode, 200, testObj.description + ': status 200');
+        assert.deepEqual(JSON.parse(body), expected, testObj.description);
+        callback();
     });
-});
+}
 
-test('get changesets from 2013-04-01 to 2014-12-01', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-from-to.json').geojson;
-    get('/api/v1/changesets?from=2013-04-01&to=2014-12-01', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-test('get all changesets from server, but show only the first two, by setting limit=3', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-limit.json').geojson;
-    get('/api/v1/changesets?limit=3', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-test('list changesets', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-no-params.json').geojson;
-    get('/api/v1/changesets', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-
-
-test('sort queries in the ascending order', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-sort.json').geojson;
-    get('/api/v1/changesets?sort=%2Bcreated_at', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-test('get changesets related to users ansuta Armire bjoern_m Cyclizine and wanda987', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-users.json').geojson;
-    get('/api/v1/changesets?users=ansuta,Armire,bjoern_m,Cyclizine,wanda987', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-test('get changesets with comment containing the word Hamburg', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-comment.json').geojson;
-    get('/api/v1/changesets?comment=Hamburg', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-test('get changesets with discussion containing the word test', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-discussion.json').geojson;
-    get('/api/v1/changesets?discussion=test', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });
-});
-
-test('get changesets sorted by -discussed_at', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-sort-discussed-at.json').geojson;
-    get('/api/v1/changesets?sort=-discussed_at', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });    
-});
-
-test('get changesets filtered by unReplied=true', function(assert) {
-    var expectedchangesets = require('./fixtures/changesets/queries-is-unreplied.json').geojson;
-    get('/api/v1/changesets?isUnreplied=true', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedchangesets, 'expected response');
-        assert.end();
-    });    
-});
 
 //Tests for invalid queries
 test('get changeset that does not exist', function(assert) {

@@ -93,8 +93,6 @@ function addWhereClauses(sql, params) {
     var from = params.from || null;
     var to = params.to || null;
     var bbox = params.bbox || null;
-    var hasDiscussion = params.has_discussion || null;
-    var discussedAtSort = params.sort && params.sort.indexOf('discussed_at') !== -1;
     var comment = params.comment || null;
     var discussion = params.discussion || null;
     var text = params.text || null;
