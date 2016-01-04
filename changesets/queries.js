@@ -99,7 +99,7 @@ function addWhereClauses(sql, params) {
     var isUnreplied = params.unReplied || null;
     if (users) {
         var usersArray = users.split(',').map(function(user) {
-            return user.trim();
+            return user;
         });
         sql.where('users.name in ?', usersArray);
     }

@@ -89,13 +89,10 @@ function addWhereClauses(sql, params) {
     } else if (isOpen === 'false') {
         sql.where('closed_at IS NOT NULL');
     }
-    if (users || comment) {
-        
-    }
     if (users) {
         sql.join('users', null, 'note_comments.user_id = users.id');
         var usersArray = users.split(',').map(function(user) {
-            return user.trim();
+            return user;
         });
         sql.where('users.name in ?', usersArray);
     }
