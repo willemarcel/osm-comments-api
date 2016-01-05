@@ -14,6 +14,7 @@ var Changeset = function(data, comments, tags) {
     this.lastCommentComment = data.last_comment_comment || null;
     this.lastCommentTimestamp = data.last_comment_timestamp || null;
     this.lastCommentUserName = data.last_comment_user_name || null;
+    this.lastCommentUserID = data.last_comment_user_id || null;
     this.changesetComment = data.changeset_comment || '';
     if (comments) {
         this.comments = comments.map(function(comment) {
@@ -53,7 +54,8 @@ Changeset.prototype.getProperties = function() {
         'changesetComment': this.changesetComment,
         'lastCommentComment': this.lastCommentComment,
         'lastCommentTimestamp': this.lastCommentTimestamp,
-        'lastCommentUserName': this.lastCommentUserName
+        'lastCommentUserName': this.lastCommentUserName,
+        'lastCommentUserID': this.lastCommentUserID
     };
     if (this.comments) {
         props.comments = this.comments.map(function(comment) {

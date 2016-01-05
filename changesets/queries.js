@@ -92,6 +92,7 @@ function addFields(sql) {
         .field('ST_AsGeoJSON(changesets.bbox)', 'bbox')
         .field('last_value(changeset_comments.timestamp) OVER (ORDER BY changeset_comments.timestamp)', 'last_comment_timestamp')
         .field('last_value(changeset_comments.comment) OVER(ORDER BY changeset_comments.timestamp)', 'last_comment_comment')
+        .field('last_value(changeset_comments.user_id) OVER(ORDER BY changeset_comments.timestamp)', 'last_comment_user_id')
         .field('last_user.name', 'last_comment_user_name');
     return sql;
 }
