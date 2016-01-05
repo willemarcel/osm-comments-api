@@ -44,7 +44,11 @@
           "userID": 651782,
           "userName": "Cyclizine",
           "numChanges": 16,
-          "changesetComment": ""
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 1799626
         }
       },
       {
@@ -54,38 +58,42 @@
           "coordinates": [
             [
               [
-                -46.9123787,
-                -23.1260827
+                -2.1234795,
+                57.155572
               ],
               [
-                -46.9123787,
-                -23.1135019
+                -2.1234795,
+                57.1581645
               ],
               [
-                -46.9072305,
-                -23.1135019
+                -2.1190102,
+                57.1581645
               ],
               [
-                -46.9072305,
-                -23.1260827
+                -2.1190102,
+                57.155572
               ],
               [
-                -46.9123787,
-                -23.1260827
+                -2.1234795,
+                57.155572
               ]
             ]
           ]
         },
         "properties": {
-          "id": 34721797,
-          "createdAt": "2015-10-18T22:23:33.000Z",
-          "closedAt": "2015-10-18T22:23:34.000Z",
-          "discussionCount": 1,
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
           "isOpen": false,
-          "userID": 1799626,
-          "userName": "AjBelnuovo",
-          "numChanges": 6,
-          "changesetComment": ""
+          "userID": 651782,
+          "userName": "Cyclizine",
+          "numChanges": 16,
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
         }
       },
       {
@@ -95,38 +103,42 @@
           "coordinates": [
             [
               [
-                10.1863837,
-                53.4870471
+                -2.1234795,
+                57.155572
               ],
               [
-                10.1863837,
-                53.5342565
+                -2.1234795,
+                57.1581645
               ],
               [
-                10.3292951,
-                53.5342565
+                -2.1190102,
+                57.1581645
               ],
               [
-                10.3292951,
-                53.4870471
+                -2.1190102,
+                57.155572
               ],
               [
-                10.1863837,
-                53.4870471
+                -2.1234795,
+                57.155572
               ]
             ]
           ]
         },
         "properties": {
-          "id": 34721796,
-          "createdAt": "2015-10-18T22:23:22.000Z",
-          "closedAt": "2015-10-18T22:23:53.000Z",
-          "discussionCount": 1,
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
           "isOpen": false,
-          "userID": 44660,
-          "userName": "bjoern_m",
-          "numChanges": 5,
-          "changesetComment": "Eisenbahn Hamburg"
+          "userID": 651782,
+          "userName": "Cyclizine",
+          "numChanges": 16,
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
         }
       }
     ],
