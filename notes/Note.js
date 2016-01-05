@@ -6,6 +6,10 @@ var Note = function(data, comments) {
     this.closedAt = data.closed_at || null;
     this.note = data.note;
     this.userName = data.user_name || null;
+    this.lastCommentComment = data.last_comment_comment || null;
+    this.lastCommentTimestamp = data.last_comment_timestamp || null;
+    this.lastCommentUserName = data.last_comment_user_name || null;
+    this.lastCommentUserID = data.last_comment_user_id || null;
     // this.openedBy = data.opened_by || null;
     this.point = JSON.parse(data.point);
     if (comments) {
@@ -32,7 +36,11 @@ Note.prototype.getProperties = function() {
         'createdAt': this.createdAt,
         'closedAt': this.closedAt,
         'note': this.note,
-        'userName': this.userName
+        'userName': this.userName,
+        'lastCommentComment': this.lastCommentComment,
+        'lastCommentTimestamp': this.lastCommentTimestamp,
+        'lastCommentUserNane': this.lastCommentUserName,
+        'lastCommentUserID': this.lastCommentUserID
     };
     if (this.comments) {
         props.comments = this.comments.map(function(noteComment) {
