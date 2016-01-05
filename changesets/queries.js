@@ -22,7 +22,6 @@ function getSearchQuery(params) {
     sql = addGroupBy(sql);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
-    console.log('sql', sql.toParam());
     return sql.toParam();
 }
 
