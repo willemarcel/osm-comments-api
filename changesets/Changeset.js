@@ -11,6 +11,9 @@ var Changeset = function(data, comments, tags) {
     this.userName = data.user_name;
     this.numChanges = data.num_changes;
     this.bbox = JSON.parse(data.bbox);
+    this.lastCommentComment = data.last_comment_comment || null;
+    this.lastCommentTimestamp = data.last_comment_timestamp || null;
+    this.lastCommentUserName = data.last_comment_user_name || null;
     this.changesetComment = data.changeset_comment || '';
     if (comments) {
         this.comments = comments.map(function(comment) {
@@ -47,7 +50,10 @@ Changeset.prototype.getProperties = function() {
         'userID': this.userID,
         'userName': this.userName,
         'numChanges': this.numChanges,
-        'changesetComment': this.changesetComment
+        'changesetComment': this.changesetComment,
+        'lastCommentComment': this.lastCommentComment,
+        'lastCommentTimestamp': this.lastCommentTimestamp,
+        'lastCommentUserName': this.lastCommentUserName
     };
     if (this.comments) {
         props.comments = this.comments.map(function(comment) {
