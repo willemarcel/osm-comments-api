@@ -18,6 +18,7 @@ function getSearchQuery(params) {
        
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
+    sql = addGroupBy(sql);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
     sql = sql.distinct('notes.id');
@@ -68,7 +69,19 @@ function addFields(sql) {
         .field('last_value(note_comments.timestamp) OVER (ORDER BY note_comments.timestamp)', 'last_comment_timestamp')
         .field('last_value(note_comments.user_id) OVER (ORDER BY note_comments.timestamp)', 'last_comment_user_id')
         .field('last_user.name', 'last_comment_user_name')
+        .field('(SELECT COUNT(note_comments.id) FROM note_comments WHERE note_id = notes.id)', 'comment_count')
         .field('ST_AsGeoJSON(notes.point)', 'point');
+    return sql;
+}
+
+function addGroupBy(sql) {
+    sql.group('note_comments.comment')
+        .group('note_comments.timestamp')
+        .group('note_comments.user_id')
+        .group('notes.id')
+        .group('opening_comment.comment')
+        .group('opening_user.name')
+        .group('last_user.name');
     return sql;
 }
 

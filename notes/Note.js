@@ -10,6 +10,7 @@ var Note = function(data, comments) {
     this.lastCommentTimestamp = data.last_comment_timestamp || null;
     this.lastCommentUserName = data.last_comment_user_name || null;
     this.lastCommentUserID = data.last_comment_user_id || null;
+    this.commentCount = data.comment_count;
     // this.openedBy = data.opened_by || null;
     this.point = JSON.parse(data.point);
     if (comments) {
@@ -40,7 +41,8 @@ Note.prototype.getProperties = function() {
         'lastCommentComment': this.lastCommentComment,
         'lastCommentTimestamp': this.lastCommentTimestamp,
         'lastCommentUserNane': this.lastCommentUserName,
-        'lastCommentUserID': this.lastCommentUserID
+        'lastCommentUserID': this.lastCommentUserID,
+        'commentCount': this.commentCount
     };
     if (this.comments) {
         props.comments = this.comments.map(function(noteComment) {
