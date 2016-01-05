@@ -15,7 +15,7 @@ var server = module.exports = express();
 
 server.use(cors());
 
-server.get('/', function(req, res, next) {
+server.get('/', function(req, res) {
     res.json({'status': 'ok'});
 });
 

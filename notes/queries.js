@@ -13,7 +13,8 @@ function getSearchQuery(params) {
         .from('notes')
         .join('note_comments', null, 'notes.id = note_comments.note_id')
         .join('note_comments', 'opening_comment', 'opening_comment.note_id = notes.id AND opening_comment.action=\'opened\'')
-        .left_outer_join('users', 'opening_user', 'opening_user.id = opening_comment.user_id');
+        .left_outer_join('users', 'opening_user', 'opening_user.id = opening_comment.user_id')
+        .left_outer_join('users', 'last_user', 'last_user.id = (SELECT user_id FROM note_comments WHERE note_comments.note_id = notes.id ORDER BY note_comments.timestamp DESC LIMIT 1)');
        
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
@@ -63,6 +64,10 @@ function addFields(sql) {
         .field('notes.closed_at', 'closed_at')
         .field('opening_comment.comment', 'note')
         .field('opening_user.name', 'user_name')
+        .field('last_value(note_comments.comment) OVER (ORDER BY note_comments.timestamp)', 'last_comment_comment')
+        .field('last_value(note_comments.timestamp) OVER (ORDER BY note_comments.timestamp)', 'last_comment_timestamp')
+        .field('last_value(note_comments.user_id) OVER (ORDER BY note_comments.timestamp)', 'last_comment_user_id')
+        .field('last_user.name', 'last_comment_user_name')
         .field('ST_AsGeoJSON(notes.point)', 'point');
     return sql;
 }

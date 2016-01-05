@@ -15,7 +15,8 @@ function getSearchQuery(params) {
         .from('changesets')
         .left_outer_join('changeset_tags', null, 'changesets.id = changeset_tags.changeset_id AND changeset_tags.key=\'comment\'')
         .join('changeset_comments', null, 'changesets.id = changeset_comments.changeset_id')
-        .join('users', null, 'changesets.user_id = users.id');
+        .join('users', null, 'changesets.user_id = users.id')
+        .join('users', 'last_user', 'last_user.id = (SELECT user_id FROM changeset_comments WHERE changeset_comments.changeset_id = changesets.id ORDER BY changeset_comments.timestamp DESC LIMIT 1)');
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
     sql = addGroupBy(sql);
@@ -70,7 +71,11 @@ function getChangesetTagsQuery(id) {
 function addGroupBy(sql) {
     sql.group('changesets.id')
          .group('users.name')
-         .group('changeset_tags.value');
+         .group('changeset_tags.value')
+         .group('changeset_comments.timestamp')
+         .group('changeset_comments.comment')
+         .group('changeset_comments.user_id')
+         .group('last_user.name');
     return sql;
 }
 
@@ -84,7 +89,11 @@ function addFields(sql) {
         .field('users.name', 'user_name')
         .field('changesets.num_changes', 'num_changes')
         .field('changesets.discussion_count', 'discussion_count')
-        .field('ST_AsGeoJSON(changesets.bbox)', 'bbox');
+        .field('ST_AsGeoJSON(changesets.bbox)', 'bbox')
+        .field('last_value(changeset_comments.timestamp) OVER (ORDER BY changeset_comments.timestamp)', 'last_comment_timestamp')
+        .field('last_value(changeset_comments.comment) OVER(ORDER BY changeset_comments.timestamp)', 'last_comment_comment')
+        .field('last_value(changeset_comments.user_id) OVER(ORDER BY changeset_comments.timestamp)', 'last_comment_user_id')
+        .field('last_user.name', 'last_comment_user_name');
     return sql;
 }
 
