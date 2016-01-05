@@ -44,7 +44,11 @@
           "userID": 44660,
           "userName": "bjoern_m",
           "numChanges": 5,
-          "changesetComment": "Eisenbahn Hamburg"
+          "changesetComment": "Eisenbahn Hamburg",
+          "lastCommentComment": "Fun",
+          "lastCommentTimestamp": "2015-11-18T22:49:05.000Z",
+          "lastCommentUserName": "Armire",
+          "lastCommentUserID": 3099780
         }
       }
     ],

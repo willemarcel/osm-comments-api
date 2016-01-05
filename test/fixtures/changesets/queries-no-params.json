@@ -42,7 +42,146 @@
           "userID": 651782,
           "userName": "Cyclizine",
           "numChanges": 16,
-          "changesetComment": ""
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 1799626
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "Cyclizine",
+          "numChanges": 16,
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "Cyclizine",
+          "numChanges": 16,
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "Cyclizine",
+          "numChanges": 16,
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
         }
       },
       {
@@ -83,7 +222,11 @@
           "userID": 1799626,
           "userName": "AjBelnuovo",
           "numChanges": 6,
-          "changesetComment": ""
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:49:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
         }
       },
       {
@@ -124,7 +267,11 @@
           "userID": 44660,
           "userName": "bjoern_m",
           "numChanges": 5,
-          "changesetComment": "Eisenbahn Hamburg"
+          "changesetComment": "Eisenbahn Hamburg",
+          "lastCommentComment": "Fun",
+          "lastCommentTimestamp": "2015-11-18T22:49:05.000Z",
+          "lastCommentUserName": "Armire",
+          "lastCommentUserID": 3099780
         }
       },
       {
@@ -165,7 +312,11 @@
           "userID": 3188422,
           "userName": "ansuta",
           "numChanges": 5,
-          "changesetComment": "Biescas"
+          "changesetComment": "Biescas",
+          "lastCommentComment": "Foo",
+          "lastCommentTimestamp": "2015-11-18T22:49:00.000Z",
+          "lastCommentUserName": "Armire",
+          "lastCommentUserID": 3099780
         }
       },
       {
@@ -206,7 +357,56 @@
           "userID": 344561,
           "userName": "FahRadler",
           "numChanges": 37,
-          "changesetComment": "Fernwärme ergänzt"
+          "changesetComment": "Fernwärme ergänzt",
+          "lastCommentComment": "Danish addressnodes are maintained by scripts and are actually by law not associated with any specific building. Please do not touch them.",
+          "lastCommentTimestamp": "2015-10-18T22:48:00.000Z",
+          "lastCommentUserName": "Hjart",
+          "lastCommentUserID": 207581
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                10.2474101,
+                57.1613
+              ],
+              [
+                10.2474101,
+                57.1668117
+              ],
+              [
+                10.2570929,
+                57.1668117
+              ],
+              [
+                10.2570929,
+                57.1613
+              ],
+              [
+                10.2474101,
+                57.1613
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721793,
+          "createdAt": "2015-10-18T22:23:15.000Z",
+          "closedAt": "2015-10-18T22:23:16.000Z",
+          "discussionCount": 2,
+          "isOpen": false,
+          "userID": 344561,
+          "userName": "FahRadler",
+          "numChanges": 37,
+          "changesetComment": "Fernwärme ergänzt",
+          "lastCommentComment": "test",
+          "lastCommentTimestamp": "2015-10-18T22:55:00.000Z",
+          "lastCommentUserName": "Hjart",
+          "lastCommentUserID": 207581
         }
       }
     ],
