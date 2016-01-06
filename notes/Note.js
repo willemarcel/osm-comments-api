@@ -10,6 +10,7 @@ var Note = function(data, comments) {
     this.lastCommentTimestamp = data.last_comment_timestamp || null;
     this.lastCommentUserName = data.last_comment_user_name || null;
     this.lastCommentUserID = data.last_comment_user_id || null;
+    this.lastCommentAction = data.last_comment_action || null;
     this.commentCount = data.comment_count;
     // this.openedBy = data.opened_by || null;
     this.point = JSON.parse(data.point);
@@ -42,6 +43,7 @@ Note.prototype.getProperties = function() {
         'lastCommentTimestamp': this.lastCommentTimestamp,
         'lastCommentUserNane': this.lastCommentUserName,
         'lastCommentUserID': this.lastCommentUserID,
+        'lastCommentAction': this.lastCommentAction,
         'commentCount': this.commentCount
     };
     if (this.comments) {

@@ -11,7 +11,8 @@ module.exports.getNoteCommentsQuery = getNoteCommentsQuery;
 function getSearchQuery(params) {
     var sql = squel.select()
         .from('notes')
-        .join('note_comments', null, 'notes.id = note_comments.note_id')
+        .join('note_comments', 'last_comment', 'last_comment.id = (SELECT id FROM note_comments WHERE note_comments.note_id = notes.id ORDER BY note_comments.timestamp DESC LIMIT 1)')
+        .join('note_comments', null, 'note_comments.note_id = notes.id')
         .join('note_comments', 'opening_comment', 'opening_comment.note_id = notes.id AND opening_comment.action=\'opened\'')
         .left_outer_join('users', 'opening_user', 'opening_user.id = opening_comment.user_id')
         .left_outer_join('users', 'last_user', 'last_user.id = (SELECT user_id FROM note_comments WHERE note_comments.note_id = notes.id ORDER BY note_comments.timestamp DESC LIMIT 1)');
@@ -21,7 +22,7 @@ function getSearchQuery(params) {
     sql = addGroupBy(sql);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
-    sql = sql.distinct('notes.id');
+    console.log('sql', sql.toParam());
     return sql.toParam();
 }
 
@@ -65,23 +66,23 @@ function addFields(sql) {
         .field('notes.closed_at', 'closed_at')
         .field('opening_comment.comment', 'note')
         .field('opening_user.name', 'user_name')
-        .field('last_value(note_comments.comment) OVER (ORDER BY note_comments.timestamp)', 'last_comment_comment')
-        .field('last_value(note_comments.timestamp) OVER (ORDER BY note_comments.timestamp)', 'last_comment_timestamp')
-        .field('last_value(note_comments.user_id) OVER (ORDER BY note_comments.timestamp)', 'last_comment_user_id')
+        .field('last_comment.comment', 'last_comment_comment')
+        .field('last_comment.timestamp', 'last_comment_timestamp')
+        .field('last_comment.action', 'last_comment_action')
         .field('last_user.name', 'last_comment_user_name')
-        .field('(SELECT COUNT(note_comments.id) FROM note_comments WHERE note_id = notes.id)', 'comment_count')
-        .field('ST_AsGeoJSON(notes.point)', 'point');
+        .field('ST_AsGeoJSON(notes.point)', 'point')
+        .distinct();
     return sql;
 }
 
 function addGroupBy(sql) {
-    sql.group('note_comments.comment')
-        .group('note_comments.timestamp')
-        .group('note_comments.user_id')
+    sql.group('last_comment.comment')
+        .group('last_comment.timestamp')
+        .group('last_comment.action')
         .group('notes.id')
-        .group('opening_comment.comment')
-        .group('opening_user.name')
-        .group('last_user.name');
+        .group('opening_comment.id')
+        .group('opening_user.id')
+        .group('last_user.id');
     return sql;
 }
 
@@ -133,20 +134,7 @@ function addOrderBy(sql, params) {
         return sql;
     }
     if (field === 'commented_at') {
-        sql.field('MAX(note_comments.timestamp)', 'last_timestamp')
-            .group('notes.id')
-            .group('opening_comment.comment')
-            .group('opening_user.name');
-        field = 'last_timestamp';
-        // sql.from(
-        //     squel.select()
-        //         .field('note_comments.timestamp', 'last_timestamp')
-        //         .from('note_comments')
-        //         .where('note_comments.note_id = note_id')
-        //         .order('note_comments.timestamp', false),
-        //     't'
-        // );
-        // field = 't.last_timestamp';
+        field = 'last_comment.timestamp';
     }
     var isAscending = operator === '+';
     sql.order(field, isAscending);
