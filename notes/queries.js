@@ -70,6 +70,7 @@ function addFields(sql) {
         .field('last_comment.timestamp', 'last_comment_timestamp')
         .field('last_comment.action', 'last_comment_action')
         .field('last_user.name', 'last_comment_user_name')
+        .field('(SELECT count(note_comments.id) FROM note_comments WHERE note_comments.note_id = notes.id)', 'comment_count')
         .field('ST_AsGeoJSON(notes.point)', 'point')
         .distinct();
     return sql;
