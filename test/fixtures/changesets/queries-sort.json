@@ -271,9 +271,9 @@
           "numChanges": 16,
           "changesetComment": "",
           "lastCommentComment": "Test discussion item.",
-          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
+          "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
           "lastCommentUserName": "bjoern_m",
-          "lastCommentUserID": 1799626
+          "lastCommentUserID": 44660
         }
       },
       {
@@ -406,9 +406,9 @@
           "numChanges": 16,
           "changesetComment": "",
           "lastCommentComment": "Test discussion item.",
-          "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
+          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
           "lastCommentUserName": "bjoern_m",
-          "lastCommentUserID": 44660
+          "lastCommentUserID": 1799626
         }
       }
     ],

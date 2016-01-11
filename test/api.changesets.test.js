@@ -7,7 +7,7 @@ var queue = require('queue-async');
 var path = require('path');
 var http = require('http');
 var db = path.resolve(__dirname, 'db.sh');
-var testsList = require('./fixtures/test_list.json');
+var testsList = require('./fixtures/changesets/test_list.json');
 var server;
 
 // Simple GET function
@@ -84,30 +84,30 @@ function runAPITest(assert, testObj, callback) {
     get(testObj.url, function(err, body, res) {
         assert.ifError(err, testObj.description + ': success');
         assert.equal(res.statusCode, 200, testObj.description + ': status 200');
-        assert.deepEqual(JSON.parse(body), expected, testObj.description);
+        assert.deepEqual(JSON.parse(body), expected.geojson, testObj.description);
         callback();
     });
 }
 
 
 //Tests for invalid queries
-test('get changeset that does not exist', function(assert) {
-    get('/api/v1/changesets/123456789', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.deepEqual(JSON.parse(body), { message: 'Not found: Changeset not found' }, 'expected error message');
-        assert.equal(res.statusCode, 404, 'expected status');
-        assert.end();
-    });
-});
+// test('get changeset that does not exist', function(assert) {
+//     get('/api/v1/changesets/123456789', function(err, body, res) {
+//         assert.ifError(err, 'success');
+//         assert.deepEqual(JSON.parse(body), { message: 'Not found: Changeset not found' }, 'expected error message');
+//         assert.equal(res.statusCode, 404, 'expected status');
+//         assert.end();
+//     });
+// });
 
-test('get invalid changeset id', function(assert) {
-    get('/api/v1/changesets/ventriloquism', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Changeset id must be a number' }, 'expected error message');
-        assert.equal(res.statusCode, 422, 'expected status');
-        assert.end();
-    });
-});
+// test('get invalid changeset id', function(assert) {
+//     get('/api/v1/changesets/ventriloquism', function(err, body, res) {
+//         assert.ifError(err, 'success');
+//         assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Changeset id must be a number' }, 'expected error message');
+//         assert.equal(res.statusCode, 422, 'expected status');
+//         assert.end();
+//     });
+// });
 
 test('get results for invalid from date', function(assert) {
     get('/api/v1/changesets?from=strings&to=2015-09-08', function(err, body, res) {

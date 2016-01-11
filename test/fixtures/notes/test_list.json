@@ -1,0 +1,52 @@
+[
+    {
+        "description": "test with bbox params=-80,-80,60,60 returns expected results",
+        "url": "/api/v1/notes?bbox=-80,-80,60,60",
+        "fixture": "queries-bbox.json"
+    },
+    {
+        "description": "test that text search within notes works",
+        "url": "/api/v1/notes?comment=test",
+        "fixture": "queries-comment.json"
+    },
+    {
+        "description": "test with from=2013-04-01 and to=2014-04-01 returns expected results",
+        "url": "/api/v1/notes?from=2013-04-01&to=2014-04-01",
+        "fixture": "queries-from-to.json"
+    },
+    {
+        "description": "test that isOpen=false returns expected results",
+        "url": "/api/v1/notes?isOpen=false",
+        "fixture": "queries-is-open-false.json"
+    },
+    {
+        "description": "test that isOpen=true returns expected results",
+        "url": "/api/v1/notes?isOpen=true",
+        "fixture": "queries-is-open-true.json"
+    },
+    {
+        "description": "test that limit=2 returns expected results",
+        "url": "/api/v1/notes/?limit=2",
+        "fixture": "queries-limit.json"
+    },
+    {
+        "description": "test that no params returns expected results",
+        "url": "/api/v1/notes",
+        "fixture": "queries-no-params.json"
+    },
+    {
+        "description": "test that sort by -commented_at works",
+        "url": "/api/v1/notes/?sort=-commented_at",
+        "fixture": "queries-sort-commented-at.json"
+    },
+    {
+        "description": "test with sort=-created_at returns expected results",
+        "url": "/api/v1/notes/?sort=-created_at",
+        "fixture": "queries-sort.json"
+    },
+    {
+        "description": "test with users=kuede,FredB,nyampire,TomH returns expected results",
+        "url": "/api/v1/notes/?users=kuede,FredB,nyampire,TomH",
+        "fixture": "queries-users.json"
+    }
+]

@@ -5,11 +5,6 @@
         "fixture": "queries-bbox.json"
     },
     {
-        "description": "get a detailed reponse for the changeset with ID 34721797",
-        "url": "/api/v1/changesets/34721797",
-        "fixture": "queries-detailed.json"
-    },
-    {
         "description": "get changesets from 2013-04-01 to 2014-12-01",
         "url": "/api/v1/changesets?from=2013-04-01&to=2014-12-01",
         "fixture": "queries-from-to.json"

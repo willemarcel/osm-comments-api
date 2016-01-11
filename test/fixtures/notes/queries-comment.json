@@ -1,37 +1,58 @@
 {
-    "description": "test that text search within notes works",
-    "params": {
-        "comment": "test"
-    },
-    "geojson": {
-        "features": [{
-            "geometry": {
-                "coordinates": [6.1373234, 50.7550836],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": null,
-                "createdAt": "2013-04-24T08:15:06.000Z",
-                "id": 8,
-                "note": "test",
-                "userName": "Oli-Wan"
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [68.86415, 36.7232991],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-04-24T08:08:51.000Z",
-                "createdAt": "2013-04-24T08:07:02.000Z",
-                "id": 4,
-                "note": "test",
-                "userName": "FredB"
-            },
-            "type": "Feature"
-        }],
-        "total": "2",
-        "type": "FeatureCollection"
-    }
+  "description": "test that text search within notes works",
+  "params": {
+    "comment": "test"
+  },
+  "geojson": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            6.1373234,
+            50.7550836
+          ]
+        },
+        "properties": {
+          "id": 8,
+          "createdAt": "2013-04-24T08:15:06.000Z",
+          "closedAt": null,
+          "note": "test",
+          "userName": "Oli-Wan",
+          "lastCommentComment": "test close",
+          "lastCommentTimestamp": "2013-05-24T08:15:07.000Z",
+          "lastCommentUserNane": "Oli-Wan",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            68.86415,
+            36.7232991
+          ]
+        },
+        "properties": {
+          "id": 4,
+          "createdAt": "2013-04-24T08:07:02.000Z",
+          "closedAt": "2013-04-24T08:08:51.000Z",
+          "note": "test",
+          "userName": "FredB",
+          "lastCommentComment": null,
+          "lastCommentTimestamp": "2013-04-24T08:08:51.000Z",
+          "lastCommentUserNane": "FredB",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      }
+    ],
+    "total": "2"
+  }
 }
