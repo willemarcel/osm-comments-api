@@ -41,7 +41,7 @@ Note.prototype.getProperties = function() {
         'userName': this.userName,
         'lastCommentComment': this.lastCommentComment,
         'lastCommentTimestamp': this.lastCommentTimestamp,
-        'lastCommentUserNane': this.lastCommentUserName,
+        'lastCommentUserName': this.lastCommentUserName,
         'lastCommentUserID': this.lastCommentUserID,
         'lastCommentAction': this.lastCommentAction,
         'commentCount': this.commentCount
