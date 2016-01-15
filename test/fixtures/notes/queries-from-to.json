@@ -1,103 +1,174 @@
 {
-    "description": "test with from=2013-04-01 and to=2014-04-01 returns expected results",
-    "params": {
-        "from": "2013-04-01",
-        "to": "2014-04-01"
-    },
-    "geojson": {
-        "features": [{
-            "geometry": {
-                "coordinates": [7.3768338, 48.395811],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-07-03T21:20:32.000Z",
-                "createdAt": "2013-05-24T08:17:47.000Z",
-                "id": 10,
-                "note": "Building is currently demolished",
-                "userName": null
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [8.3768338, 47.395811],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-07-03T21:20:32.000Z",
-                "createdAt": "2013-04-24T08:17:47.000Z",
-                "id": 9,
-                "note": "Building is currently demolished",
-                "userName": null
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [6.1373234, 50.7550836],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": null,
-                "createdAt": "2013-04-24T08:15:06.000Z",
-                "id": 8,
-                "note": "test",
-                "userName": "Oli-Wan"
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [1.8605947, 50.9381992],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-04-24T08:14:50.000Z",
-                "createdAt": "2013-04-24T08:14:28.000Z",
-                "id": 7,
-                "note": "Adresse complète :\nB&B CALAIS Centre St Pierre \t \nZAC Curie\nRue de Lille\n62100 CALAIS\nTel. 08 92 70 75 18 (0.34€ TTC/mn depuis un poste fixe)\nFax. 03 21 00 92 71\nParking, accès handicapé, wifi, ascenseur, caméra",
-                "userName": null
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [139.6322554, 35.5170066],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-05-10T12:28:11.000Z",
-                "createdAt": "2013-04-24T08:12:38.000Z",
-                "id": 6,
-                "note": "Ministopは閉店済み",
-                "userName": "nyampire"
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [-0.0112063, 51.760921],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-04-24T21:31:47.000Z",
-                "createdAt": "2013-04-24T08:10:38.000Z",
-                "id": 5,
-                "note": "This building has been demolished and is currently a construction site.",
-                "userName": "TomH"
-            },
-            "type": "Feature"
-        }, {
-            "geometry": {
-                "coordinates": [68.86415, 36.7232991],
-                "type": "Point"
-            },
-            "properties": {
-                "closedAt": "2013-04-24T08:08:51.000Z",
-                "createdAt": "2013-04-24T08:07:02.000Z",
-                "id": 4,
-                "note": "test",
-                "userName": "FredB"
-            },
-            "type": "Feature"
-        }],
-        "total": "7",
-        "type": "FeatureCollection"
-    }
+  "description": "test with from=2013-04-01 and to=2014-04-01 returns expected results",
+  "params": {
+    "from": "2013-04-01",
+    "to": "2014-04-01"
+  },
+  "geojson": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            7.3768338,
+            48.395811
+          ]
+        },
+        "properties": {
+          "id": 10,
+          "createdAt": "2013-05-24T08:17:47.000Z",
+          "closedAt": "2013-07-03T21:20:32.000Z",
+          "note": "Building is currently demolished",
+          "userName": null,
+          "lastCommentComment": "Building is currently demolished",
+          "lastCommentTimestamp": "2013-05-24T08:17:47.000Z",
+          "lastCommentUserName": null,
+          "lastCommentUserID": null,
+          "lastCommentAction": "opened",
+          "commentCount": "1"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            8.3768338,
+            47.395811
+          ]
+        },
+        "properties": {
+          "id": 9,
+          "createdAt": "2013-04-24T08:17:47.000Z",
+          "closedAt": "2013-07-03T21:20:32.000Z",
+          "note": "Building is currently demolished",
+          "userName": null,
+          "lastCommentComment": "Hat schon jemand eingetragen...",
+          "lastCommentTimestamp": "2013-07-03T21:20:32.000Z",
+          "lastCommentUserName": "kuede",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            6.1373234,
+            50.7550836
+          ]
+        },
+        "properties": {
+          "id": 8,
+          "createdAt": "2013-04-24T08:15:06.000Z",
+          "closedAt": null,
+          "note": "test",
+          "userName": "Oli-Wan",
+          "lastCommentComment": "test close",
+          "lastCommentTimestamp": "2013-05-24T08:15:07.000Z",
+          "lastCommentUserName": "Oli-Wan",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            1.8605947,
+            50.9381992
+          ]
+        },
+        "properties": {
+          "id": 7,
+          "createdAt": "2013-04-24T08:14:28.000Z",
+          "closedAt": "2013-04-24T08:14:50.000Z",
+          "note": "Adresse complète :\nB&B CALAIS Centre St Pierre \t \nZAC Curie\nRue de Lille\n62100 CALAIS\nTel. 08 92 70 75 18 (0.34€ TTC/mn depuis un poste fixe)\nFax. 03 21 00 92 71\nParking, accès handicapé, wifi, ascenseur, caméra",
+          "userName": null,
+          "lastCommentComment": null,
+          "lastCommentTimestamp": "2013-04-24T08:14:50.000Z",
+          "lastCommentUserName": "Marcussacapuces91",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            139.6322554,
+            35.5170066
+          ]
+        },
+        "properties": {
+          "id": 6,
+          "createdAt": "2013-04-24T08:12:38.000Z",
+          "closedAt": "2013-05-10T12:28:11.000Z",
+          "note": "Ministopは閉店済み",
+          "userName": "nyampire",
+          "lastCommentComment": "name corrected",
+          "lastCommentTimestamp": "2013-05-10T12:28:11.000Z",
+          "lastCommentUserName": "gorn",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -0.0112063,
+            51.760921
+          ]
+        },
+        "properties": {
+          "id": 5,
+          "createdAt": "2013-04-24T08:10:38.000Z",
+          "closedAt": "2013-04-24T21:31:47.000Z",
+          "note": "This building has been demolished and is currently a construction site.",
+          "userName": "TomH",
+          "lastCommentComment": null,
+          "lastCommentTimestamp": "2013-04-24T21:31:47.000Z",
+          "lastCommentUserName": "TomH",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            68.86415,
+            36.7232991
+          ]
+        },
+        "properties": {
+          "id": 4,
+          "createdAt": "2013-04-24T08:07:02.000Z",
+          "closedAt": "2013-04-24T08:08:51.000Z",
+          "note": "test",
+          "userName": "FredB",
+          "lastCommentComment": null,
+          "lastCommentTimestamp": "2013-04-24T08:08:51.000Z",
+          "lastCommentUserName": "FredB",
+          "lastCommentUserID": null,
+          "lastCommentAction": "closed",
+          "commentCount": "2"
+        }
+      }
+    ],
+    "total": "7"
+  }
 }

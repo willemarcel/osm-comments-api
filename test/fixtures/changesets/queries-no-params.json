@@ -44,6 +44,51 @@
           "numChanges": 16,
           "changesetComment": "",
           "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "Cyclizine",
+          "numChanges": 16,
+          "changesetComment": "",
+          "lastCommentComment": "Test discussion item.",
           "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
           "lastCommentUserName": "bjoern_m",
           "lastCommentUserID": 1799626
@@ -135,51 +180,6 @@
           "changesetComment": "",
           "lastCommentComment": "Test discussion item.",
           "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
-          "lastCommentUserName": "bjoern_m",
-          "lastCommentUserID": 44660
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                -2.1234795,
-                57.155572
-              ],
-              [
-                -2.1234795,
-                57.1581645
-              ],
-              [
-                -2.1190102,
-                57.1581645
-              ],
-              [
-                -2.1190102,
-                57.155572
-              ],
-              [
-                -2.1234795,
-                57.155572
-              ]
-            ]
-          ]
-        },
-        "properties": {
-          "id": 34721798,
-          "createdAt": "2015-10-18T22:23:37.000Z",
-          "closedAt": "2015-10-18T22:23:38.000Z",
-          "discussionCount": 4,
-          "isOpen": false,
-          "userID": 651782,
-          "userName": "Cyclizine",
-          "numChanges": 16,
-          "changesetComment": "",
-          "lastCommentComment": "Test discussion item.",
-          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
           "lastCommentUserName": "bjoern_m",
           "lastCommentUserID": 44660
         }
@@ -358,8 +358,8 @@
           "userName": "FahRadler",
           "numChanges": 37,
           "changesetComment": "Fernwärme ergänzt",
-          "lastCommentComment": "Danish addressnodes are maintained by scripts and are actually by law not associated with any specific building. Please do not touch them.",
-          "lastCommentTimestamp": "2015-10-18T22:48:00.000Z",
+          "lastCommentComment": "test",
+          "lastCommentTimestamp": "2015-10-18T22:55:00.000Z",
           "lastCommentUserName": "Hjart",
           "lastCommentUserID": 207581
         }
@@ -403,8 +403,8 @@
           "userName": "FahRadler",
           "numChanges": 37,
           "changesetComment": "Fernwärme ergänzt",
-          "lastCommentComment": "test",
-          "lastCommentTimestamp": "2015-10-18T22:55:00.000Z",
+          "lastCommentComment": "Danish addressnodes are maintained by scripts and are actually by law not associated with any specific building. Please do not touch them.",
+          "lastCommentTimestamp": "2015-10-18T22:48:00.000Z",
           "lastCommentUserName": "Hjart",
           "lastCommentUserID": 207581
         }

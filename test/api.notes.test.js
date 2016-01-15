@@ -7,6 +7,7 @@ var queue = require('queue-async');
 var path = require('path');
 var http = require('http');
 var db = path.resolve(__dirname, 'db.sh');
+var testsList = require('./fixtures/notes/test_list.json');
 var server;
 
 // Simple GET function
@@ -67,136 +68,45 @@ tape('start server', function(assert) {
     });
 });
 
-test('get notes within the bounding box [-80,-80,60,60]', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-bbox.json').geojson;
-    get('/api/v1/notes?bbox=-80,-80,60,60', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
+test('run API tests for notes', function(assert) {
+    var q = queue(5);
+    testsList.forEach(function(t) {
+        q.defer(runAPITest, assert, t);    
+    });
+    q.awaitAll(function() {
         assert.end();
     });
 });
 
-test('get a detailed reponse for the note with ID 9', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-detailed.json').geojson;
-    get('/api/v1/notes/9', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
+function runAPITest(assert, testObj, callback) {
+    var basePath = './fixtures/notes/';
+    var expected = require(basePath + testObj.fixture);
+    get(testObj.url, function(err, body, res) {
+        assert.ifError(err, testObj.description + ': success');
+        assert.equal(res.statusCode, 200, testObj.description + ': status 200');
+        assert.deepEqual(JSON.parse(body), expected.geojson, testObj.description);
+        callback();
     });
-});
-
-test('get notes from 2013-04-01 to 2014-04-01', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-from-to.json').geojson;
-    get('/api/v1/notes?from=2013-04-01&to=2014-04-01', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('get all notes from server, but show only the first two, by setting limit=2', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-limit.json').geojson;
-    get('/api/v1/notes?limit=2', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('list notes', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-no-params.json').geojson;
-    get('/api/v1/notes', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-
-
-test('sort queries in the descending order', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-sort.json').geojson;
-    get('/api/v1/notes?sort=-created_at', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('get notes related to users kuede, FredB, nyampire andTomH', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-users.json').geojson;
-    get('/api/v1/notes?users=kuede,FredB,nyampire,TomH', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('get notes for full text search for the word test', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-comment.json').geojson;
-    get('/api/v1/notes?comment=test', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('get open notes', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-is-open-true.json').geojson;
-    get('/api/v1/notes?isOpen=true', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('get closed notes', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-is-open-false.json').geojson;
-    get('/api/v1/notes?isOpen=false', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
-
-test('sorting reverse by last commented at', function(assert) {
-    var expectedNotes = require('./fixtures/notes/queries-sort-commented-at.json').geojson;
-    get('/api/v1/notes?sort=-commented_at', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.equal(res.statusCode, 200, 'expected HTTP status');
-        assert.deepEqual(JSON.parse(body), expectedNotes, 'expected response');
-        assert.end();
-    });
-});
+}
 
 //Tests for invalid queries
-test('get note that does not exist', function(assert) {
-    get('/api/v1/notes/123456789', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.deepEqual(JSON.parse(body), { message: 'Not found: Note not found' }, 'expected error message');
-        assert.equal(res.statusCode, 404, 'expected status');
-        assert.end();
-    });
-});
+// test('get note that does not exist', function(assert) {
+//     get('/api/v1/notes/123456789', function(err, body, res) {
+//         assert.ifError(err, 'success');
+//         assert.deepEqual(JSON.parse(body), { message: 'Not found: Note not found' }, 'expected error message');
+//         assert.equal(res.statusCode, 404, 'expected status');
+//         assert.end();
+//     });
+// });
 
-test('get invalid note id', function(assert) {
-    get('/api/v1/notes/bananas', function(err, body, res) {
-        assert.ifError(err, 'success');
-        assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Note id must be a number' }, 'expected error message');
-        assert.equal(res.statusCode, 422, 'expected status');
-        assert.end();
-    });
-});
+// test('get invalid note id', function(assert) {
+//     get('/api/v1/notes/bananas', function(err, body, res) {
+//         assert.ifError(err, 'success');
+//         assert.deepEqual(JSON.parse(body), { message: 'Invalid request: Note id must be a number' }, 'expected error message');
+//         assert.equal(res.statusCode, 422, 'expected status');
+//         assert.end();
+//     });
+// });
 
 test('get results for invalid from date', function(assert) {
     get('/api/v1/notes?from=strings&to=2015-09-08', function(err, body, res) {
