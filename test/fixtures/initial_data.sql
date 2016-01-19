@@ -56,8 +56,6 @@ CREATE TABLE IF NOT EXISTS changeset_comments (
 );
 
 
-ALTER TABLE changeset_comments OWNER TO sanjaybhangar;
-
 --
 -- Name: changeset_tags; Type: TABLE; Schema: public; Owner: sanjaybhangar; Tablespace: 
 --
@@ -69,8 +67,6 @@ CREATE TABLE IF NOT EXISTS changeset_tags (
     value text
 );
 
-
-ALTER TABLE changeset_tags OWNER TO sanjaybhangar;
 
 --
 -- Name: changesets; Type: TABLE; Schema: public; Owner: sanjaybhangar; Tablespace: 
@@ -92,8 +88,6 @@ CREATE TABLE IF NOT EXISTS changesets (
 );
 
 
-ALTER TABLE changesets OWNER TO sanjaybhangar;
-
 --
 -- Name: note_comments; Type: TABLE; Schema: public; Owner: sanjaybhangar; Tablespace: 
 --
@@ -106,9 +100,6 @@ CREATE TABLE IF NOT EXISTS note_comments (
     "timestamp" timestamp with time zone,
     user_id integer
 );
-
-
-ALTER TABLE note_comments OWNER TO sanjaybhangar;
 
 --
 -- Name: notes; Type: TABLE; Schema: public; Owner: sanjaybhangar; Tablespace: 
@@ -123,8 +114,6 @@ CREATE TABLE IF NOT EXISTS notes (
 );
 
 
-ALTER TABLE notes OWNER TO sanjaybhangar;
-
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: sanjaybhangar; Tablespace: 
 --
@@ -134,8 +123,6 @@ CREATE TABLE IF NOT EXISTS users (
     name text
 );
 
-
-ALTER TABLE users OWNER TO sanjaybhangar;
 
 --
 -- Data for Name: changeset_comments; Type: TABLE DATA; Schema: public; Owner: sanjaybhangar
