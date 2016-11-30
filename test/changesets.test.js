@@ -28,21 +28,19 @@ var changesets = require('../changesets/index');
 tape('test changesets module', function(assert) {
     var q = queue(10);
     changesetsQueries.forEach(function(query) {
-
-        q.defer(searchchangesets, assert, query);
-
-        q.awaitAll(function() {
-            assert.end();
-            process.exit(0);
-        });
+        q.defer(searchChangesets, assert, query);
     });
 
+    q.awaitAll(function() {
+        assert.end();
+        process.exit(0);
+    });
     // getchangesets(assert,changesetQueryDetailed);
 
 });
 
 
-function searchchangesets(assert, query, callback) {
+function searchChangesets(assert, query, callback) {
     changesets.search(query.params, function(err, result) {
 
         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly

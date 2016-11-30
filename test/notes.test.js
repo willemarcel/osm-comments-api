@@ -25,10 +25,10 @@ tape('test notes module', function(assert) {
     var q = queue(10);
     notesQueries.forEach(function(query) {
         q.defer(searchNotes, assert, query);
-        q.awaitAll(function() {
-            assert.end();
-            process.exit(0);
-        });
+    });
+    q.awaitAll(function() {
+        assert.end();
+        process.exit(0);
     });
 });
 
