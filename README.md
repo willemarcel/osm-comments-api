@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/mapbox/osm-comments-api/tree/master.svg?style=svg)](https://circleci.com/gh/mapbox/osm-comments-api/tree/master)
+
 # osm-comments-api
 Expose a RESTful API for OSM Notes and Changeset Comments.
 
