@@ -18,7 +18,7 @@ var notesQueries = [
     require('./fixtures/notes/queries-sort-commented-at.json')
 ];
 
-var queue = require('queue-async');
+var queue = require('d3-queue').queue;
 var notes = require('../notes/index');
 
 tape('test notes module', function(assert) {

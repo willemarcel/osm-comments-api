@@ -21,7 +21,7 @@ var changesetsQueries = [
 
 // var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
 
-var queue = require('queue-async');
+var queue = require('d3-queue').queue;
 var changesets = require('../changesets/index');
 
 
