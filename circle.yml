@@ -1,3 +1,5 @@
 machine:
   node:
     version: 4
+  environment:
+    TEST_PG_USER: ubuntu
