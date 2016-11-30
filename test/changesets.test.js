@@ -19,30 +19,28 @@ var changesetsQueries = [
     require('./fixtures/changesets/queries-text.json')
 ];
 
-var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
+// var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
 
-var queue = require('queue-async');
+var queue = require('d3-queue').queue;
 var changesets = require('../changesets/index');
 
 
 tape('test changesets module', function(assert) {
     var q = queue(10);
     changesetsQueries.forEach(function(query) {
-
-        q.defer(searchchangesets, assert, query);
-
-        q.awaitAll(function() {
-            assert.end();
-            process.exit(0);
-        });
+        q.defer(searchChangesets, assert, query);
     });
 
-    getchangesets(assert,changesetQueryDetailed);
+    q.awaitAll(function() {
+        assert.end();
+        process.exit(0);
+    });
+    // getchangesets(assert,changesetQueryDetailed);
 
 });
 
 
-function searchchangesets(assert, query, callback) {
+function searchChangesets(assert, query, callback) {
     changesets.search(query.params, function(err, result) {
 
         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
@@ -51,10 +49,10 @@ function searchchangesets(assert, query, callback) {
     });
 }
 
-function getchangesets(assert, query) {
-    changesets.get(query.id, function(err, result) {
+// function getchangesets(assert, query) {
+//     changesets.get(query.id, function(err, result) {
 
-        //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
-        assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
-    });
-}
+//         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
+//         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
+//     });
+// }

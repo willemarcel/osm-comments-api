@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mapbox/osm-comments-api",
   "dependencies": {
     "cors": "^2.7.1",
+    "d3-queue": "^3.0.3",
     "express": "^4.13.3",
     "fasterror": "0.0.0",
     "fastlog": "^1.1.0",
@@ -26,7 +27,6 @@
     "minimist": "^1.2.0",
     "moment": "^2.10.6",
     "pg": "^4.4.3",
-    "queue-async": "^1.0.7",
     "squel": "^4.2.0",
     "turf-bbox-polygon": "^1.0.1",
     "validate.js": "^0.9.0"

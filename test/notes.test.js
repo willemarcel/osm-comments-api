@@ -18,17 +18,17 @@ var notesQueries = [
     require('./fixtures/notes/queries-sort-commented-at.json')
 ];
 
-var queue = require('queue-async');
+var queue = require('d3-queue').queue;
 var notes = require('../notes/index');
 
 tape('test notes module', function(assert) {
     var q = queue(10);
     notesQueries.forEach(function(query) {
         q.defer(searchNotes, assert, query);
-        q.awaitAll(function() {
-            assert.end();
-            process.exit(0);
-        });
+    });
+    q.awaitAll(function() {
+        assert.end();
+        process.exit(0);
     });
 });
 
