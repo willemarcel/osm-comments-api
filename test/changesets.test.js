@@ -19,7 +19,7 @@ var changesetsQueries = [
     require('./fixtures/changesets/queries-text.json')
 ];
 
-var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
+// var changesetQueryDetailed = require('./fixtures/changesets/queries-detailed.json');
 
 var queue = require('queue-async');
 var changesets = require('../changesets/index');
@@ -37,7 +37,7 @@ tape('test changesets module', function(assert) {
         });
     });
 
-    getchangesets(assert,changesetQueryDetailed);
+    // getchangesets(assert,changesetQueryDetailed);
 
 });
 
@@ -51,10 +51,10 @@ function searchchangesets(assert, query, callback) {
     });
 }
 
-function getchangesets(assert, query) {
-    changesets.get(query.id, function(err, result) {
+// function getchangesets(assert, query) {
+//     changesets.get(query.id, function(err, result) {
 
-        //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
-        assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
-    });
-}
+//         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
+//         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
+//     });
+// }
