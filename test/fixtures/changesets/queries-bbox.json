@@ -42,57 +42,12 @@
           "discussionCount": 4,
           "isOpen": false,
           "userID": 651782,
-          "userName": "Cyclizine",
+          "userName": "username",
           "numChanges": 16,
-          "changesetComment": "",
-          "lastCommentComment": "Test discussion item.",
-          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
-          "lastCommentUserName": "bjoern_m",
-          "lastCommentUserID": 44660
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                -2.1234795,
-                57.155572
-              ],
-              [
-                -2.1234795,
-                57.1581645
-              ],
-              [
-                -2.1190102,
-                57.1581645
-              ],
-              [
-                -2.1190102,
-                57.155572
-              ],
-              [
-                -2.1234795,
-                57.155572
-              ]
-            ]
-          ]
-        },
-        "properties": {
-          "id": 34721798,
-          "createdAt": "2015-10-18T22:23:37.000Z",
-          "closedAt": "2015-10-18T22:23:38.000Z",
-          "discussionCount": 4,
-          "isOpen": false,
-          "userID": 651782,
-          "userName": "Cyclizine",
-          "numChanges": 16,
-          "changesetComment": "",
+          "changesetComment": "comment",
           "lastCommentComment": "Test discussion item.",
           "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
-          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserName": "AjBelnuovo",
           "lastCommentUserID": 1799626
         }
       },
@@ -132,9 +87,9 @@
           "discussionCount": 4,
           "isOpen": false,
           "userID": 651782,
-          "userName": "Cyclizine",
+          "userName": "username",
           "numChanges": 16,
-          "changesetComment": "",
+          "changesetComment": "comment",
           "lastCommentComment": "Test discussion item.",
           "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
           "lastCommentUserName": "bjoern_m",
@@ -177,13 +132,598 @@
           "discussionCount": 4,
           "isOpen": false,
           "userID": 651782,
-          "userName": "Cyclizine",
+          "userName": "username",
           "numChanges": 16,
-          "changesetComment": "",
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
           "lastCommentComment": "Test discussion item.",
           "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
           "lastCommentUserName": "bjoern_m",
           "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
+          "lastCommentUserName": "AjBelnuovo",
+          "lastCommentUserID": 1799626
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
+          "lastCommentUserName": "AjBelnuovo",
+          "lastCommentUserID": 1799626
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-12-18T22:55:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:55:10.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T23:49:20.000Z",
+          "lastCommentUserName": "bjoern_m",
+          "lastCommentUserID": 44660
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [
+                -2.1234795,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.1581645
+              ],
+              [
+                -2.1190102,
+                57.155572
+              ],
+              [
+                -2.1234795,
+                57.155572
+              ]
+            ]
+          ]
+        },
+        "properties": {
+          "id": 34721798,
+          "createdAt": "2015-10-18T22:23:37.000Z",
+          "closedAt": "2015-10-18T22:23:38.000Z",
+          "discussionCount": 4,
+          "isOpen": false,
+          "userID": 651782,
+          "userName": "username",
+          "numChanges": 16,
+          "changesetComment": "comment",
+          "lastCommentComment": "Test discussion item.",
+          "lastCommentTimestamp": "2015-11-18T22:49:15.000Z",
+          "lastCommentUserName": "AjBelnuovo",
+          "lastCommentUserID": 1799626
         }
       },
       {
@@ -222,9 +762,9 @@
           "discussionCount": 1,
           "isOpen": false,
           "userID": 1799626,
-          "userName": "AjBelnuovo",
+          "userName": "username",
           "numChanges": 6,
-          "changesetComment": "",
+          "changesetComment": "comment",
           "lastCommentComment": "Test discussion item.",
           "lastCommentTimestamp": "2015-11-18T22:49:10.000Z",
           "lastCommentUserName": "bjoern_m",
@@ -267,9 +807,9 @@
           "discussionCount": 1,
           "isOpen": false,
           "userID": 44660,
-          "userName": "bjoern_m",
+          "userName": "username",
           "numChanges": 5,
-          "changesetComment": "Eisenbahn Hamburg",
+          "changesetComment": "comment",
           "lastCommentComment": "Fun",
           "lastCommentTimestamp": "2015-11-18T22:49:05.000Z",
           "lastCommentUserName": "Armire",
@@ -312,9 +852,9 @@
           "discussionCount": 1,
           "isOpen": false,
           "userID": 3188422,
-          "userName": "ansuta",
+          "userName": "username",
           "numChanges": 5,
-          "changesetComment": "Biescas",
+          "changesetComment": "comment",
           "lastCommentComment": "Foo",
           "lastCommentTimestamp": "2015-11-18T22:49:00.000Z",
           "lastCommentUserName": "Armire",
@@ -357,54 +897,9 @@
           "discussionCount": 2,
           "isOpen": false,
           "userID": 344561,
-          "userName": "FahRadler",
+          "userName": "username",
           "numChanges": 37,
-          "changesetComment": "Fernwärme ergänzt",
-          "lastCommentComment": "test",
-          "lastCommentTimestamp": "2015-10-18T22:55:00.000Z",
-          "lastCommentUserName": "Hjart",
-          "lastCommentUserID": 207581
-        }
-      },
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                10.2474101,
-                57.1613
-              ],
-              [
-                10.2474101,
-                57.1668117
-              ],
-              [
-                10.2570929,
-                57.1668117
-              ],
-              [
-                10.2570929,
-                57.1613
-              ],
-              [
-                10.2474101,
-                57.1613
-              ]
-            ]
-          ]
-        },
-        "properties": {
-          "id": 34721793,
-          "createdAt": "2015-10-18T22:23:15.000Z",
-          "closedAt": "2015-10-18T22:23:16.000Z",
-          "discussionCount": 2,
-          "isOpen": false,
-          "userID": 344561,
-          "userName": "FahRadler",
-          "numChanges": 37,
-          "changesetComment": "Fernwärme ergänzt",
+          "changesetComment": "comment",
           "lastCommentComment": "Danish addressnodes are maintained by scripts and are actually by law not associated with any specific building. Please do not touch them.",
           "lastCommentTimestamp": "2015-10-18T22:48:00.000Z",
           "lastCommentUserName": "Hjart",
