@@ -1,6 +1,6 @@
 var ChangesetComment = require('./ChangesetComment');
 
-var Changeset = function(data, comments, tags) {
+var Changeset = function(data, comments) {
     this.id = data.id;
     this.createdAt = data.created_at;
     this.closedAt = data.closed_at || null;
