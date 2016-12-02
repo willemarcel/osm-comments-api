@@ -1,5 +1,4 @@
 var ChangesetComment = require('./ChangesetComment');
-var ChangesetTag = require('./ChangesetTag');
 
 var Changeset = function(data, comments, tags) {
     this.id = data.id;
@@ -22,13 +21,6 @@ var Changeset = function(data, comments, tags) {
         });
     } else {
         this.comments = null;
-    }
-    if (tags) {
-        this.tags = tags.map(function(tag) {
-            return new ChangesetTag(tag);
-        });
-    } else {
-        this.tags = null;
     }
     return this;
 };
@@ -60,11 +52,6 @@ Changeset.prototype.getProperties = function() {
     if (this.comments) {
         props.comments = this.comments.map(function(comment) {
             return comment.getJSON();
-        });
-    }
-    if (this.tags) {
-        props.tags = this.tags.map(function(tag) {
-            return tag.getJSON();
         });
     }
     return props;

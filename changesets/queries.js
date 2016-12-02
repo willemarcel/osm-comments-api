@@ -7,7 +7,6 @@ module.exports.getSearchQuery = getSearchQuery;
 module.exports.getCountQuery = getCountQuery;
 module.exports.getChangesetQuery = getChangesetQuery;
 module.exports.getChangesetCommentsQuery = getChangesetCommentsQuery;
-// module.exports.getChangesetTagsQuery = getChangesetTagsQuery;
 
 
 function getSearchQuery(params) {
@@ -17,7 +16,6 @@ function getSearchQuery(params) {
         .join('changeset_comments', 'last_comment', 'last_comment.changeset_id = (SELECT changeset_id FROM changeset_comments WHERE changeset_comments.changeset_id = changesets.id ORDER BY changeset_comments.timestamp DESC LIMIT 1)');
     sql = addFields(sql);
     sql = addWhereClauses(sql, params);
-    // sql = addGroupBy(sql);
     sql = addOrderBy(sql, params);
     sql = addOffsetLimit(sql, params);
     return sql.toParam();
@@ -52,25 +50,6 @@ function getChangesetCommentsQuery(id) {
     return sql.toParam();
 }
 
-// function getChangesetTagsQuery(id) {
-//     var sql = squel.select()
-//         .from('changeset_tags')
-//         .where('changeset_id = ?', id)
-//         .field('changeset_tags.key', 'key')
-//         .field('changeset_tags.value', 'value');
-//     return sql.toParam();
-// }
-
-// function addGroupBy(sql) {
-//     sql.group('changesets.id')
-//          .group('users.name')
-//          .group('changeset_tags.value')
-//          .group('last_comment.comment')
-//          .group('last_comment.timestamp')
-//          .group('last_comment.user_id')
-//          .group('last_user.name');
-//     return sql;
-// }
 
 function addFields(sql) {
     sql.field('changesets.id', 'id')
