@@ -13,7 +13,8 @@
  - GET **/changesets** Fetches changesets, returned as GeoJSON. Params:
   - **from**: date to search from (as YYYY-MM-DD)
   - **to**: date to search to (as YYYY-MM-DD)
-  - **users**: comma separate list of usernames - searches for changesets created by users in list
+  - **users**: comma separated list of usernames - searches for changesets created by users in list
+  - **involves**: comma separated list of usernames - searches for changesets where users `involved` have commented on that changeset
   - **bbox**: Bounding box to search for changesets within
   - **sort**: Operator plus field to sort by. eg. '-created_at'. Supported fields are: created_at, closed_at, discussion_count, num_changes, discussed_at
   - **comment**: Text, returns changesets where the changeset comment contains _text_
