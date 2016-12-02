@@ -1,7 +1,7 @@
 var config = require('../lib/config')();
 var Changeset = require('./Changeset');
 var queries = require('./queries');
-var queue = require('queue-async');
+var queue = require('d3-queue').queue;
 var pg = require('pg');
 require('../validators');
 var validate = require('validate.js');
