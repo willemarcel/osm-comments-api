@@ -5,53 +5,7 @@
   },
   "geojson": {
     "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "geometry": {
-          "type": "Polygon",
-          "coordinates": [
-            [
-              [
-                10.1863837,
-                53.4870471
-              ],
-              [
-                10.1863837,
-                53.5342565
-              ],
-              [
-                10.3292951,
-                53.5342565
-              ],
-              [
-                10.3292951,
-                53.4870471
-              ],
-              [
-                10.1863837,
-                53.4870471
-              ]
-            ]
-          ]
-        },
-        "properties": {
-          "id": 34721796,
-          "createdAt": "2015-10-18T22:23:22.000Z",
-          "closedAt": "2015-10-18T22:23:53.000Z",
-          "discussionCount": 1,
-          "isOpen": false,
-          "userID": 44660,
-          "userName": "bjoern_m",
-          "numChanges": 5,
-          "changesetComment": "Eisenbahn Hamburg",
-          "lastCommentComment": "Fun",
-          "lastCommentTimestamp": "2015-11-18T22:49:05.000Z",
-          "lastCommentUserName": "Armire",
-          "lastCommentUserID": 3099780
-        }
-      }
-    ],
-    "total": "1"
+    "features": [],
+    "total": "0"
   }
 }
