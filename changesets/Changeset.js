@@ -10,10 +10,12 @@ var Changeset = function(data, comments) {
     this.userName = data.user_name;
     this.numChanges = data.num_changes;
     this.bbox = JSON.parse(data.bbox);
-    this.lastCommentComment = data.last_comment_comment || null;
-    this.lastCommentTimestamp = data.last_comment_timestamp || null;
-    this.lastCommentUserName = data.last_comment_user_name || null;
-    this.lastCommentUserID = data.last_comment_user_id || null;
+    if (data.last_comment_comment) {
+        this.lastCommentComment = data.last_comment_comment || null;
+        this.lastCommentTimestamp = data.last_comment_timestamp || null;
+        this.lastCommentUserName = data.last_comment_user_name || null;
+        this.lastCommentUserID = data.last_comment_user_id || null;
+    }
     this.changesetComment = data.changeset_comment || '';
     if (comments) {
         this.comments = comments.map(function(comment) {

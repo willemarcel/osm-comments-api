@@ -33,8 +33,16 @@ function getCountQuery(params) {
 function getChangesetQuery(id) {
     var sql = squel.select()
         .from('changesets')
-        .where('changesets.id = ?', id);
-    sql = addFields(sql);
+        .where('changesets.id = ?', id)
+        .field('changesets.created_at', 'created_at')
+        .field('changesets.closed_at', 'closed_at')
+        .field('changesets.is_open', 'is_open')
+        .field('changesets.user_id', 'user_id')
+        .field('changesets.username', 'user_name')
+        .field('changesets.comment', 'changeset_comment')
+        .field('changesets.num_changes', 'num_changes')
+        .field('changesets.discussion_count', 'discussion_count')
+        .field('ST_AsGeoJSON(changesets.bbox)', 'bbox');
     return sql.toParam();
 }
 
