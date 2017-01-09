@@ -54,7 +54,8 @@ function getChangesetCommentsQuery(id) {
         .field('changeset_comments.timestamp', 'comment_timestamp')
         .field('changeset_comments.comment', 'comment')
         .field('changeset_comments.user_id', 'user_id')
-        .field('changeset_comments.username', 'user_name');
+        .field('changeset_comments.username', 'user_name')
+        .order('changeset_comments.timestamp', true);
     return sql.toParam();
 }
 
