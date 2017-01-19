@@ -7,8 +7,6 @@ var queue = require('d3-queue').queue;
 var path = require('path');
 var http = require('http');
 var db = path.resolve(__dirname, 'db.sh');
-var testsList = require('./fixtures/notes/test_list.json');
-var server;
 
 // Simple GET function
 function get(path, callback) {
@@ -61,7 +59,7 @@ tape('create db', function(assert) {
 });
 
 tape('start server', function(assert) {
-    server = api.listen(20009, function(err) {
+    api.listen(20009, function(err) {
         if (err) throw err;
         assert.pass('server listening on 20009');
         assert.end();
