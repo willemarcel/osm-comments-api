@@ -126,7 +126,10 @@ CREATE TABLE IF NOT EXISTS notes (
 
 CREATE TABLE IF NOT EXISTS users (
     id integer NOT NULL,
-    name text
+    name text,
+    first_edit timestamptz,
+    changeset_count integer,
+    num_changes integer
 );
 
 
@@ -240,22 +243,22 @@ COPY spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: sanjaybhangar
 --
 
-COPY users (id, name) FROM stdin;
-1626	FredB
-3980	TomH
-378532	nyampire
-10353	gorn
-37548	Marcussacapuces91
-293774	Oli-Wan
-8296	kuede
-344561	FahRadler
-207581	Hjart
-3188422	ansuta
-3099780	Armire
-44660	bjoern_m
-1799626	AjBelnuovo
-651782	Cyclizine
-3318999	wanda987
+COPY users (id, name, first_edit, changeset_count, num_changes) FROM stdin;
+1626	FredB	2013-04-24	5	50
+3980	TomH	2013-04-24	3	30
+378532	nyampire	2013-04-24	2	20
+10353	gorn	2013-04-24	1	10
+37548	Marcussacapuces91	2013-04-24	12	120
+293774	Oli-Wan	2013-04-24	11	110
+8296	kuede	2013-04-24	5 	11
+344561	FahRadler	2013-04-24	1	1
+207581	Hjart	2013-04-24	4	44
+3188422	ansuta	2013-04-24	2	22
+3099780	Armire	2013-04-24	1	400
+44660	bjoern_m	2013-04-24	55	5555
+1799626	AjBelnuovo	2013-04-24	1	11
+651782	Cyclizine	2013-04-24	1	10
+3318999	wanda987	2013-04-24	1	11
 \.
 
 

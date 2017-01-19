@@ -6,6 +6,7 @@ require('./lib/config')(config);
 var express = require('express');
 var notes = require('./notes/index');
 var changesets = require('./changesets/index');
+var users = require('./users/index');
 var cors = require('cors');
 var errors = require('mapbox-error');
 var ErrorHTTP = require('mapbox-error').ErrorHTTP;
@@ -52,6 +53,15 @@ server.get('/api/v1/changesets/:id', function(req, res, next) {
             return next(err);
         }
         res.json(geojson);
+    });
+});
+
+server.get('/api/v1/users/:name', function(req, res, next) {
+    users.get(req.params.name, function(err, json) {
+        if (err) {
+            return next(err);
+        }
+        res.json(json);
     });
 });
 
