@@ -88,6 +88,7 @@ function addWhereClauses(sql, params) {
     var text = params.text || null;
     var isUnreplied = params.unReplied || null;
     var involves = params.involves || null;
+    sql.where('changesets.discussion_count > 0');
     if (users) {
         var usersArray = users.split(',').map(function(user) {
             return user;

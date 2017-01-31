@@ -20,6 +20,8 @@ changesets.search = function(params, callback) {
     }
     var searchQuery = queries.getSearchQuery(params);
     var countQuery = queries.getCountQuery(params);
+    console.log('searchQ', searchQuery);
+    console.log('countQ', countQuery);
     var q = queue(2);
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
