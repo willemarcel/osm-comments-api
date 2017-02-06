@@ -67,9 +67,11 @@ server.get('/api/v1/users/:name', function(req, res, next) {
 });
 
 server.get('/api/v1/stats/', function(req, res, next) {
-    var to = to || moment().toISOString();
-    var from = from || moment().subtract(1, 'hours').toISOString();
-    changes.get('2017-02-06 15:03:26+05:30', '2017-02-06 15:03:29+05:30', null, null, function(err, json) {
+    var to = req.query.to || moment().toISOString();
+    var from = req.query.from || moment().subtract(1, 'hours').toISOString();
+    var users = req.query.users || false;
+    var tags = req.query.tags || false;
+    changes.get(from, to, users, tags, function(err, json) {
         if (err) {
             return next(err);
         }
