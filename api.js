@@ -7,11 +7,12 @@ var express = require('express');
 var notes = require('./notes/index');
 var changesets = require('./changesets/index');
 var users = require('./users/index');
+var changes = require('./changes/index');
 var cors = require('cors');
 var errors = require('mapbox-error');
 var ErrorHTTP = require('mapbox-error').ErrorHTTP;
 var customErrors = require('./errors');
-
+var moment = require('moment');
 var server = module.exports = express();
 
 server.use(cors());
@@ -58,6 +59,17 @@ server.get('/api/v1/changesets/:id', function(req, res, next) {
 
 server.get('/api/v1/users/:name', function(req, res, next) {
     users.get(req.params.name, function(err, json) {
+        if (err) {
+            return next(err);
+        }
+        res.json(json);
+    });
+});
+
+server.get('/api/v1/stats/', function(req, res, next) {
+    var to = to || moment().toISOString();
+    var from = from || moment().subtract(1, 'hours').toISOString();
+    changes.get('2017-02-06 15:03:26+05:30', '2017-02-06 15:03:29+05:30', null, null, function(err, json) {
         if (err) {
             return next(err);
         }
