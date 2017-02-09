@@ -27,7 +27,7 @@
     "minimist": "^1.2.0",
     "moment": "^2.17.1",
     "pg": "^4.4.3",
-    "squel": "^4.2.0",
+    "squel": "^5.7.0",
     "turf-bbox-polygon": "^1.0.1",
     "validate.js": "^0.9.0"
   },
