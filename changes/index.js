@@ -74,11 +74,8 @@ function getQuery(from, to, users, tags, callback) {
         var tagsArray = tags.split(',').map(function(tag) {
             return tag;
         });
-        prepareTagQuery(tagsArray, sql, function(err, sql) {
-            if (err) {
-                return callback(err);
-            }
-        });
+        var tagSql = prepareTagQuery(tagsArray, sql);
+        sql = sql.where(tagSql);
     }
 
     if (users) {
@@ -131,7 +128,7 @@ function getUserIds(users, callback) {
     });
 }
 
-function prepareTagQuery(tags, sql, callback) {
+function prepareTagQuery(tags, sql) {
     // SELECT * FROM json_test WHERE data ? 'a'; - check if 'a' exists as a key.
     // SELECT * FROM json_test WHERE data ?| array['a', 'b'];
     // select tags_created from stats where tags_created -> 'shop' ? 'tattoo';
@@ -150,5 +147,5 @@ function prepareTagQuery(tags, sql, callback) {
             tagsSql.or('tags_modified ? !!', key);
         }
     });
-    callback(null, sql.where(tagsSql));
+    return tagsSql;
 }
