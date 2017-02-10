@@ -1,5 +1,4 @@
 var config = require('../lib/config')();
-var queue = require('d3-queue').queue;
 var pg = require('pg');
 require('../validators');
 var validate = require('validate.js');
@@ -103,6 +102,7 @@ function getUserIds(users, callback) {
     var userSql = squel.select({'parameterCharacter': '!!'})
         .from('users')
         .field('id')
+        .field('name')
         .where('name in !!', users);
 
     var userIds = [];
@@ -142,9 +142,11 @@ function prepareTagQuery(tags, sql) {
         if (value !== '*') {
             tagsSql.or('tags_created -> !! ? !!', key, value);
             tagsSql.or('tags_modified -> !! ? !!', key, value);
+            tagsSql.or('tags_deleted -> !! ? !!', key, value);
         } else {
             tagsSql.or('tags_created ? !!', key);
             tagsSql.or('tags_modified ? !!', key);
+            tagsSql.or('tags_deleted ? !!', key);
         }
     });
     return tagsSql;
