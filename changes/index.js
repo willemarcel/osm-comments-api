@@ -16,7 +16,7 @@ changes.get = function(from, to, users, tags, callback) {
         return callback(new errors.ParseError(parseError));
     }
 
-    getQuery(from, to, users, tags, function(err, query) {
+    getQuery(from, to, users, tags, function(err, query, usersData) {
         if (err) {
             callback(err, null);
             return;
@@ -34,6 +34,18 @@ changes.get = function(from, to, users, tags, callback) {
                 }
                 if (result.rows.length === 0) {
                     return callback(new errors.NotFoundError('No records found'));
+                }
+
+                var userLookup = {};
+
+                if (usersData) {
+                    usersData.rows.forEach(function (u) {
+                        userLookup[u.id] = u.name;
+                    });
+
+                    result.rows.forEach(function (r) {
+                        r.username = userLookup[r.uid];
+                    });
                 }
                 callback(null, result.rows);
             });
@@ -82,13 +94,18 @@ function getQuery(from, to, users, tags, callback) {
             return user;
         });
 
-        getUserIds(usersArray, function(err, userIds) {
+        getUserIds(usersArray, function(err, usersData) {
             if (err) {
                 return callback(err);
             }
 
+            var userIds = [];
+            usersData.rows.forEach(function (r) {
+                userIds.push(r.id);
+            });
+
             sql.where('uid in !!', userIds);
-            callback(null, sql.toParam());
+            callback(null, sql.toParam(), usersData);
         });
     } else {
 
@@ -105,7 +122,6 @@ function getUserIds(users, callback) {
         .field('name')
         .where('name in !!', users);
 
-    var userIds = [];
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
             return callback(err, null);
@@ -119,10 +135,7 @@ function getUserIds(users, callback) {
             if (result.rows.length === 0) {
                 return callback(new errors.NotFoundError('No such users'));
             }
-            result.rows.forEach(function (r) {
-                userIds.push(r.id);
-            });
-            callback(null, userIds);
+            callback(null, result);
 
         });
     });
