@@ -108,7 +108,17 @@ function getQuery(from, to, users, tags, callback) {
             callback(null, sql.toParam(), usersData);
         });
     } else {
-
+        sql.field('u.name', 'username')
+            .field('stats.id', 'id')
+            .field('uid')
+            .field('change_at')
+            .field('nodes')
+            .field('ways')
+            .field('relations')
+            .field('tags_created')
+            .field('tags_modified')
+            .field('tags_deleted')
+            .join('users', 'u', 'u.id = stats.uid');
         callback(null, sql.toParam());
     }
 
