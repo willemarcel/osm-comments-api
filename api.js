@@ -57,8 +57,17 @@ server.get('/api/v1/changesets/:id', function(req, res, next) {
     });
 });
 
-server.get('/api/v1/users/:name', function(req, res, next) {
-    users.get(req.params.name, function(err, json) {
+server.get('/api/v1/users/name/:name', function(req, res, next) {
+    users.getName(req.params.name, function(err, json) {
+        if (err) {
+            return next(err);
+        }
+        res.json(json);
+    });
+});
+
+server.get('/api/v1/users/id/:id', function(req, res, next) {
+    users.getId(req.params.id, function(err, json) {
         if (err) {
             return next(err);
         }
