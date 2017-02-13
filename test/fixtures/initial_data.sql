@@ -36,7 +36,6 @@ CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
 
 COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
 
-CREATE EXTENSION tsearch2;
 
 SET search_path = public, pg_catalog;
 
