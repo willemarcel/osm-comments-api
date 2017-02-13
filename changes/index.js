@@ -118,6 +118,7 @@ function getQuery(from, to, users, tags, callback) {
             .field('tags_created')
             .field('tags_modified')
             .field('tags_deleted')
+            .field('changesets')
             .join('users', 'u', 'u.id = stats.uid');
         callback(null, sql.toParam());
     }
