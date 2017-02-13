@@ -115,10 +115,9 @@ function addWhereClauses(sql, params) {
     }
     if (text) {
         sql.where(
-            squel.expr().or_begin()
+            squel.expr()
                 .or('to_tsvector(\'english\', changesets.comment) @@ plainto_tsquery(?)', text)
                 .or('to_tsvector(\'english\', changeset_comments.comment) @@ plainto_tsquery(?)', text)
-                .end()
         );
     }
     if (bbox) {
