@@ -25,3 +25,12 @@
   - **offset**: Record number to start returning results at (default=0)
   - **limit**: Number of results to return (default=20)
 
+- GET **/users/name/:name** Fetches user details for `name` like id, date of first edit, number of changesets, number of edits.
+
+- GET **/users/id/:id** Fetches user details for `id`.
+
+- GET **/stats/** Fetches stats about changes, parsed from minutely changeset file.
+ - **from**: timestamp in UTC (example: `2017-02-01T05:03:04.000Z`)
+ - **to**: timestamp in UTC
+ - **users**: comma separated list of usernames
+ - **tags**: comma separated list of tags (example: `highway=*,building=yes`)

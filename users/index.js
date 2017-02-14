@@ -9,14 +9,34 @@ module.exports = users;
 
 var pgURL = config.PostgresURL;
 
-users.get = function(name, callback) {
-    var userQuery = 'SELECT * FROM users WHERE name = $1';
+users.getName = function(name, callback) {
+    query(name, 'name', function (err, user) {
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, user);
+    });
+};
+
+users.getId = function(id, callback) {
+    query(id, 'id', function (err, user) {
+        if (err) {
+            return callback(err, null);
+        }
+
+        callback(null, user);
+    });
+};
+
+function query(value, thing, callback) {
+    var userQuery = 'SELECT * FROM users WHERE ' + thing + '= $1';
     pg.connect(pgURL, function(err, client, done) {
         if (err) {
             callback(err, null);
             return;
         }
-        client.query(userQuery, [name], function(err, result) {
+        client.query(userQuery, [value], function(err, result) {
             done();
             if (err) {
                 return callback(err, null);
@@ -27,4 +47,4 @@ users.get = function(name, callback) {
             callback(null, result.rows[0]);
         });
     });
-};
+}
