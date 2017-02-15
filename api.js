@@ -80,7 +80,8 @@ server.get('/api/v1/stats/', function(req, res, next) {
     var from = req.query.from || moment().subtract(1, 'hours').toISOString();
     var users = req.query.users || false;
     var tags = req.query.tags || false;
-    changes.get(from, to, users, tags, function(err, json) {
+    var bbox = req.query.bbox || false;
+    changes.get(from, to, users, tags, bbox, function(err, json) {
         if (err) {
             return next(err);
         }
