@@ -86,6 +86,8 @@ function getQuery(from, to, users, tags, bbox, callback) {
         var changesetSql = squel.select({'parameterCharacter': '!!'})
         .field('array_agg(id)')
         .from('changesets')
+        .where('created_at >', from)
+        .where('created_at <', to)
         .where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
         sql.where('changesets <@', changesetSql);
     }
