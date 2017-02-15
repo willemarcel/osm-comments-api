@@ -58,7 +58,7 @@ server.get('/api/v1/changesets/:id', function(req, res, next) {
 });
 
 server.get('/api/v1/users/name/:name', function(req, res, next) {
-    users.getName(req.params.name, function(err, json) {
+    users.getName(req.params.name, req.query, function(err, json) {
         if (err) {
             return next(err);
         }
@@ -67,7 +67,7 @@ server.get('/api/v1/users/name/:name', function(req, res, next) {
 });
 
 server.get('/api/v1/users/id/:id', function(req, res, next) {
-    users.getId(req.params.id, function(err, json) {
+    users.getId(req.params.id, req.query, function(err, json) {
         if (err) {
             return next(err);
         }
