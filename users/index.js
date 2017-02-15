@@ -66,8 +66,10 @@ function fetchExtra(user, client, done, callback) {
     var q = queue(3);
     var totalDiscussionsQ = 'SELECT COUNT(id) FROM changeset_comments WHERE user_id=$1';
     var discussedChangesetsQ = 'SELECT COUNT(id) FROM changesets WHERE (SELECT COUNT(id) FROM changeset_comments WHERE changeset_comments.changeset_id = changesets.id) > 0 AND changesets.discussion_count > 0 AND changesets.user_id = $1';
+    var mappingDaysQ = "SELECT COUNT(DISTINCT(date_trunc('day', created_at))) FROM changesets WHERE user_id=$1";
     q.defer(client.query.bind(client), totalDiscussionsQ, [userId]);
     q.defer(client.query.bind(client), discussedChangesetsQ, [userId]);
+    q.defer(client.query.bind(client), mappingDaysQ, [userId]);
     q.awaitAll(function(err, results) {
         done();
         if (err) {
@@ -75,7 +77,8 @@ function fetchExtra(user, client, done, callback) {
         }
         user.extra = {
             'total_discussions': results[0].rows[0].count,
-            'changesets_with_discussions': results[1].rows[0].count
+            'changesets_with_discussions': results[1].rows[0].count,
+            'mapping_days': results[2].rows[0].count
         };
         return callback(null, user);
     });
