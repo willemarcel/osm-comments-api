@@ -4,6 +4,7 @@ require('../validators');
 var validate = require('validate.js');
 var errors = require('../errors');
 var squel = require('squel').useFlavour('postgres');
+var helpers = require('../helpers');
 
 var changes = {};
 
@@ -86,10 +87,10 @@ function getQuery(from, to, users, tags, bbox, callback) {
         var changesetSql = squel.select({'parameterCharacter': '!!'})
         .field('array_agg(id)')
         .from('changesets')
-        .where('created_at >', from)
-        .where('created_at <', to)
-        .where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(?), 4326))', polygonGeojson);
-        sql.where('changesets <@', changesetSql);
+        .where('created_at > !!', from)
+        .where('created_at < !!', to)
+        .where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(!!), 4326))', polygonGeojson);
+        sql = sql.where('changesets <@ !!', changesetSql);
     }
 
     if (tags) {
@@ -131,6 +132,7 @@ function getQuery(from, to, users, tags, bbox, callback) {
             .field('tags_deleted')
             .field('changesets')
             .join('users', 'u', 'u.id = stats.uid');
+        console.log('#sql', sql.toString());
         callback(null, sql.toParam());
     }
 
