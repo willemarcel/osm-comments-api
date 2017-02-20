@@ -69,7 +69,7 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                             if (!thisUserMemo[thing].hasOwnProperty(tag)) {
                                 thisUserMemo[thing][tag] = {};
                             }
-                            Objects.keys(row[thing[tag]]).forEach(function(value) {
+                            Objects.keys(row[thing][tag]).forEach(function(value) {
                                 if (!thisUserMemo[thing][tag].hasOwnProperty(value)) {
                                     thisUserMemo[thing][tag][value] = 0;
                                 }
