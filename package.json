@@ -1,6 +1,6 @@
 {
   "name": "osm-comments-api",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "API Server for OSM Comments and Notes",
   "main": "index.js",
   "scripts": {
