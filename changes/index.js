@@ -38,6 +38,17 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                     return callback(new errors.NotFoundError('No records found'));
                 }
 
+                var userLookup = {};
+                if (usersData) {
+                    usersData.rows.forEach(function (u) {
+                        userLookup[u.id] = u.name;
+                    });
+
+                    result.rows.forEach(function (r) {
+                        r.username = userLookup[r.uid];
+                    });
+                }
+
                 var reducerFn = function(memo, row) {
                     var hour = moment.utc(row.change_at).startOf('hour').toISOString();
                     if (!memo.hasOwnProperty(hour)) {
