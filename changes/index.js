@@ -6,7 +6,7 @@ var errors = require('../errors');
 var squel = require('squel').useFlavour('postgres');
 var helpers = require('../helpers');
 var moment = require('moment');
-
+var union = require('lodash.union');
 var changes = {};
 
 module.exports = changes;
@@ -65,11 +65,11 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                         if (!thisUserMemo.hasOwnProperty(thing)) {
                             thisUserMemo[thing] = {};
                         }
-                        Objects.keys(row[thing]).forEach(function(tag) {
+                        Object.keys(row[thing]).forEach(function(tag) {
                             if (!thisUserMemo[thing].hasOwnProperty(tag)) {
                                 thisUserMemo[thing][tag] = {};
                             }
-                            Objects.keys(row[thing][tag]).forEach(function(value) {
+                            Object.keys(row[thing][tag]).forEach(function(value) {
                                 if (!thisUserMemo[thing][tag].hasOwnProperty(value)) {
                                     thisUserMemo[thing][tag][value] = 0;
                                 }
@@ -78,6 +78,8 @@ changes.get = function(from, to, users, tags, bbox, callback) {
 
                         });
                     });
+
+                    thisUserMemo.changesets = union(thisUserMemo.changesets, row.changesets);
                     return memo;
                 };
 
