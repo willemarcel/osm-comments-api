@@ -5,7 +5,8 @@ var validate = require('validate.js');
 var errors = require('../errors');
 var squel = require('squel').useFlavour('postgres');
 var helpers = require('../helpers');
-
+var moment = require('moment');
+var union = require('lodash.union');
 var changes = {};
 
 module.exports = changes;
@@ -37,18 +38,52 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                     return callback(new errors.NotFoundError('No records found'));
                 }
 
-                var userLookup = {};
+                var reducerFn = function(memo, row) {
+                    var hour = moment.utc(row.change_at).startOf('hour').toISOString();
+                    if (!memo.hasOwnProperty(hour)) {
+                        memo[hour] = {};
+                    }
+                    var username = row.username;
+                    if (!memo[hour].hasOwnProperty(username)) {
+                        memo[hour][username] = {};
+                    }
+                    var thisUserMemo = memo[hour][username];
+                    ['nodes', 'ways', 'relations'].forEach(function(thing) {
+                        if (!thisUserMemo.hasOwnProperty(thing)) {
+                            thisUserMemo[thing] = {
+                                'c': 0,
+                                'm': 0,
+                                'd': 0
+                            };
+                        }
+                        ['c', 'm', 'd'].forEach(function(type) {
+                            // if row does not always contain these, add error handling:
+                            thisUserMemo[thing][type] += row[thing][type];
+                        });
+                    });
+                    ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function(thing) {
+                        if (!thisUserMemo.hasOwnProperty(thing)) {
+                            thisUserMemo[thing] = {};
+                        }
+                        Object.keys(row[thing]).forEach(function(tag) {
+                            if (!thisUserMemo[thing].hasOwnProperty(tag)) {
+                                thisUserMemo[thing][tag] = {};
+                            }
+                            Object.keys(row[thing][tag]).forEach(function(value) {
+                                if (!thisUserMemo[thing][tag].hasOwnProperty(value)) {
+                                    thisUserMemo[thing][tag][value] = 0;
+                                }
+                                thisUserMemo[thing][tag][value] += row[thing][tag][value];
+                            });
 
-                if (usersData) {
-                    usersData.rows.forEach(function (u) {
-                        userLookup[u.id] = u.name;
+                        });
                     });
 
-                    result.rows.forEach(function (r) {
-                        r.username = userLookup[r.uid];
-                    });
-                }
-                callback(null, result.rows);
+                    thisUserMemo.changesets = union(thisUserMemo.changesets, row.changesets);
+                    return memo;
+                };
+
+                callback(null, result.rows.reduce(reducerFn, {}));
             });
         });
     });
