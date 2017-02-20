@@ -71,6 +71,22 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                                         hourlyBuckets[hour][d.username][thing][type] = hourlyBuckets[hour][d.username][thing][type] + d[thing][type];
                                     });
                                 });
+
+                                ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function (thing) {
+                                    Object.keys(hourlyBuckets[hour][d.username][thing]).forEach(function (k) {
+                                        if (d[thing].hasOwnProperty(k)) {
+                                            Object.keys(hourlyBuckets[hour][d.username][thing][k]).forEach(function (v) {
+                                                if (d[thing][k].hasOwnProperty(v)) {
+                                                    hourlyBuckets[hour][d.username][thing][k][v] = hourlyBuckets[hour][d.username][thing][k][v] + d[thing][k][v];
+                                                } else {
+                                                    hourlyBuckets[hour][d.username][thing][k][v] = d[thing][k][v];
+                                                }
+                                            });
+                                        } else {
+                                            hourlyBuckets[hour][d.username][thing][k] = d[thing][k];
+                                        }
+                                    });
+                                });
                             } else {
                                 hourlyBuckets[hour][d.username] = d;
                             }
@@ -87,41 +103,6 @@ changes.get = function(from, to, users, tags, bbox, callback) {
         });
     });
 };
-
-// function aggregate(hour, minute) {
-//     var hourKeys = Object.keys(hour);
-//     var user = minute.user;
-//     hour.forEach(function (h) {
-//         if (h.user == minute.user) {
-
-//             ['nodes', 'ways', 'relations'].forEach(function (thing) {
-//                 ['c', 'm', 'd'].forEach(function (type) {
-//                     h[thing][type] = minute.user[thing][type];
-//                 });
-//             });
-
-//             ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function (thing) {
-//                 Object.keys(minute[thing]).forEach(function (k) {
-//                     if (h[thing].hasOwnProperty(k)) {
-//                         Object.keys(minute[thing].k).forEach(function (v) {
-//                             if (h[thing].k.hasOwnProperty(v)) {
-//                                 h[thing].k.v = h[thing].k.v + minute.thing.k.v;
-//                             } else {
-//                                 h[thing].k[v] = minute.thing.k.v;
-//                             }
-//                         });
-//                     } else {
-//                         h[thing][k] = minute[thing][k];
-//                     }
-//                 });
-//             });
-//         } else {
-//             h[user] = minute;
-//         }
-//     });
-//     console.log(hour);
-//     return hour;
-// }
 
 function validateParams(params) {
     var constraints = {
