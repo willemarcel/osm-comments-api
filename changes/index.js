@@ -5,6 +5,7 @@ var validate = require('validate.js');
 var errors = require('../errors');
 var squel = require('squel').useFlavour('postgres');
 var helpers = require('../helpers');
+var moment = require('moment');
 
 var changes = {};
 
@@ -48,11 +49,79 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                         r.username = userLookup[r.uid];
                     });
                 }
-                callback(null, result.rows);
+
+                var userBuckets = {};
+                var hourlyBuckets = {};
+
+                result.rows.forEach(function (r) {
+                    if (userBuckets.hasOwnProperty(r.username)) {
+                        userBuckets[r.username].push(r);
+                    } else {
+                        userBuckets[r.username] = [r];
+                    }
+                });
+
+                Object.keys(userBuckets).forEach(function(u) {
+                    hourlyBuckets = userBuckets[u].reduce(function (hourlyBuckets, d) {
+                        var hour = moment.utc(d.change_at).startOf('hour').toISOString();
+                        if (hourlyBuckets.hasOwnProperty(hour)) {
+                            if (hourlyBuckets[hour].hasOwnProperty(d.username)) {
+                                ['nodes', 'ways', 'relations'].forEach(function (thing) {
+                                    ['c', 'm', 'd'].forEach(function (type) {
+                                        hourlyBuckets[hour][d.username][thing][type] = d[thing][type];
+                                    });
+                                });
+                            } else {
+                                hourlyBuckets[hour][d.username] = d;
+                            }
+                        } else {
+                            hourlyBuckets[hour] = {};
+                            hourlyBuckets[hour][d.username] = d;
+                        }
+                        return hourlyBuckets;
+                    });
+                });
+
+                callback(null, hourlyBuckets);
             });
         });
     });
 };
+
+// function aggregate(hour, minute) {
+//     var hourKeys = Object.keys(hour);
+//     var user = minute.user;
+//     hour.forEach(function (h) {
+//         if (h.user == minute.user) {
+
+//             ['nodes', 'ways', 'relations'].forEach(function (thing) {
+//                 ['c', 'm', 'd'].forEach(function (type) {
+//                     h[thing][type] = minute.user[thing][type];
+//                 });
+//             });
+
+//             ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function (thing) {
+//                 Object.keys(minute[thing]).forEach(function (k) {
+//                     if (h[thing].hasOwnProperty(k)) {
+//                         Object.keys(minute[thing].k).forEach(function (v) {
+//                             if (h[thing].k.hasOwnProperty(v)) {
+//                                 h[thing].k.v = h[thing].k.v + minute.thing.k.v;
+//                             } else {
+//                                 h[thing].k[v] = minute.thing.k.v;
+//                             }
+//                         });
+//                     } else {
+//                         h[thing][k] = minute[thing][k];
+//                     }
+//                 });
+//             });
+//         } else {
+//             h[user] = minute;
+//         }
+//     });
+//     console.log(hour);
+//     return hour;
+// }
 
 function validateParams(params) {
     var constraints = {
