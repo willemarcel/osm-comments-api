@@ -68,7 +68,7 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                             if (hourlyBuckets[hour].hasOwnProperty(d.username)) {
                                 ['nodes', 'ways', 'relations'].forEach(function (thing) {
                                     ['c', 'm', 'd'].forEach(function (type) {
-                                        hourlyBuckets[hour][d.username][thing][type] = d[thing][type];
+                                        hourlyBuckets[hour][d.username][thing][type] = hourlyBuckets[hour][d.username][thing][type] + d[thing][type];
                                     });
                                 });
                             } else {
