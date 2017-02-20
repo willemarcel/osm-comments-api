@@ -4,19 +4,20 @@ require('../validators');
 var validate = require('validate.js');
 var errors = require('../errors');
 var squel = require('squel').useFlavour('postgres');
+var helpers = require('../helpers');
 
 var changes = {};
 
 module.exports = changes;
 var pgURL = config.PostgresURL;
 
-changes.get = function(from, to, users, tags, callback) {
+changes.get = function(from, to, users, tags, bbox, callback) {
     var parseError = validateParams({'from': from, 'to': to});
     if (parseError) {
         return callback(new errors.ParseError(parseError));
     }
 
-    getQuery(from, to, users, tags, function(err, query, usersData) {
+    getQuery(from, to, users, tags, bbox, function(err, query, usersData) {
         if (err) {
             callback(err, null);
             return;
@@ -74,12 +75,23 @@ function validateParams(params) {
     return null;
 }
 
-function getQuery(from, to, users, tags, callback) {
+function getQuery(from, to, users, tags, bbox, callback) {
 
     var sql = squel.select({'parameterCharacter': '!!'})
-        .from('stats')
-        .where('change_at > !!', from)
-        .where('change_at < !!', to);
+    .from('stats')
+    .where('change_at > !!', from)
+    .where('change_at < !!', to);
+
+    if (bbox) {
+        var polygonGeojson = JSON.stringify(helpers.getPolygon(bbox).geometry);
+        var changesetSql = squel.select({'parameterCharacter': '!!'})
+        .field('array_agg(id)')
+        .from('changesets')
+        .where('created_at > !!', from)
+        .where('created_at < !!', to)
+        .where('ST_Intersects(changesets.bbox, ST_SetSRID(ST_GeomFromGeoJSON(!!), 4326))', polygonGeojson);
+        sql = sql.where('changesets <@ !!', changesetSql);
+    }
 
     if (tags) {
         var tagsArray = tags.split(',').map(function(tag) {
@@ -120,6 +132,7 @@ function getQuery(from, to, users, tags, callback) {
             .field('tags_deleted')
             .field('changesets')
             .join('users', 'u', 'u.id = stats.uid');
+        console.log('#sql', sql.toString());
         callback(null, sql.toParam());
     }
 
