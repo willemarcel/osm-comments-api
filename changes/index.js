@@ -38,70 +38,44 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                     return callback(new errors.NotFoundError('No records found'));
                 }
 
-                var userLookup = {};
-
-                if (usersData) {
-                    usersData.rows.forEach(function (u) {
-                        userLookup[u.id] = u.name;
-                    });
-
-                    result.rows.forEach(function (r) {
-                        r.username = userLookup[r.uid];
-                    });
-                }
-
-                var userBuckets = {};
-                var hourlyBuckets = {};
-
-                result.rows.forEach(function (r) {
-                    if (userBuckets.hasOwnProperty(r.username)) {
-                        userBuckets[r.username].push(r);
-                    } else {
-                        userBuckets[r.username] = [r];
+                var reducerFn = function(memo, row) {
+                    var hour = moment.utc(row.change_at).startOf('hour').toISOString();
+                    if (!memo.hasOwnProperty(hour)) {
+                        memo[hour] = {};
                     }
-                });
-
-                Object.keys(userBuckets).forEach(function(u) {
-                    hourlyBuckets = userBuckets[u].reduce(function (memo, d) {
-                        var hour = moment.utc(d.change_at).startOf('hour').toISOString();
-                        if (hourlyBuckets.hasOwnProperty(hour)) {
-                            if (hourlyBuckets[hour].hasOwnProperty(d.username)) {
-                                ['nodes', 'ways', 'relations'].forEach(function (thing) {
-                                    ['c', 'm', 'd'].forEach(function (type) {
-                                        hourlyBuckets[hour][d.username][thing][type] = hourlyBuckets[hour][d.username][thing][type] + d[thing][type];
-                                    });
-                                });
-
-                                ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function (thing) {
-                                    Object.keys(hourlyBuckets[hour][d.username][thing]).forEach(function (k) {
-                                        if (d[thing].hasOwnProperty(k)) {
-                                            Object.keys(hourlyBuckets[hour][d.username][thing][k]).forEach(function (v) {
-                                                if (d[thing][k].hasOwnProperty(v)) {
-                                                    hourlyBuckets[hour][d.username][thing][k][v] = hourlyBuckets[hour][d.username][thing][k][v] + d[thing][k][v];
-                                                } else {
-                                                    hourlyBuckets[hour][d.username][thing][k][v] = d[thing][k][v];
-                                                }
-                                            });
-                                        } else {
-                                            hourlyBuckets[hour][d.username][thing][k] = d[thing][k];
-                                        }
-                                    });
-                                });
-
-                                Array.prototype.push.apply(hourlyBuckets[hour][d.username].changesets, d.changesets);
-
-                            } else {
-                                hourlyBuckets[hour][d.username] = d;
-                            }
-                        } else {
-                            hourlyBuckets[hour] = {};
-                            hourlyBuckets[hour][d.username] = d;
+                    var username = row.username;
+                    if (!memo[hour].hasOwnProperty(username)) {
+                        memo[hour][username] = {};
+                    }
+                    var thisUserMemo = memo[hour][username];
+                    ['nodes', 'ways', 'relations'].forEach(function(thing) {
+                        if (!thisUserMemo.hasOwnProperty(thing)) {
+                            thisUserMemo[thing] = {
+                                'c': 0,
+                                'm': 0,
+                                'd': 0
+                            };
                         }
-                        return hourlyBuckets;
-                    }, {});
-                });
+                        ['c', 'm', 'd'].forEach(function(type) {
+                            // if row does not always contain these, add error handling:
+                            thisUserMemo[thing][type] += row[thing][type];
+                        });
+                    });
+                    ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function(thing) {
+                        if (!thisUserMemo.hasOwnProperty(thing)) {
+                            thisUserMemo[thing] = {};
+                        }
+                        Objects.keys(row[thing]).forEach(function(tag) {
+                            if (!thisUserMemo[thing].hasOwnProperty(tag)) {
+                                thisUserMemo[thing][tag] = 0;
+                            }
+                            thisUserMemo[thing][tag] += row[thing][tag];
+                        });
+                    });
+                    return memo;
+                };
 
-                callback(null, hourlyBuckets);
+                callback(null, result.rows.reduce(reducerFn, {}));
             });
         });
     });
