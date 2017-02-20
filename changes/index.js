@@ -67,9 +67,15 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                         }
                         Objects.keys(row[thing]).forEach(function(tag) {
                             if (!thisUserMemo[thing].hasOwnProperty(tag)) {
-                                thisUserMemo[thing][tag] = 0;
+                                thisUserMemo[thing][tag] = {};
                             }
-                            thisUserMemo[thing][tag] += row[thing][tag];
+                            Objects.keys(row[thing[tag]]).forEach(function(value) {
+                                if (!thisUserMemo[thing][tag].hasOwnProperty(value)) {
+                                    thisUserMemo[thing][tag][value] = 0;
+                                }
+                                thisUserMemo[thing][tag][value] += row[thing][tag][value];
+                            });
+
                         });
                     });
                     return memo;
