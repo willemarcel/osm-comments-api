@@ -62,7 +62,7 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                 });
 
                 Object.keys(userBuckets).forEach(function(u) {
-                    hourlyBuckets = userBuckets[u].reduce(function (hourlyBuckets, d) {
+                    hourlyBuckets = userBuckets[u].reduce(function (memo, d) {
                         var hour = moment.utc(d.change_at).startOf('hour').toISOString();
                         if (hourlyBuckets.hasOwnProperty(hour)) {
                             if (hourlyBuckets[hour].hasOwnProperty(d.username)) {
@@ -87,6 +87,9 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                                         }
                                     });
                                 });
+
+                                Array.prototype.push.apply(hourlyBuckets[hour][d.username].changesets, d.changesets);
+
                             } else {
                                 hourlyBuckets[hour][d.username] = d;
                             }
@@ -95,7 +98,7 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                             hourlyBuckets[hour][d.username] = d;
                         }
                         return hourlyBuckets;
-                    });
+                    }, {});
                 });
 
                 callback(null, hourlyBuckets);
