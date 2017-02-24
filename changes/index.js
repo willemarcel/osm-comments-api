@@ -13,7 +13,7 @@ module.exports = changes;
 var pgURL = config.PostgresURL;
 
 changes.get = function(from, to, users, tags, bbox, callback) {
-    var parseError = validateParams({'from': from, 'to': to});
+    var parseError = validateParams({'from': from, 'to': to, 'bbox': bbox});
     if (parseError) {
         return callback(new errors.ParseError(parseError));
     }
@@ -106,6 +106,10 @@ function validateParams(params) {
         'to': {
             'presence': true,
             'datetime': true
+        },
+        'bbox': {
+            'presence': false,
+            'bbox': true
         }
     };
     var errs = validate(params, constraints);
