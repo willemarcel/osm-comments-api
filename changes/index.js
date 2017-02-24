@@ -34,9 +34,6 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                 if (err) {
                     return callback(err, null);
                 }
-                if (result.rows.length === 0) {
-                    return callback(new errors.NotFoundError('No records found'));
-                }
 
                 var userLookup = {};
                 if (usersData) {
