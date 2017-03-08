@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "pretest": "eslint changesets lib notest test *.js",
-    "test": "test/setup.sh && node test/changesets.test.js && node test/notes.test.js && node test/api.notes.test.js && node test/api.changesets.test.js && test/teardown.sh"
+    "test": "test/setup.sh && node test/changesets.test.js && node test/notes.test.js && node test/api.notes.test.js && node test/api.changesets.test.js && test/teardown.sh",
+    "start": "node run-server.js"
   },
   "repository": {
     "type": "git",
