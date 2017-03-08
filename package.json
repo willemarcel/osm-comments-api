@@ -6,10 +6,6 @@
   "scripts": {
     "pretest": "eslint changesets lib notest test *.js && test/setup.sh",
     "test": "tape test/*.test.js | faucet || npm run dropdb",
-    "test:changesets": "node test/changesets.test.js",
-    "test:changesets-api": "node test/api.changesets.test.js",
-    "test:notes": "node test/notes.test.js",
-    "test:notes-api": "node test/api.notes.test.js",
     "dropdb": "test/teardown.sh"
   },
   "repository": {
@@ -40,7 +36,6 @@
   "devDependencies": {
     "eslint": "^1.9.0",
     "eslint-config-mourner": "^1.0.1",
-    "npm-run-all": "^4.0.2",
     "tape": "^4.2.2"
   }
 }
