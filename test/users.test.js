@@ -14,11 +14,14 @@ tape('test users module', function(t) {
             var expected = {
                 'id': 1626,
                 'name': 'FredB',
-                'first_edit': '2013-04-23T18:30:00.000Z',
+                'first_edit': '2013-04-24T00:00:00.000Z',
                 'changeset_count': 5,
                 'num_changes': 50
             };
-            result.first_edit = moment(result.first_edit).toISOString();
+            result.first_edit = moment(result.first_edit);
+            result.first_edit = result.first_edit
+                .add('minutes', result.first_edit.utcOffset())
+                .toISOString();
             assert.deepEqual(result, expected, 'user module returns as expected');
             assert.end();
         });
@@ -30,11 +33,15 @@ tape('test users module', function(t) {
             var expected = {
                 'id': 1626,
                 'name': 'FredB',
-                'first_edit': '2013-04-23T18:30:00.000Z',
+                'first_edit': '2013-04-24T00:00:00.000Z',
                 'changeset_count': 5,
                 'num_changes': 50
             };
-            result.first_edit = moment(result.first_edit).toISOString();
+            console.log(result.first_edit);
+            result.first_edit = moment(result.first_edit);
+            result.first_edit = result.first_edit
+                .add('minutes', result.first_edit.utcOffset())
+                .toISOString();
             assert.deepEqual(result, expected, 'user module returns as expected');
             assert.end();
         });
