@@ -1,7 +1,7 @@
 var testConfig = {
     'PostgresURL': 'postgres://localhost/osm-comments-api-test'
 };
-
+var moment = require('moment');
 require('../lib/config')(testConfig);
 
 var tape = require('tape');
@@ -14,10 +14,11 @@ tape('test users module', function(t) {
             var expected = {
                 'id': 1626,
                 'name': 'FredB',
-                'first_edit': new Date('2013-04-23T18:30:00.000Z'),
+                'first_edit': '2013-04-23T18:30:00.000Z',
                 'changeset_count': 5,
                 'num_changes': 50
             };
+            result.first_edit = moment(result.first_edit).toISOString();
             assert.deepEqual(result, expected, 'user module returns as expected');
             assert.end();
         });
@@ -29,10 +30,11 @@ tape('test users module', function(t) {
             var expected = {
                 'id': 1626,
                 'name': 'FredB',
-                'first_edit': new Date('2013-04-23T18:30:00.000Z'),
+                'first_edit': '2013-04-23T18:30:00.000Z',
                 'changeset_count': 5,
                 'num_changes': 50
             };
+            result.first_edit = moment(result.first_edit).toISOString();
             assert.deepEqual(result, expected, 'user module returns as expected');
             assert.end();
         });
