@@ -4,8 +4,10 @@
   "description": "API Server for OSM Comments and Notes",
   "main": "index.js",
   "scripts": {
-    "pretest": "eslint changesets lib notest test *.js && test/setup.sh",
+    "createdb": "test/setup.sh",
+    "pretest": "eslint changesets lib notest test *.js && npm run createdb",
     "test": "tape test/*.test.js | faucet",
+    "posttest": "npm run dropdb",
     "dropdb": "test/teardown.sh"
   },
   "repository": {
@@ -34,8 +36,7 @@
     "validate.js": "^0.9.0"
   },
   "devDependencies": {
-    "eslint": "^1.9.0",
-    "eslint-config-mourner": "^1.0.1",
+    "eslint": "^3.17.1",
     "faucet": "0.0.1",
     "tape": "^4.2.2"
   }
