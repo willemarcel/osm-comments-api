@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "eslint changesets lib notest test *.js && test/setup.sh",
-    "test": "tape test/*.test.js | faucet || npm run dropdb",
+    "test": "tape test/*.test.js | faucet",
     "dropdb": "test/teardown.sh"
   },
   "repository": {
