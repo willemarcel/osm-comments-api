@@ -4,6 +4,7 @@
   "description": "API Server for OSM Comments and Notes",
   "main": "index.js",
   "scripts": {
+    "start": "node run-server.js",
     "createdb": "test/setup.sh",
     "pretest": "eslint changesets lib notest test *.js && npm run createdb",
     "test": "tape test/*.test.js | faucet",
