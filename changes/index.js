@@ -18,11 +18,10 @@ changes.get = function(from, to, users, tags, bbox, callback) {
         return callback(new errors.ParseError(parseError));
     }
     
-    getQuery(from, to, users, tags, bbox, function(err, query, usersData) {
-        if (err) {
-            callback(err, null);
-            return;
-        }
+    getQueryAndUserData(from, to, users, tags, bbox)
+    .then(function(obj) {
+        var usersData = obj.usersData;
+        var query = obj.query;
         pg.connect(pgURL, function(err, client, done) {
             if (err) {
                 callback(err, null);
@@ -45,57 +44,57 @@ changes.get = function(from, to, users, tags, bbox, callback) {
                         r.username = userLookup[r.uid];
                     });
                 }
-
-                var reducerFn = function(memo, row) {
-                    var hour = moment.utc(row.change_at).startOf('hour').toISOString();
-                    if (!memo.hasOwnProperty(hour)) {
-                        memo[hour] = {};
-                    }
-                    var username = row.username;
-                    if (!memo[hour].hasOwnProperty(username)) {
-                        memo[hour][username] = {};
-                    }
-                    var thisUserMemo = memo[hour][username];
-                    ['nodes', 'ways', 'relations'].forEach(function(thing) {
-                        if (!thisUserMemo.hasOwnProperty(thing)) {
-                            thisUserMemo[thing] = {
-                                'c': 0,
-                                'm': 0,
-                                'd': 0
-                            };
-                        }
-                        ['c', 'm', 'd'].forEach(function(type) {
-                            // if row does not always contain these, add error handling:
-                            thisUserMemo[thing][type] += row[thing][type];
-                        });
-                    });
-                    ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function(thing) {
-                        if (!thisUserMemo.hasOwnProperty(thing)) {
-                            thisUserMemo[thing] = {};
-                        }
-                        Object.keys(row[thing]).forEach(function(tag) {
-                            if (!thisUserMemo[thing].hasOwnProperty(tag)) {
-                                thisUserMemo[thing][tag] = {};
-                            }
-                            Object.keys(row[thing][tag]).forEach(function(value) {
-                                if (!thisUserMemo[thing][tag].hasOwnProperty(value)) {
-                                    thisUserMemo[thing][tag][value] = 0;
-                                }
-                                thisUserMemo[thing][tag][value] += row[thing][tag][value];
-                            });
-
-                        });
-                    });
-
-                    thisUserMemo.changesets = union(thisUserMemo.changesets, row.changesets);
-                    return memo;
-                };
-
                 callback(null, result.rows.reduce(reducerFn, {}));
             });
         });
-    });
+    })
+    .catch(callback);
 };
+
+function reducerFn(memo, row) {
+    var hour = moment.utc(row.change_at).startOf('hour').toISOString();
+    if (!memo.hasOwnProperty(hour)) {
+        memo[hour] = {};
+    }
+    var username = row.username;
+    if (!memo[hour].hasOwnProperty(username)) {
+        memo[hour][username] = {};
+    }
+    var thisUserMemo = memo[hour][username];
+    ['nodes', 'ways', 'relations'].forEach(function (thing) {
+        if (!thisUserMemo.hasOwnProperty(thing)) {
+            thisUserMemo[thing] = {
+                'c': 0,
+                'm': 0,
+                'd': 0
+            };
+        }
+        ['c', 'm', 'd'].forEach(function (type) {
+            // if row does not always contain these, add error handling:
+            thisUserMemo[thing][type] += row[thing][type];
+        });
+    });
+    ['tags_created', 'tags_modified', 'tags_deleted'].forEach(function (thing) {
+        if (!thisUserMemo.hasOwnProperty(thing)) {
+            thisUserMemo[thing] = {};
+        }
+        Object.keys(row[thing]).forEach(function (tag) {
+            if (!thisUserMemo[thing].hasOwnProperty(tag)) {
+                thisUserMemo[thing][tag] = {};
+            }
+            Object.keys(row[thing][tag]).forEach(function (value) {
+                if (!thisUserMemo[thing][tag].hasOwnProperty(value)) {
+                    thisUserMemo[thing][tag][value] = 0;
+                }
+                thisUserMemo[thing][tag][value] += row[thing][tag][value];
+            });
+
+        });
+    });
+
+    thisUserMemo.changesets = union(thisUserMemo.changesets, row.changesets);
+    return memo;
+}
 
 function validateParams(params) {
     var constraints = {
@@ -118,7 +117,8 @@ function validateParams(params) {
     return null;
 }
 
-function getQuery(from, to, users, tags, bbox, callback) {
+// @returns Promise
+function getQueryAndUserData(from, to, users, tags, bbox) {
 
     var sql = squel.select({'parameterCharacter': '!!'})
     .from('stats')
@@ -148,67 +148,67 @@ function getQuery(from, to, users, tags, bbox, callback) {
         var usersArray = users.split(',').map(function(user) {
             return user;
         });
-
-        getUserIds(usersArray, function(err, usersData) {
-            if (err) {
-                return callback(err);
-            }
-
-            var userIds = [];
-            usersData.rows.forEach(function (r) {
-                userIds.push(r.id);
-            });
-
-            sql.where('uid in !!', userIds);
-            callback(null, sql.toParam(), usersData);
-        });
-    } else {
-        sql.field('u.name', 'username')
-            .field('stats.id', 'id')
-            .field('uid')
-            .field('change_at')
-            .field('nodes')
-            .field('ways')
-            .field('relations')
-            .field('tags_created')
-            .field('tags_modified')
-            .field('tags_deleted')
-            .field('changesets')
-            .join('users', 'u', 'u.id = stats.uid');
-        console.log('#sql', sql.toString());
-        callback(null, sql.toParam());
+        return getUserIds(usersArray)
+                .then(function(usersData) {
+                    var userIds = [];
+                    usersData.rows.forEach(function (r) {
+                        userIds.push(r.id);
+                    });
+                    sql.where('uid in !!', userIds);
+                    return {
+                        query: sql.toParam(),
+                        usersData: usersData
+                    };
+                });
     }
 
-
+    sql.field('u.name', 'username')
+        .field('stats.id', 'id')
+        .field('uid')
+        .field('change_at')
+        .field('nodes')
+        .field('ways')
+        .field('relations')
+        .field('tags_created')
+        .field('tags_modified')
+        .field('tags_deleted')
+        .field('changesets')
+        .join('users', 'u', 'u.id = stats.uid');
+    console.log('#sql', sql.toString());
+    return Promise.resolve({
+        query: sql.toParam()
+    });
 }
 
-function getUserIds(users, callback) {
+// @returns Promise
+function getUserIds(users) {
     var userSql = squel.select({'parameterCharacter': '!!'})
         .from('users')
         .field('id')
         .field('name')
         .where('name in !!', users);
 
-    pg.connect(pgURL, function(err, client, done) {
-        if (err) {
-            return callback(err, null);
-        }
-        client.query(userSql.toParam(), function(err, result) {
-            done();
+    return new Promise(function (res, rej) {
+        pg.connect(pgURL, function (err, client, done) {
             if (err) {
-                return callback(err);
+                return rej(err);
             }
+            client.query(userSql.toParam(), function (err, result) {
+                done();
+                if (err) {
+                    return rej(err);
+                }
 
-            if (result.rows.length === 0) {
-                return callback(new errors.NotFoundError('No such users'));
-            }
-            callback(null, result);
-
+                if (result.rows.length === 0) {
+                    return rej(new errors.NotFoundError('No such users'));
+                }
+                res(result);
+            });
         });
     });
 }
 
-function prepareTagQuery(tags, sql) {
+function prepareTagQuery(tags) {
     // SELECT * FROM json_test WHERE data ? 'a'; - check if 'a' exists as a key.
     // SELECT * FROM json_test WHERE data ?| array['a', 'b'];
     // select tags_created from stats where tags_created -> 'shop' ? 'tattoo';
