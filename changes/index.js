@@ -17,7 +17,7 @@ changes.get = function(from, to, users, tags, bbox, callback) {
     if (parseError) {
         return callback(new errors.ParseError(parseError));
     }
-
+    
     getQuery(from, to, users, tags, bbox, function(err, query, usersData) {
         if (err) {
             callback(err, null);
