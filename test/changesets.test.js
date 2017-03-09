@@ -33,7 +33,6 @@ tape('test changesets module', function(assert) {
 
     q.awaitAll(function() {
         assert.end();
-        process.exit(0);
     });
     // getchangesets(assert,changesetQueryDetailed);
 
@@ -56,3 +55,5 @@ function searchChangesets(assert, query, callback) {
 //         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
 //     });
 // }
+
+tape.onFinish(() => process.exit(0));

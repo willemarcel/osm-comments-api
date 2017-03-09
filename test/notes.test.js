@@ -28,7 +28,6 @@ tape('test notes module', function(assert) {
     });
     q.awaitAll(function() {
         assert.end();
-        process.exit(0);
     });
 });
 
@@ -48,3 +47,5 @@ function searchNotes(assert, query, callback) {
 //         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
 //     });
 // }
+
+tape.onFinish(() => process.exit(0));
