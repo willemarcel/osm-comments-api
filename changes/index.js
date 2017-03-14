@@ -12,43 +12,46 @@ var changes = {};
 module.exports = changes;
 var pgURL = config.PostgresURL;
 
-changes.get = function(from, to, users, tags, bbox, callback) {
-    var parseError = validateParams({'from': from, 'to': to});
-    if (parseError) {
-        return callback(new errors.ParseError(parseError));
-    }
-    
-    getQueryAndUserData(from, to, users, tags, bbox)
-    .then(function(obj) {
-        var usersData = obj.usersData;
-        var query = obj.query;
-        pg.connect(pgURL, function(err, client, done) {
+function pgConnect(url, query) {
+    return new Promise(function (res, rej) {
+        pg.connect(url, function (err, client, done) {
             if (err) {
-                callback(err, null);
-                return;
+                return rej(err);
             }
-            console.log(query);
-            client.query(query, function(err, result) {
+            client.query(query, function (err, result) {
                 done();
-                if (err) {
-                    return callback(err, null);
-                }
-
-                var userLookup = {};
-                if (usersData) {
-                    usersData.rows.forEach(function (u) {
-                        userLookup[u.id] = u.name;
-                    });
-
-                    result.rows.forEach(function (r) {
-                        r.username = userLookup[r.uid];
-                    });
-                }
-                callback(null, result.rows.reduce(reducerFn, {}));
+                if (err) return rej(err);
+                return res(result); 
             });
         });
-    })
-    .catch(callback);
+    });
+}
+
+changes.get = function(from, to, users, tags, bbox) {
+    var parseError = validateParams({'from': from, 'to': to});
+    var usersData;
+    if (parseError) {
+        return Promise.reject(new errors.ParseError(parseError));
+    }
+    
+    return getQueryAndUserData(from, to, users, tags, bbox)
+        .then(function (obj) {
+            // save usersData for future use.
+            usersData = obj.usersData;
+            return pgConnect(pgURL, obj.query);
+        })
+        .then(function (res) {
+            var userLookup = {};
+            if (usersData) {
+                usersData.rows.forEach(function (u) {
+                    userLookup[u.id] = u.name;
+                });
+                res.rows.forEach(function (r) {
+                    r.username = userLookup[r.uid];
+                });
+            }
+            return res.rows.reduce(reducerFn, {});
+        });
 };
 
 function reducerFn(memo, row) {
