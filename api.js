@@ -81,12 +81,9 @@ server.get('/api/v1/stats/', function(req, res, next) {
     var users = req.query.users || false;
     var tags = req.query.tags || false;
     var bbox = req.query.bbox || false;
-    changes.get(from, to, users, tags, bbox, function(err, json) {
-        if (err) {
-            return next(err);
-        }
-        res.json(json);
-    });
+    changes.get(from, to, users, tags, bbox)
+        .then(function(d) {res.json(d);})
+        .catch(next);
 });
 
 server.use(function(err, req, res, next) {
