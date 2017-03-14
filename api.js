@@ -82,7 +82,7 @@ server.get('/api/v1/stats/', function(req, res, next) {
     var tags = req.query.tags || false;
     var bbox = req.query.bbox || false;
     changes.get(from, to, users, tags, bbox)
-        .then(res.json)
+        .then(function(d) {res.json(d);})
         .catch(next);
 });
 
