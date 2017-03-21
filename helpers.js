@@ -9,22 +9,6 @@ module.exports = {
         });
         return turfBBoxPolygon(points);
     },
-    // simple promise wrapper to directly connect and query
-    // takes care of done().
-    pgConnect: function (url, query) {
-        return new Promise(function (res, rej) {
-            pg.connect(url, function (err, client, done) {
-                if (err) {
-                    return rej(err);
-                }
-                client.query(query, function (err, result) {
-                    done();
-                    if (err) return rej(err);
-                    return res(result);
-                });
-            });
-        });
-    },
     // wraps pg.connect into a promise, resolves
     // to client.
     pgPromise: function (url) {

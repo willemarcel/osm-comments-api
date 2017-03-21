@@ -10,20 +10,29 @@ var changes = {};
 
 module.exports = changes;
 var pgURL = config.PostgresURL;
-var pgConnect = helpers.pgConnect;
+var pgPromise = helpers.pgPromise;
+var promisifyQuery = helpers.promisifyQuery;
 
 changes.get = function(from, to, users, tags, bbox) {
     var parseError = validateParams({'from': from, 'to': to});
-    var usersData;
+    var usersData, searchQuery;
     if (parseError) {
         return Promise.reject(new errors.ParseError(parseError));
     }
     
     return getQueryAndUserData(from, to, users, tags, bbox)
         .then(function (obj) {
-            // save usersData for future use.
+            // save vars for future use.
             usersData = obj.usersData;
-            return pgConnect(pgURL, obj.query);
+            searchQuery = obj.query;
+            return pgPromise(pgURL);
+        })
+        .then(function (pg) {
+            var query = promisifyQuery(pg.client);
+            return query(searchQuery).then(function (r) {
+                pg.done();
+                return r;
+            });
         })
         .then(function (res) {
             var userLookup = {};
@@ -176,7 +185,15 @@ function getUserIds(users) {
         .field('name')
         .where('name in !!', users);
 
-    return pgConnect(pgURL, userSql.toParam())
+    return pgPromise(pgURL)
+        .then(function(pg) {
+            var query = promisifyQuery(pg.client);
+            return query(userSql.toParam())
+            .then(function (r) {
+                pg.done();
+                return r;
+            });
+        })
         .then(function (result) {
             if (result.rows.length === 0) {
                 return Promise.reject(new errors.NotFoundError('No such users'));

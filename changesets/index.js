@@ -5,9 +5,9 @@ var helpers = require('../helpers');
 require('../validators');
 var validate = require('validate.js');
 var errors = require('../errors');
-
 var pgPromise = helpers.pgPromise;
 var promisifyQuery = helpers.promisifyQuery;
+
 var changesets = {};
 
 module.exports = changesets;
