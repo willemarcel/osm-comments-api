@@ -22,12 +22,11 @@ server.get('/', function(req, res) {
 });
 
 server.get('/api/v1/notes', function(req, res, next) {
-    notes.search(req.query, function(err, geojson) {
-        if (err) {
-            return next(err);
-        }
-        res.json(geojson);
-    });
+    notes.search(req.query)
+        .then(function(geojson) {
+            res.json(geojson);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/changesets', function(req, res, next) {
@@ -38,12 +37,11 @@ server.get('/api/v1/changesets', function(req, res, next) {
 });
 
 server.get('/api/v1/notes/:id', function(req, res, next) {
-    notes.get(req.params.id, function(err, geojson) {
-        if (err) {
-            return next(err);
-        }
+    notes.get(req.params.id)
+    .then(function(geojson) {
         res.json(geojson);
-    });
+    })
+    .catch(next);
 });
 
 server.get('/api/v1/changesets/:id', function(req, res, next) {
