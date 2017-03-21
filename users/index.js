@@ -1,50 +1,37 @@
 var config = require('../lib/config')();
-var queue = require('d3-queue').queue;
-var pg = require('pg');
 var errors = require('../errors');
+var helpers = require('../helpers');
 
 var users = {};
 
 module.exports = users;
 
 var pgURL = config.PostgresURL;
+var pgPromise = helpers.pgPromise;
+var promisifyQuery = helpers.promisifyQuery;
 
-users.getName = function(name, callback) {
-    query(name, 'name', function (err, user) {
-        if (err) {
-            return callback(err, null);
-        }
-
-        callback(null, user);
-    });
+users.getName = function(name) {
+    return query(name, 'name');
 };
 
-users.getId = function(id, callback) {
-    query(id, 'id', function (err, user) {
-        if (err) {
-            return callback(err, null);
-        }
-
-        callback(null, user);
-    });
+users.getId = function(id) {
+    return query(id, 'id');
 };
 
-function query(value, thing, callback) {
+function query(value, thing) {
     var userQuery = 'SELECT * FROM users WHERE ' + thing + '= $1';
-    pg.connect(pgURL, function(err, client, done) {
-        if (err) {
-            callback(err, null);
-            return;
-        }
-        client.query(userQuery, [value], function(err, result) {
-            done();
-            if (err) {
-                return callback(err, null);
-            }
+    return pgPromise(pgURL)
+        .then(function (pg) {
+            var query = promisifyQuery(pg.client);
+            return query(userQuery, [value]).then(function (r) {
+                pg.done();
+                return r;
+            });
+        })
+        .then(function (result) {
             if (result.rows.length === 0) {
-                return callback(new errors.NotFoundError('User not found'));
+                return Promise.reject(new errors.NotFoundError('User not found'));
             }
-            callback(null, result.rows[0]);
+            return result.rows[0];
         });
-    });
 }

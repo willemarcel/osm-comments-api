@@ -9,8 +9,8 @@ var users = require('../users/index');
 
 tape('test users module', function(t) {
     t.test('test getName', function(assert) {
-        users.getName('FredB', function (err, result) {
-            assert.ifError(err, 'no error fetching user');
+        users.getName('FredB')
+        .then(function (result) {
             var expected = {
                 'id': 1626,
                 'name': 'FredB',
@@ -24,12 +24,15 @@ tape('test users module', function(t) {
                 .toISOString();
             assert.deepEqual(result, expected, 'user module returns as expected');
             assert.end();
+        })
+        .catch(function (error) {
+            assert.error(error, 'no error fetching user');
         });
     });
 
     t.test('test getID', function(assert) {
-        users.getId('1626', function (err, result) {
-            assert.ifError(err, 'no error fetching user');
+        users.getId('1626')
+        .then(function (result) {
             var expected = {
                 'id': 1626,
                 'name': 'FredB',
@@ -44,8 +47,10 @@ tape('test users module', function(t) {
                 .toISOString();
             assert.deepEqual(result, expected, 'user module returns as expected');
             assert.end();
+        })
+        .catch(function (error) {
+            assert.error(error, 'no error fetching user');
         });
     });
 });
-
 tape.onFinish(() => process.exit(0));
