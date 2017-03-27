@@ -34,6 +34,10 @@ changesets.search = function(params) {
                 .then(function (r) {
                     pg.done();
                     return r;
+                })
+                .catch(function (e) {
+                    pg.done();
+                    return Promise.reject(e);
                 });
         })
         .then(processSearchResults);
@@ -56,6 +60,10 @@ changesets.get = function(id) {
                 .then(function (results) {
                     pg.done();
                     return results;
+                })
+                .catch(function (e) {
+                    pg.done();
+                    return Promise.reject(e);
                 });
         })
         .then(function (results) {

@@ -29,9 +29,14 @@ changes.get = function(from, to, users, tags, bbox) {
         })
         .then(function (pg) {
             var query = promisifyQuery(pg.client);
-            return query(searchQuery).then(function (r) {
+            return query(searchQuery)
+            .then(function (r) {
                 pg.done();
                 return r;
+            })
+            .catch(function(e) {
+                pg.done();
+                return Promise.reject(e);
             });
         })
         .then(function (res) {
@@ -192,6 +197,10 @@ function getUserIds(users) {
             .then(function (r) {
                 pg.done();
                 return r;
+            })
+            .catch(function (e) {
+                pg.done();
+                return Promise.reject(e);
             });
         })
         .then(function (result) {
