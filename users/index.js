@@ -32,8 +32,8 @@ function query(value, thing, extra) {
     var userQuery = 'SELECT * FROM users WHERE ' + thing + '= $1';
     return pgPromise(pgURL)
         .then(function (pg) {
-            var query = promisifyQuery(pg.client);
-            var userQueryProm = query(userQuery, [value]);
+            var queryPromise = promisifyQuery(pg.client);
+            var userQueryProm = queryPromise(userQuery, [value]);
 
             return userQueryProm.then(function (result) {
                 if (result.rows.length === 0) {
@@ -41,7 +41,7 @@ function query(value, thing, extra) {
                 }
                 var user = result.rows[0];
                 if (extra) {
-                    return fetchExtra(user, query);
+                    return fetchExtra(user, queryPromise);
                 }
                 return user;
             })
@@ -58,19 +58,19 @@ function query(value, thing, extra) {
 
 /*
     @param {Object} user - basic user details
-    @param {query}  promisified query which is identical to client.query
+    @param {queryPromise}  promisified query which is identical to client.query
                     except that it is thenable
 */
-function fetchExtra(user, query) {
+function fetchExtra(user, queryPromise) {
     var userId = user.id;
     var totalDiscussionsQ = 'SELECT COUNT(id) FROM changeset_comments WHERE user_id=$1';
     var discussedChangesetsQ = 'SELECT COUNT(id) FROM changesets WHERE (SELECT COUNT(id) FROM changeset_comments WHERE changeset_comments.changeset_id = changesets.id) > 0 AND changesets.discussion_count > 0 AND changesets.user_id = $1';
     var mappingDaysQ = 'SELECT COUNT(DISTINCT(date_trunc(\'day\', created_at))) FROM changesets WHERE user_id=$1';
 
     var promises = [
-        query(totalDiscussionsQ, [userId]),
-        query(discussedChangesetsQ, [userId]),
-        query(mappingDaysQ, [userId])
+        queryPromise(totalDiscussionsQ, [userId]),
+        queryPromise(discussedChangesetsQ, [userId]),
+        queryPromise(mappingDaysQ, [userId])
     ];
   
     return Promise.all(promises)
