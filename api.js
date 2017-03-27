@@ -54,7 +54,7 @@ server.get('/api/v1/changesets/:id', function(req, res, next) {
 });
 
 server.get('/api/v1/users/name/:name', function(req, res, next) {
-    users.getName(req.params.name)
+    users.getName(req.params.name, req.query)
         .then(function(json) {
             res.json(json);
         })
@@ -62,7 +62,7 @@ server.get('/api/v1/users/name/:name', function(req, res, next) {
 });
 
 server.get('/api/v1/users/id/:id', function(req, res, next) {
-    users.getId(req.params.id)
+    users.getId(req.params.id, req.query)
         .then(function(json) {
             res.json(json);
         })
