@@ -12,13 +12,13 @@ var promisifyQuery = helpers.promisifyQuery;
 
 users.getName = function(name, queryParams) {
     var extra = false;
-    if (queryParams.extra) extra = true;
+    if (queryParams && queryParams.extra) extra = true;
     return query(name, 'name', extra);
 };
 
-users.getId = function(id, query) {
+users.getId = function (id, queryParams) {
     var extra = false;
-    if (query.extra) extra = true;
+    if (queryParams && queryParams.extra) extra = true;
     return query(id, 'id', extra);
 };
 
@@ -40,7 +40,6 @@ function query(value, thing, extra) {
                     return Promise.reject(new errors.NotFoundError('User not found'));
                 }
                 var user = result.rows[0];
-
                 if (extra) {
                     return fetchExtra(user, query);
                 }
