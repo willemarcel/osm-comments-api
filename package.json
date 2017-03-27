@@ -1,13 +1,13 @@
 {
   "name": "osm-comments-api",
-  "version": "1.7.0",
+  "version": "1.9.0",
   "description": "API Server for OSM Comments and Notes",
   "main": "index.js",
   "scripts": {
     "start": "node run-server.js",
     "createdb": "test/setup.sh",
     "pretest": "eslint changesets lib notest test *.js && npm run createdb",
-    "test": "tape test/*.test.js | faucet",
+    "test": "tape test/*.test.js | faucet ",
     "posttest": "npm run dropdb",
     "dropdb": "test/teardown.sh"
   },

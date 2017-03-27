@@ -22,57 +22,51 @@ server.get('/', function(req, res) {
 });
 
 server.get('/api/v1/notes', function(req, res, next) {
-    notes.search(req.query, function(err, geojson) {
-        if (err) {
-            return next(err);
-        }
-        res.json(geojson);
-    });
+    notes.search(req.query)
+        .then(function(geojson) {
+            res.json(geojson);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/changesets', function(req, res, next) {
-    changesets.search(req.query, function(err, geojson) {
-        if (err) {
-            return next(err);
-        }
-        res.json(geojson);
-    });
+    changesets.search(req.query)
+        .then(function(geojson) {
+            res.json(geojson);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/notes/:id', function(req, res, next) {
-    notes.get(req.params.id, function(err, geojson) {
-        if (err) {
-            return next(err);
-        }
-        res.json(geojson);
-    });
+    notes.get(req.params.id)
+        .then(function(geojson) {
+            res.json(geojson);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/changesets/:id', function(req, res, next) {
-    changesets.get(req.params.id, function(err, geojson) {
-        if (err) {
-            return next(err);
-        }
-        res.json(geojson);
-    });
+    changesets.get(req.query)
+        .then(function (geojson) {
+            res.json(geojson);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/users/name/:name', function(req, res, next) {
-    users.getName(req.params.name, function(err, json) {
-        if (err) {
-            return next(err);
-        }
-        res.json(json);
-    });
+    users.getName(req.params.name)
+        .then(function(json) {
+            res.json(json);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/users/id/:id', function(req, res, next) {
-    users.getId(req.params.id, function(err, json) {
-        if (err) {
-            return next(err);
-        }
-        res.json(json);
-    });
+    users.getId(req.params.id)
+        .then(function(json) {
+            res.json(json);
+        })
+        .catch(next);
 });
 
 server.get('/api/v1/stats/', function(req, res, next) {

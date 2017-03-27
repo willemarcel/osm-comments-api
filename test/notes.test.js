@@ -32,11 +32,15 @@ tape('test notes module', function(assert) {
 });
 
 function searchNotes(assert, query, callback) {
-    notes.search(query.params, function(err, result) {
-
+    notes.search(query.params)
+    .then(function(result) {
         //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
         assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
         callback();
+    })
+    .catch(function (err) {
+        console.error(err);
+        assert.error(err);
     });
 }
 

@@ -38,14 +38,17 @@ tape('test changesets module', function(assert) {
 
 });
 
-
 function searchChangesets(assert, query, callback) {
-    changesets.search(query.params, function(err, result) {
-
-        //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
-        assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
-        callback();
-    });
+    changesets.search(query.params)
+        .then(function(result) {
+            //the JSON.parse(JSON.stringify(result)) bit is there to format dates properly
+            assert.deepEqual(JSON.parse(JSON.stringify(result)), query.geojson, query.description);
+            callback();
+        })
+        .catch(function (e) {
+            assert.error(e);
+            callback();
+        });
 }
 
 // function getchangesets(assert, query) {

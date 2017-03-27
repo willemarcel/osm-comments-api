@@ -1,5 +1,4 @@
 var config = require('../lib/config')();
-var pg = require('pg');
 require('../validators');
 var validate = require('validate.js');
 var errors = require('../errors');
@@ -11,34 +10,29 @@ var changes = {};
 
 module.exports = changes;
 var pgURL = config.PostgresURL;
-
-function pgConnect(url, query) {
-    return new Promise(function (res, rej) {
-        pg.connect(url, function (err, client, done) {
-            if (err) {
-                return rej(err);
-            }
-            client.query(query, function (err, result) {
-                done();
-                if (err) return rej(err);
-                return res(result); 
-            });
-        });
-    });
-}
+var pgPromise = helpers.pgPromise;
+var promisifyQuery = helpers.promisifyQuery;
 
 changes.get = function(from, to, users, tags, bbox) {
     var parseError = validateParams({'from': from, 'to': to});
-    var usersData;
+    var usersData, searchQuery;
     if (parseError) {
         return Promise.reject(new errors.ParseError(parseError));
     }
     
     return getQueryAndUserData(from, to, users, tags, bbox)
         .then(function (obj) {
-            // save usersData for future use.
+            // save vars for future use.
             usersData = obj.usersData;
-            return pgConnect(pgURL, obj.query);
+            searchQuery = obj.query;
+            return pgPromise(pgURL);
+        })
+        .then(function (pg) {
+            var query = promisifyQuery(pg.client);
+            return query(searchQuery).then(function (r) {
+                pg.done();
+                return r;
+            });
         })
         .then(function (res) {
             var userLookup = {};
@@ -191,24 +185,21 @@ function getUserIds(users) {
         .field('name')
         .where('name in !!', users);
 
-    return new Promise(function (res, rej) {
-        pg.connect(pgURL, function (err, client, done) {
-            if (err) {
-                return rej(err);
-            }
-            client.query(userSql.toParam(), function (err, result) {
-                done();
-                if (err) {
-                    return rej(err);
-                }
-
-                if (result.rows.length === 0) {
-                    return rej(new errors.NotFoundError('No such users'));
-                }
-                res(result);
+    return pgPromise(pgURL)
+        .then(function(pg) {
+            var query = promisifyQuery(pg.client);
+            return query(userSql.toParam())
+            .then(function (r) {
+                pg.done();
+                return r;
             });
+        })
+        .then(function (result) {
+            if (result.rows.length === 0) {
+                return Promise.reject(new errors.NotFoundError('No such users'));
+            }
+            return result;
         });
-    });
 }
 
 function prepareTagQuery(tags) {
