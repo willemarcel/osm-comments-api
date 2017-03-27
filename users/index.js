@@ -23,9 +23,14 @@ function query(value, thing) {
     return pgPromise(pgURL)
         .then(function (pg) {
             var query = promisifyQuery(pg.client);
-            return query(userQuery, [value]).then(function (r) {
+            return query(userQuery, [value])
+            .then(function (r) {
                 pg.done();
                 return r;
+            })
+            .catch(function (e) {
+                pg.done();
+                return Promise.reject(e);
             });
         })
         .then(function (result) {
