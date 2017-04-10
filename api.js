@@ -46,7 +46,7 @@ server.get('/api/v1/notes/:id', function(req, res, next) {
 });
 
 server.get('/api/v1/changesets/:id', function(req, res, next) {
-    changesets.get(req.query)
+    changesets.get(req.params.id)
         .then(function (geojson) {
             res.json(geojson);
         })
