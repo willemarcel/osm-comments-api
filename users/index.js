@@ -77,7 +77,6 @@ function fetchExtra(user, queryPromise) {
   
     return Promise.all(promises)
         .then(function (results) {
-            console.log(results[3]);
             user.extra = {
                 'total_discussions': results[0].rows[0].count,
                 'changesets_with_discussions': results[1].rows[0].count,
