@@ -66,19 +66,23 @@ function fetchExtra(user, queryPromise) {
     var totalDiscussionsQ = 'SELECT COUNT(id) FROM changeset_comments WHERE user_id=$1';
     var discussedChangesetsQ = 'SELECT COUNT(id) FROM changesets WHERE (SELECT COUNT(id) FROM changeset_comments WHERE changeset_comments.changeset_id = changesets.id) > 0 AND changesets.discussion_count > 0 AND changesets.user_id = $1';
     var mappingDaysQ = 'SELECT COUNT(DISTINCT(date_trunc(\'day\', created_at))) FROM changesets WHERE user_id=$1';
+    var editFrequency = 'SELECT date_trunc(\'day\', closed_at) as day, COUNT(id) FROM changesets WHERE user_id=$1 GROUP BY day ORDER BY day;'
 
     var promises = [
         queryPromise(totalDiscussionsQ, [userId]),
         queryPromise(discussedChangesetsQ, [userId]),
-        queryPromise(mappingDaysQ, [userId])
+        queryPromise(mappingDaysQ, [userId]),
+        queryPromise(editFrequency, [userId])
     ];
   
     return Promise.all(promises)
         .then(function (results) {
+            console.log(results[3]);
             user.extra = {
                 'total_discussions': results[0].rows[0].count,
                 'changesets_with_discussions': results[1].rows[0].count,
-                'mapping_days': results[2].rows[0].count
+                'mapping_days': results[2].rows[0].count,
+                'edit_frequency': results[3].rows
             };
             return user;
         });
