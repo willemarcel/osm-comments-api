@@ -30,6 +30,7 @@ users.getId = function (id, queryParams) {
 */
 function query(value, thing, extra) {
     var userQuery = 'SELECT * FROM users WHERE ' + thing + '= $1';
+    var firstEditQuery = 'SELECT created_at FROM changesets WHERE user_id=$1 ORDER BY created_at LIMIT 1';
     return pgPromise(pgURL)
         .then(function (pg) {
             var queryPromise = promisifyQuery(pg.client);
@@ -40,10 +41,15 @@ function query(value, thing, extra) {
                     return Promise.reject(new errors.NotFoundError('User not found'));
                 }
                 var user = result.rows[0];
-                if (extra) {
-                    return fetchExtra(user, queryPromise);
-                }
-                return user;
+                var firstEditProm = queryPromise(firstEditQuery, [user.id]);
+                return firstEditProm.then(function (result) {
+                    var created_at = result.rows[0].created_at;
+                    user.first_edit = created_at;
+                    if (extra) {
+                        return fetchExtra(user, queryPromise);
+                    }
+                    return user;
+                });
             })
             .then(function (result) {
                 pg.done();
