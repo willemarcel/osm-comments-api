@@ -17,6 +17,24 @@ var server = module.exports = express();
 
 server.use(cors());
 
+var apiKeys = process.env.APIKEYS ? process.env.APIKEYS.split(',') : [];
+
+function checkApiKey(key) {
+    return apiKeys.filter(i => i === key).length > 0;
+}
+
+server.use(function(req, res, next) {
+    if(!req.get('apiKey')) {
+        next(new ErrorHTTP('apiKey was not provided', 401));
+    } else {
+        if (!checkApiKey(req.get('apiKey'))) {
+            next(new ErrorHTTP('The provided apiKey is not valid.', 403));
+        } else {
+            next();
+        }
+    }
+});
+
 server.get('/', function(req, res) {
     res.json({'status': 'ok'});
 });

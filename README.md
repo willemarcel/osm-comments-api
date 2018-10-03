@@ -11,6 +11,10 @@ Expose a RESTful API for OSM Notes and Changeset Comments.
 
  - Define an env var called `OSM_COMMENTS_POSTGRES_URL` eg `export OSM_COMMENTS_POSTGRES_URL='postgres://localhost/osm-comments'`
 
+ - Define an env var called `APIKEYS` to set one or more apiKeys to be used  in
+ the requests authentication. You can separate the apiKeys with a `,`. For
+ example: `APIKEYS=app1-api-key-1234,user2-key-12345`
+
  - Run server with `node run-server.js`
 
  - Visit for eg. `http://localhost:8888/api/v1/notes` in your browser to see some JSON
